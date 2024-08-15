@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Добавление отчёта</title>
+</head>
+<body class="bg-light">
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>Добавление отчёт</h2>
+        <p class="lead">Заполните поля и нажмите кнопку 'Добавить отчёт'</p>
+    </div>
+
+    <form enctype="multipart/form-data" action="#" th:action="@{/order/add_order}" th:object="${order}" method="post" class="needs-validation"
+          novalidate>
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="mb-3">Поля для заполнения</h4>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="name">Имя</label>
+                        <input th:field="*{name}" type="text" class="form-control" id="name" placeholder="" value="" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="created">Когда создан</label>
+                        <input th:field="*{created}" type="text" class="form-control" id="created" placeholder="" value="" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description">Описание</label>
+                        <input th:field="*{description}" type="text" class="form-control" id="description" placeholder="" value="" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="author">Автор</label>
+                        <input th:field="*{orderEmpl.id}" type="number" class="form-control" id="author" placeholder="" value="" required>
+                    </div>
+                </div>
+                <hr class="mb-4">
+                <button class="btn btn-primary btn-lg btn-block" type="submit" value="Submit">Добавить отчёт</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>
