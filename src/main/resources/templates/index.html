@@ -15,61 +15,30 @@
 
 <div class="row">
     <div class="col col-lg-3">
-        <a th:href="@{/employee/add_employee}" class="btn btn-lg btn-block btn-outline-primary" role="button"
+        <a th:href="@{/employees/add_employee}" class="btn btn-lg btn-block btn-outline-primary" role="button"
            aria-disabled="true">Добавить сострудника</a>
     </div>
     <div class="col col-lg-3">
-        <a th:href="@{/employee}" class="btn btn-lg btn-block btn-outline-primary" role="button"
+        <a th:href="@{/employees}" class="btn btn-lg btn-block btn-outline-primary" role="button"
            aria-disabled="true">всё сотрудники</a>
     </div>
     <div class="col col-lg-3">
-        <a th:href="@{/order/add_order}" class="btn btn-lg btn-block btn-outline-primary" role="button"
+        <a th:href="@{/orders/add_order}" class="btn btn-lg btn-block btn-outline-primary" role="button"
            aria-disabled="true">Добавить отчёт</a>
     </div>
     <div class="col col-lg-3">
-        <a th:href="@{/order}" class="btn btn-lg btn-block btn-outline-primary" role="button"
+        <a th:href="@{/orders}" class="btn btn-lg btn-block btn-outline-primary" role="button"
            aria-disabled="true">всё отчёты</a>
     </div>
     <div class="col col-lg-3">
-        <a th:href="@{/task}" class="btn btn-lg btn-block btn-outline-primary" role="button"
+        <a th:href="@{/tasks}" class="btn btn-lg btn-block btn-outline-primary" role="button"
            aria-disabled="true">всё задания</a>
     </div>
     <div class="col col-lg-3">
-        <a th:href="@{/task/add_task}" class="btn btn-lg btn-block btn-outline-primary" role="button"
+        <a th:href="@{/tasks/add_task}" class="btn btn-lg btn-block btn-outline-primary" role="button"
            aria-disabled="true">создать задание</a>
     </div>
 </div>
-
-<div class="container">
-    <br/>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th class="text-justify">#</th>
-                <th class="text-justify">Имя</th>
-                <th class="text-justify">Возраст</th>
-                <th class="text-justify">Пост</th>
-                <th class="text-justify">Когда присоеденился</th>
-                <th class="text-justify">Стаж</th>
-                <th class="text-justify">Описание</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="empl : ${employee}">
-                <td class="align-middle"><span th:text="${empl.id}"/></td>
-                <td class="align-middle"><span th:text="${empl.name}"/></td>
-                <td class="align-middle"><span th:text="${empl.age}"/></td>
-                <td class="align-middle"><span th:text="${empl.post}"/></td>
-                <td class="align-middle"><span th:text="${empl.joined}"/></td>
-                <td class="align-middle"><span th:text="${empl.workExperienceYears}"/></td>
-                <td class="align-middle"><span th:text="${empl.description}"/></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

@@ -31,12 +31,14 @@ public class EmployeeEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderEmpl")
     private List<OrderEntity> emplOrders = new ArrayList<>();
 
-//
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "whoGaveTask")
-//    private List<TaskEntity> taskForEmpl = new ArrayList<>();
-//
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "whoGivenTask")
-//    private List<TaskEntity> taskFromEmpl = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "whoGaveTask")
+    private List<TaskEntity> taskForEmpl = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "whoGivenTask")
+    private List<TaskEntity> taskFromEmpl = new ArrayList<>();
+
+    //TODO: Сделать эндпоинты для задания и отчёта, добавить в их контроллеры обработку
+    //TODO: дописать все функции CRUD для КАЖДОЙ СУЩНОСТИ
 
 }

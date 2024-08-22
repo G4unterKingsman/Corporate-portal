@@ -11,14 +11,14 @@ import ru.egarschool.naapplication.Corporate.portal.service.OrderServiceImpl;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("order")
+@RequestMapping("orders")
 public class OrderController {
     private final OrderServiceImpl orderService;
 
     @GetMapping()
     public String getAllOrders(Model model){
         model.addAttribute("orders", orderService.findAll());
-        return "order";
+        return "orders";
     }
 
 
@@ -32,7 +32,7 @@ public class OrderController {
 
     public String saveOrder(@Valid @ModelAttribute OrderEntity orderEntity, Long employId){
         orderService.create(orderEntity, employId);
-        return "redirect:/order";
+        return "redirect:/orders";
     }
 
 

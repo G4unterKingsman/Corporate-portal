@@ -9,20 +9,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.egarschool.naapplication.Corporate.portal.entity.OrderEntity;
 import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
 import ru.egarschool.naapplication.Corporate.portal.service.TaskServiceImpl;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("task")
+@RequestMapping("tasks")
 public class TaskController {
     private final TaskServiceImpl taskService;
 
     @GetMapping
     public String getAllTasks(Model model){
         model.addAttribute("tasks", taskService.findAll());
-        return "task";
+        return "tasks";
     }
 
 
@@ -37,7 +36,7 @@ public class TaskController {
     @PostMapping("/add_task")
     public String saveTask(@Valid @ModelAttribute TaskEntity taskEntity, Long idWhoGave, Long idWhoGiven){
         taskService.create(taskEntity, idWhoGave, idWhoGiven);
-        return "redirect:/task";
+        return "redirect:/tasks";
     }
 
 }
