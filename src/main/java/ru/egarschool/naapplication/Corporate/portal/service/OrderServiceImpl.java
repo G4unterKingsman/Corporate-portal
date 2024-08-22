@@ -17,6 +17,8 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepo orderRepo;
     private final EmployeeRepo employeeRepo;
 
+    public List<OrderEntity> findAll() {return orderRepo.findAll();}
+
     public OrderEntity create(OrderEntity orderEntity, Long emplId){
         if(emplId != null) {
             EmployeeEntity employeeEntity = employeeRepo.findById(emplId).get();
@@ -25,7 +27,5 @@ public class OrderServiceImpl implements OrderService {
         return orderRepo.save(orderEntity);
     }
 
-    public List<OrderEntity> findAll() {
-        return orderRepo.findAll();
-    }
+
 }
