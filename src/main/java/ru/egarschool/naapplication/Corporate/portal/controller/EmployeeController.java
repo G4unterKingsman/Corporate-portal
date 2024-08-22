@@ -3,7 +3,6 @@ package ru.egarschool.naapplication.Corporate.portal.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,14 +12,14 @@ import ru.egarschool.naapplication.Corporate.portal.service.EmployeeServiceImpl;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("employee")
+@RequestMapping("employees")
 public class EmployeeController {
     private final EmployeeServiceImpl employeeService;
 
     @GetMapping()
     public String findAll(Model model){
-        model.addAttribute("employee",employeeService.findAll());
-        return "index";
+        model.addAttribute("employees",employeeService.findAll());
+        return "employees";
     }
 
     @GetMapping("/add_employee")
@@ -32,13 +31,12 @@ public class EmployeeController {
     @PostMapping("/add_employee")
     public String create(@Valid @ModelAttribute EmployeeEntity employeeEntity){
         employeeService.create(employeeEntity);
-        return "redirect:/employee";
+        return "redirect:/employees";
     }
 
-
-
-    @GetMapping("/{id}")
-    public ResponseEntity findById(@PathVariable Long id){
-        return ResponseEntity.ok(employeeService.findById(id));
+    @GetMapping("/{employeeId}")
+    public String getInfoEmployee(Model model, @PathVariable Long employeeId){
+        model.addAttribute("employee", employeeService.findById(employeeId));
+        return "employee";
     }
 }
