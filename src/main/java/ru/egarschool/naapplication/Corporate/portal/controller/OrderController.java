@@ -17,7 +17,7 @@ public class OrderController {
 
     @GetMapping()
     public String getAllOrders(Model model){
-        model.addAttribute("order", orderService.findAll());
+        model.addAttribute("orders", orderService.findAll());
         return "order";
     }
 
@@ -28,11 +28,10 @@ public class OrderController {
         return "add_order";
     }
 
-
     @PostMapping("/add_order")
-    public String saveOrder(@Valid @ModelAttribute OrderEntity orderEntity,
-                             Long emplId){
-        orderService.create(orderEntity, emplId);
+
+    public String saveOrder(@Valid @ModelAttribute OrderEntity orderEntity, Long employId){
+        orderService.create(orderEntity, employId);
         return "redirect:/order";
     }
 

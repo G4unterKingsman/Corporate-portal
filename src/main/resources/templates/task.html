@@ -18,8 +18,8 @@
         <h2>Группа АИ-171</h2>
     </div>
     <div class="col col-lg-3">
-        <a th:href="@{/order/add_order}" class="btn btn-lg btn-block btn-outline-primary" role="button"
-           aria-disabled="true">Добавить отчёт</a>
+        <a th:href="@{/task/add_task}" class="btn btn-lg btn-block btn-outline-primary" role="button"
+           aria-disabled="true">Добавить задание</a>
     </div>
 </div>
 
@@ -33,16 +33,18 @@
                 <th class="text-justify">Имя</th>
                 <th class="text-justify">Когда создан</th>
                 <th class="text-justify">Описание</th>
-                <th class="text-justify">Автор</th>
+                <th class="text-justify">Кто дал задание</th>
+                <th class="text-justify">Кому дали задание</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="order : ${orders}">
-                <td class="align-middle"><span th:text="${order.id}"/></td>
-                <td class="align-middle"><span th:text="${order.name}"/></td>
-                <td class="align-middle"><span th:text="${order.created}"/></td>
-                <td class="align-middle"><span th:text="${order.description}"/></td>
-                <td class="align-middle"><span th:text="${order.orderEmpl.name}"/></td>
+            <tr th:each="task : ${tasks}">
+                <td class="align-middle"><span th:text="${task.id}"/></td>
+                <td class="align-middle"><span th:text="${task.title}"/></td>
+                <td class="align-middle"><span th:text="${task.created}"/></td>
+                <td class="align-middle"><span th:text="${task.description}"/></td>
+                <td class="align-middle"><span th:text="${task.whoGaveTask.name}"/></td>
+                <td class="align-middle"><span th:text="${task.whoGivenTask.name}"/></td>
             </tr>
             </tbody>
         </table>
