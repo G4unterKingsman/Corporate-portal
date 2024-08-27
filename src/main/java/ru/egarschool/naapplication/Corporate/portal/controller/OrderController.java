@@ -5,8 +5,14 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.egarschool.naapplication.Corporate.portal.dto.EmployeeDto;
+import ru.egarschool.naapplication.Corporate.portal.dto.OrderDto;
+import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
 import ru.egarschool.naapplication.Corporate.portal.entity.OrderEntity;
+import ru.egarschool.naapplication.Corporate.portal.mapper.EmployeeMapper;
+import ru.egarschool.naapplication.Corporate.portal.mapper.OrderMapper;
 import ru.egarschool.naapplication.Corporate.portal.service.OrderServiceImpl;
 
 @Controller
@@ -41,5 +47,25 @@ public class OrderController {
         return "show_order";
     }
 
+
+    @GetMapping("/{id}/edit_order")
+    public String getEditForm(Model model, @PathVariable Long id){
+        OrderEntity order = orderService.findById(id);
+        model.addAttribute("order", order);
+        OrderDto orderDto = OrderMapper.getOrderDto(order);
+        model.addAttribute("orderDto",orderDto);
+        return "edit_order";
+    }
+
+    @PostMapping("/{id}/edit_order")
+    public String update(@Valid @ModelAttribute OrderDto orderDto, BindingResult bindingResult,
+                         @PathVariable Long id, Model model){
+        OrderEntity order = orderService.findById(id);
+        model.addAttribute("order",order);
+        if(bindingResult.hasErrors())
+            return "edit_order";
+        orderService.update(order, orderDto);
+        return "redirect:/employees";
+    }
 
 }
