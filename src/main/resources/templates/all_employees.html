@@ -14,12 +14,9 @@
 <body class="bg-light">
 
 <div class="row">
-    <div class="col">
-        <h2>Группа АИ-171</h2>
-    </div>
     <div class="col col-lg-3">
-        <a th:href="@{/orders/add_order}" class="btn btn-lg btn-block btn-outline-primary" role="button"
-           aria-disabled="true">Добавить отчёт</a>
+        <a th:href="@{/employees/add_employee}" class="btn btn-lg btn-block btn-outline-primary" role="button"
+           aria-disabled="true">Добавить сострудника</a>
     </div>
     <div class="col col-lg-3">
         <a th:href="@{/}" class="btn btn-lg btn-block btn-outline-primary" role="button"
@@ -35,18 +32,26 @@
             <tr>
                 <th class="text-justify">#</th>
                 <th class="text-justify">Имя</th>
-                <th class="text-justify">Когда создан</th>
+                <th class="text-justify">Возраст</th>
+                <th class="text-justify">Пост</th>
+                <th class="text-justify">Когда присоеденился</th>
+                <th class="text-justify">Стаж</th>
                 <th class="text-justify">Описание</th>
-                <th class="text-justify">Автор</th>
+                <th class="text-justify"></th>
+                <th class="text-justify"></th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="order : ${orders}">
-                <td class="align-middle"><span th:text="${order.id}"/></td>
-                <td class="align-middle"><span th:text="${order.name}"/></td>
-                <td class="align-middle"><span th:text="${order.created}"/></td>
-                <td class="align-middle"><span th:text="${order.description}"/></td>
-                <td class="align-middle"><span th:text="${order.orderEmpl.name}"/></td>
+            <tr th:each="employee : ${employees}">
+                <td class="align-middle"><span th:text="${employee.id}"/></td>
+                <td class="align-middle"><span th:text="${employee.name}"/></td>
+                <td class="align-middle"><span th:text="${employee.age}"/></td>
+                <td class="align-middle"><span th:text="${employee.post}"/></td>
+                <td class="align-middle"><span th:text="${employee.joined}"/></td>
+                <td class="align-middle"><span th:text="${employee.workExperienceYears}"/></td>
+                <td class="align-middle"><span th:text="${employee.description}"/></td>
+                <td><a th:href="'employees/' + ${employee.id}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
+                <td><a th:href="'employees/' + ${employee.id} + '/edit_employee'"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
             </tr>
             </tbody>
         </table>

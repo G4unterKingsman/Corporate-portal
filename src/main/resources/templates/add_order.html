@@ -26,11 +26,7 @@
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label for="name">Имя</label>
-                        <input th:field="*{name}" type="text" class="form-control" id="name" placeholder="" value="" required>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="created">Когда создан</label>
-                        <input th:field="*{created}" type="text" class="form-control" id="created" placeholder="" value="" required>
+                        <input th:field="*{title}" type="text" class="form-control" id="name" placeholder="" value="" required>
                     </div>
                     <div class="mb-3">
                         <label for="description">Описание</label>
@@ -38,7 +34,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="author">Автор</label>
-                        <input th:field="*{orderEmpl.id}" type="number" class="form-control" id="author" placeholder="" value="" required>
+                        <input th:field="*{orderEmploy.id}" type="number" class="form-control" id="author" placeholder="" value="" required>
                     </div>
                 </div>
                 <hr class="mb-4">

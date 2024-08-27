@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
 import ru.egarschool.naapplication.Corporate.portal.entity.OrderEntity;
+import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
 import ru.egarschool.naapplication.Corporate.portal.repository.EmployeeRepo;
 import ru.egarschool.naapplication.Corporate.portal.repository.OrderRepo;
 import ru.egarschool.naapplication.Corporate.portal.service.impl.OrderService;
@@ -18,11 +19,14 @@ public class OrderServiceImpl implements OrderService {
     private final EmployeeRepo employeeRepo;
 
     public List<OrderEntity> findAll() {return orderRepo.findAll();}
+    public OrderEntity findById(Long orderId){
+        return orderRepo.findById(orderId).orElseThrow();
+    }
 
     public OrderEntity create(OrderEntity orderEntity, Long emplId){
         if(emplId != null) {
-            EmployeeEntity employeeEntity = employeeRepo.findById(emplId).get();
-            orderEntity.setOrderEmpl(employeeEntity);
+            EmployeeEntity employeeEntity = employeeRepo.findById(emplId).orElseThrow();
+            orderEntity.setOrderEmploy(employeeEntity);
         }
         return orderRepo.save(orderEntity);
     }
