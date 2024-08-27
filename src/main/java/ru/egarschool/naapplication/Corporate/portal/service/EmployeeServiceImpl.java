@@ -2,7 +2,9 @@ package ru.egarschool.naapplication.Corporate.portal.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.egarschool.naapplication.Corporate.portal.dto.EmployeeDto;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
+import ru.egarschool.naapplication.Corporate.portal.mapper.EmployeeMapper;
 import ru.egarschool.naapplication.Corporate.portal.repository.EmployeeRepo;
 import ru.egarschool.naapplication.Corporate.portal.service.impl.EmployeeService;
 
@@ -17,8 +19,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeEntity findById(Long id){
-        EmployeeEntity employee = employeeRepo.findById(id).get();
-        return employee;
+        return employeeRepo.findById(id).orElseThrow();
     }
 
     @Override
@@ -29,6 +30,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeEntity create(EmployeeEntity employeeEntity) {
         return employeeRepo.save(employeeEntity);
+    }
+
+
+    @Override
+    public EmployeeEntity update(EmployeeEntity employeeEntity, EmployeeDto employeeDto) {
+        return employeeRepo.save(EmployeeMapper.getEmployee(employeeEntity,employeeDto));
     }
 
 }

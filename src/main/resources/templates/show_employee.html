@@ -25,7 +25,7 @@
 </div>
 
 <div>
-  <div class="col" th:action="@{/employee}" th:object="${employee}">
+  <div class="col" th:action="@{/show_employee}" th:object="${employee}">
     <div class="py-5 text-center">
       <h2>информация о соструднике</h2>
       <p class="lead">Заполните поля и нажмите кнопку 'Добавить сострудника'</p>
@@ -88,12 +88,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="order : ${employee.emplOrders}">
+        <tr th:each="order : ${employee.getEmployOrders}">
           <td class="align-middle"><span th:text="${order.id}"/></td>
           <td class="align-middle"><span th:text="${order.name}"/></td>
           <td class="align-middle"><span th:text="${order.created}"/></td>
           <td class="align-middle"><span th:text="${order.description}"/></td>
-          <td class="align-middle"><span th:text="${order.orderEmpl.name}"/></td>
+          <td class="align-middle"><span th:text="${order.getOrderEmploy.name}"/></td>
         </tr>
         </tbody>
       </table>
@@ -114,7 +114,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="task : ${employee.taskFromEmpl}">
+      <tr th:each="task : ${employee.getTaskFromEmploy}">
         <td class="align-middle"><span th:text="${task.id}"/></td>
         <td class="align-middle"><span th:text="${task.title}"/></td>
         <td class="align-middle"><span th:text="${task.created}"/></td>
@@ -137,7 +137,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="task : ${employee.taskForEmpl}">
+      <tr th:each="task : ${employee.getTaskForEmploy}">
         <td class="align-middle"><span th:text="${task.id}"/></td>
         <td class="align-middle"><span th:text="${task.title}"/></td>
         <td class="align-middle"><span th:text="${task.created}"/></td>

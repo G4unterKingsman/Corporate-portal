@@ -22,11 +22,14 @@ public class TaskServiceImpl implements TaskService {
     public List<TaskEntity> findAll(){
         return taskRepo.findAll();
     }
+    public TaskEntity findById(Long taskId){
+        return taskRepo.findById(taskId).orElseThrow();
+    }
 
     public TaskEntity create(TaskEntity taskEntity, Long idWhoGave, Long idWhoGiven){
         if((idWhoGave != null) & (idWhoGiven != null)) {
-            EmployeeEntity employeeWhoGave = employeeRepo.findById(idWhoGave).get();
-            EmployeeEntity employeeWhoGiven = employeeRepo.findById(idWhoGiven).get();
+            EmployeeEntity employeeWhoGave = employeeRepo.findById(idWhoGave).orElseThrow();
+            EmployeeEntity employeeWhoGiven = employeeRepo.findById(idWhoGiven).orElseThrow();
             taskEntity.setWhoGaveTask(employeeWhoGave);
             taskEntity.setWhoGivenTask(employeeWhoGiven);
         }

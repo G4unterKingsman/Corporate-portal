@@ -5,10 +5,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
 import ru.egarschool.naapplication.Corporate.portal.service.TaskServiceImpl;
 
@@ -21,7 +18,7 @@ public class TaskController {
     @GetMapping
     public String getAllTasks(Model model){
         model.addAttribute("tasks", taskService.findAll());
-        return "tasks";
+        return "all_tasks";
     }
 
 
@@ -37,6 +34,12 @@ public class TaskController {
     public String saveTask(@Valid @ModelAttribute TaskEntity taskEntity, Long idWhoGave, Long idWhoGiven){
         taskService.create(taskEntity, idWhoGave, idWhoGiven);
         return "redirect:/tasks";
+    }
+
+    @GetMapping("/{taskId}")
+    public String getInfoTask(Model model, @PathVariable Long taskId){
+        model.addAttribute("task", taskService.findById(taskId));
+        return "show_task";
     }
 
 }

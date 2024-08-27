@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Builder
-@Table(schema = "employees")
+@Table
 public class EmployeeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,17 +27,21 @@ public class EmployeeEntity {
     private String description;
 
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderEmpl")
-    private List<OrderEntity> emplOrders = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderEmploy")
+    private List<OrderEntity> employOrders = new ArrayList<>();
 
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "whoGaveTask")
-    private List<TaskEntity> taskForEmpl = new ArrayList<>();
+    private List<TaskEntity> taskForEmploy = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "whoGivenTask")
-    private List<TaskEntity> taskFromEmpl = new ArrayList<>();
+    private List<TaskEntity> taskFromEmploy = new ArrayList<>();
+
+
 
     //TODO: Сделать эндпоинты для задания и отчёта, добавить в их контроллеры обработку
     //TODO: дописать все функции CRUD для КАЖДОЙ СУЩНОСТИ
+    //TODO: Добавить сущность админа команды? МногоКОдному создание задания,удаление сотрудников,просмотр отчётов всех
+
 
 }

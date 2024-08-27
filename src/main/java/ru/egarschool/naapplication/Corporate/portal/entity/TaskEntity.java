@@ -3,9 +3,8 @@ package ru.egarschool.naapplication.Corporate.portal.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.engine.internal.Cascade;
-
-import java.time.LocalDate;
+import org.hibernate.annotations.CreationTimestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -14,13 +13,15 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Builder
-@Table(schema = "tasks")
+@Table
 public class TaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private LocalDate created;
+
+    @CreationTimestamp
+    private LocalDateTime created;
     private String description;
 
     @ManyToOne(cascade = CascadeType.REFRESH)

@@ -9,17 +9,16 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-  <title>Добавление сострудника</title>
+  <title>Редактирование сострудника</title>
 </head>
 <body class="bg-light">
 <div class="container">
   <div class="py-5 text-center">
-    <h2>Добавление сострудника</h2>
+    <h2>Редактирование сострудника</h2>
     <p class="lead">Заполните поля и нажмите кнопку 'Добавить сострудника'</p>
   </div>
 
-  <form enctype="multipart/form-data" action="#" th:action="@{/employees/add_employee}" th:object="${employee}" method="post" class="needs-validation"
-        novalidate>
+  <form enctype="multipart/form-data" action="#" th:object="${employeeDto}" method="post" class="needs-validation" novalidate>
     <div class="row">
       <div class="col-md-12">
         <h4 class="mb-3">Поля для заполнения</h4>
@@ -27,34 +26,39 @@
         <div class="row">
           <div class="col-md-4 mb-3">
             <label for="name">Имя</label>
-            <input th:field="*{name}" type="text" class="form-control" id="name" placeholder="" value="" required>
+            <input th:field="*{name}" th:value="${employee.name}" type="text" class="form-control" id="name" placeholder="" value="" required>
+            <small class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
           </div>
           <div class="col-md-4 mb-3">
             <label for="age">Возраст</label>
-            <input th:field="*{age}" type="text" class="form-control" id="age" placeholder="" value="" required>
+            <input th:field="*{age}" th:value="${employee.age}" type="text" class="form-control" id="age" placeholder="" value="" required>
+            <small class="text-danger" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></small>
           </div>
           <div class="col-md-4 mb-3">
             <label for="post">Пост</label>
-            <input th:field="*{post}" type="text" class="form-control" id="post" placeholder="" value="" required>
+            <input th:field="*{post}" th:value="${employee.post}" type="text" class="form-control" id="post" placeholder="" value="" required>
+            <small class="text-danger" th:if="${#fields.hasErrors('post')}" th:errors="*{post}"></small>
           </div>
           <div class="col-md-4 mb-3">
             <label for="joined">Когда присоеденился</label>
-            <input th:field="*{joined}" type="text" class="form-control" id="joined" placeholder=""
-                   value="" required>
+            <input th:field="*{joined}" th:value="${employee.joined}" type="text" class="form-control" id="joined" placeholder="" value="" required>
+            <small class="text-danger" th:if="${#fields.hasErrors('joined')}" th:errors="*{joined}"></small>
           </div>
         </div>
 
         <div class="mb-3">
           <label for="workExperienceYears">Стаж</label>
-          <input th:field="*{workExperienceYears}" type="text" class="form-control" id="workExperienceYears" value="" required>
+          <input th:field="*{workExperienceYears}" th:value="${employee.workExperienceYears}" type="text" class="form-control" id="workExperienceYears" value="" required>
+          <small class="text-danger" th:if="${#fields.hasErrors('workExperienceYears')}" th:errors="*{workExperienceYears}"></small>
         </div>
 
         <div class="mb-3">
           <label for="description">Домашний адрес</label>
-          <input th:field="*{description}" type="text" class="form-control" id="description" placeholder="" value="" required>
+          <input th:field="*{description}" th:value="${employee.description}" type="text" class="form-control" id="description" placeholder="" value="" required>
+          <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
         </div>
         <hr class="mb-4">
-        <button class="btn btn-primary btn-lg btn-block" type="submit" value="Submit">Добавить сострудника</button>
+        <button class="btn btn-primary btn-lg btn-block" type="submit" value="Submit">Редактировать сострудника</button>
       </div>
     </div>
   </form>
