@@ -15,8 +15,8 @@
 
 <div class="row">
   <div class="col col-lg-3">
-    <a th:href="@{/employees}" class="btn btn-lg btn-block btn-outline-primary" role="button"
-       aria-disabled="true">все сотрудники </a>
+    <a th:href="@{/all_orders}" class="btn btn-lg btn-block btn-outline-primary" role="button"
+       aria-disabled="true">все отчёты </a>
   </div>
   <div class="col col-lg-3">
     <a th:href="@{/}" class="btn btn-lg btn-block btn-outline-primary" role="button"
@@ -53,7 +53,7 @@
             <td class="align-middle"><span th:text="*{description}"/></td>
           </tr>
           <tr>
-            <td class="text-justify">Кто создал</td>
+            <td class="text-justify">Автор</td>
             <td class="align-middle"><span th:text="*{orderEmploy}"/></td>
           </tr>
           </tbody>

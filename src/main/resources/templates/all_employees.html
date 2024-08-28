@@ -15,7 +15,7 @@
 
 <div class="row">
     <div class="col col-lg-3">
-        <a th:href="@{/employees/add_employee}" class="btn btn-lg btn-block btn-outline-primary" role="button"
+        <a th:href="@{/all_employees/add_employee}" class="btn btn-lg btn-block btn-outline-primary" role="button"
            aria-disabled="true">Добавить сострудника</a>
     </div>
     <div class="col col-lg-3">
@@ -50,8 +50,8 @@
                 <td class="align-middle"><span th:text="${employee.joined}"/></td>
                 <td class="align-middle"><span th:text="${employee.workExperienceYears}"/></td>
                 <td class="align-middle"><span th:text="${employee.description}"/></td>
-                <td><a th:href="'employees/' + ${employee.id}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
-                <td><a th:href="'employees/' + ${employee.id} + '/edit_employee'"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
+                <td><a th:href="'all_employees/' + ${employee.id}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
+                <td><a th:href="'all_employees/' + ${employee.id} + '/edit_employee'"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
             </tr>
             </tbody>
         </table>

@@ -15,7 +15,7 @@
 
 <div class="row">
     <div class="col col-lg-3">
-        <a th:href="@{/tasks/add_task}" class="btn btn-lg btn-block btn-outline-primary" role="button"
+        <a th:href="@{/all_tasks/add_task}" class="btn btn-lg btn-block btn-outline-primary" role="button"
            aria-disabled="true">Добавить задание</a>
     </div>
     <div class="col col-lg-3">
@@ -31,7 +31,7 @@
             <thead>
             <tr>
                 <th class="text-justify">#</th>
-                <th class="text-justify">Имя</th>
+                <th class="text-justify">Название</th>
                 <th class="text-justify">Когда создан</th>
                 <th class="text-justify">Описание</th>
                 <th class="text-justify">Кто дал задание</th>
@@ -48,8 +48,8 @@
                 <td class="align-middle"><span th:text="${task.description}"/></td>
                 <td class="align-middle"><span th:text="${task.whoGaveTask.name}"/></td>
                 <td class="align-middle"><span th:text="${task.whoGivenTask.name}"/></td>
-                <td><a th:href="'tasks/' + ${task.id}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
-                <td><a th:href="'tasks/' + ${task.id} + '/edit_task'"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
+                <td><a th:href="'all_tasks/' + ${task.id}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
+                <td><a th:href="'all_tasks/' + ${task.id} + '/edit_task'"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
             </tr>
             </tbody>
         </table>
