@@ -7,17 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.egarschool.naapplication.Corporate.portal.dto.EmployeeDto;
 import ru.egarschool.naapplication.Corporate.portal.dto.OrderDto;
-import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
 import ru.egarschool.naapplication.Corporate.portal.entity.OrderEntity;
-import ru.egarschool.naapplication.Corporate.portal.mapper.EmployeeMapper;
 import ru.egarschool.naapplication.Corporate.portal.mapper.OrderMapper;
 import ru.egarschool.naapplication.Corporate.portal.service.OrderServiceImpl;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("orders")
+@RequestMapping("all_orders")
 public class OrderController {
     private final OrderServiceImpl orderService;
 
@@ -38,12 +35,12 @@ public class OrderController {
 
     public String saveOrder(@Valid @ModelAttribute OrderEntity orderEntity, Long employId){
         orderService.create(orderEntity, employId);
-        return "redirect:/orders";
+        return "redirect:/all_orders";
     }
 
-    @GetMapping("/{orderId}")
-    public String getInfoOrder(Model model, @PathVariable Long orderId){
-        model.addAttribute("order", orderService.findById(orderId));
+    @GetMapping("/{id}")
+    public String getInfoOrder(Model model, @PathVariable Long id){
+        model.addAttribute("order", orderService.findById(id));
         return "show_order";
     }
 
@@ -65,7 +62,7 @@ public class OrderController {
         if(bindingResult.hasErrors())
             return "edit_order";
         orderService.update(order, orderDto);
-        return "redirect:/employees";
+        return "redirect:/all_orders/{id}";
     }
 
 }

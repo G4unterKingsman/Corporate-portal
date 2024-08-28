@@ -15,7 +15,7 @@
 
 <div class="row">
     <div class="col col-lg-3">
-        <a th:href="@{/orders/add_order}" class="btn btn-lg btn-block btn-outline-primary" role="button"
+        <a th:href="@{/all_orders/add_order}" class="btn btn-lg btn-block btn-outline-primary" role="button"
            aria-disabled="true">Добавить отчёт</a>
     </div>
     <div class="col col-lg-3">
@@ -31,7 +31,7 @@
             <thead>
             <tr>
                 <th class="text-justify">#</th>
-                <th class="text-justify">Имя</th>
+                <th class="text-justify">Название</th>
                 <th class="text-justify">Когда создан</th>
                 <th class="text-justify">Описание</th>
                 <th class="text-justify">Автор</th>
@@ -46,8 +46,8 @@
                 <td class="align-middle"><span th:text="${order.created}"/></td>
                 <td class="align-middle"><span th:text="${order.description}"/></td>
                 <td class="align-middle"><span th:text="${order.getOrderEmploy.name}"/></td>
-                <td><a th:href="'orders/' + ${order.id}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
-                <td><a th:href="'orders/' + ${order.id} + '/edit_order'"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
+                <td><a th:href="'all_orders/' + ${order.id}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
+                <td><a th:href="'all_orders/' + ${order.id} + '/edit_order'"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
             </tr>
             </tbody>
         </table>

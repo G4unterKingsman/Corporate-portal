@@ -14,7 +14,7 @@ import ru.egarschool.naapplication.Corporate.portal.service.EmployeeServiceImpl;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("employees")
+@RequestMapping("all_employees")
 public class EmployeeController {
     private final EmployeeServiceImpl employeeService;
 
@@ -33,12 +33,12 @@ public class EmployeeController {
     @PostMapping("/add_employee")
     public String create(@Valid @ModelAttribute EmployeeEntity employeeEntity){
         employeeService.create(employeeEntity);
-        return "redirect:/employees";
+        return "redirect:/all_employees";
     }
 
-    @GetMapping("/{Id}")
-    public String getInfoEmployee(Model model, @PathVariable Long Id){
-        model.addAttribute("employee", employeeService.findById(Id));
+    @GetMapping("/{id}")
+    public String getInfoEmployee(Model model, @PathVariable Long id){
+        model.addAttribute("employee", employeeService.findById(id));
         return "show_employee";
     }
 
@@ -59,6 +59,6 @@ public class EmployeeController {
         if(bindingResult.hasErrors())
             return "edit_employee";
         employeeService.update(employee, employeeDto);
-        return "redirect:/employees";
+        return "redirect:/all_employees/{id}";
     }
 }

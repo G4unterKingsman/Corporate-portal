@@ -15,17 +15,16 @@
 <div class="container">
     <div class="py-5 text-center">
         <h2>Добавление отчёт</h2>
-        <p class="lead">Заполните поля и нажмите кнопку 'Добавить отчёт'</p>
     </div>
 
-    <form enctype="multipart/form-data" action="#" th:action="@{/orders/add_order}" th:object="${order}" method="post" class="needs-validation"
+    <form enctype="multipart/form-data" action="#" th:action="@{/all_orders/add_order}" th:object="${order}" method="post" class="needs-validation"
           novalidate>
         <div class="row">
             <div class="col-md-12">
                 <h4 class="mb-3">Поля для заполнения</h4>
                 <div class="row">
                     <div class="col-md-4 mb-3">
-                        <label for="name">Имя</label>
+                        <label for="name">Название</label>
                         <input th:field="*{title}" type="text" class="form-control" id="name" placeholder="" value="" required>
                     </div>
                     <div class="mb-3">
