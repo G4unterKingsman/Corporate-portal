@@ -8,10 +8,10 @@ import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
 import java.util.List;
 
 public interface EmployeeService {
-    EmployeeEntity findById(Long id);
+    EmployeeDto findById(Long id);
 
-    List<EmployeeEntity> findAll();
+    List<EmployeeDto> getAll();
 
-    EmployeeEntity create(EmployeeEntity employeeEntity);
-    EmployeeEntity update(EmployeeEntity employeeEntity, EmployeeDto employeeDto);
+    EmployeeDto create(EmployeeDto employeeDto);
+    EmployeeDto update(EmployeeDto employeeDto, Long id);
 }

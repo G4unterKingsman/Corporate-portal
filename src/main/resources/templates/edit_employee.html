@@ -35,7 +35,7 @@
             <small class="text-danger" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></small>
           </div>
           <div class="col-md-4 mb-3">
-            <label for="post">Пост</label>
+            <label for="post">Должность</label>
             <input th:field="*{post}" th:value="${employeeDto.post}" type="text" class="form-control" id="post" placeholder="" value="" required>
             <small class="text-danger" th:if="${#fields.hasErrors('post')}" th:errors="*{post}"></small>
           </div>
@@ -51,7 +51,7 @@
           <small class="text-danger" th:if="${#fields.hasErrors('workExperienceYears')}" th:errors="*{workExperienceYears}"></small>
         </div>
         <div class="mb-3">
-          <label for="description">Домашний адрес</label>
+          <label for="description">Описание</label>
           <input th:field="*{description}" th:value="${employeeDto.description}" type="text" class="form-control" id="description" placeholder="" value="" required>
           <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
         </div>

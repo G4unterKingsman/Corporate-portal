@@ -14,11 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Builder
-@Table
+@Table(name = "employees")
 public class EmployeeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     private String name;
     private Integer age;
     private String post;

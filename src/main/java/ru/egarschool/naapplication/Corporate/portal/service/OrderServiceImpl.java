@@ -11,32 +11,42 @@ import ru.egarschool.naapplication.Corporate.portal.mapper.EmployeeMapper;
 import ru.egarschool.naapplication.Corporate.portal.mapper.OrderMapper;
 import ru.egarschool.naapplication.Corporate.portal.repository.EmployeeRepo;
 import ru.egarschool.naapplication.Corporate.portal.repository.OrderRepo;
+import ru.egarschool.naapplication.Corporate.portal.service.impl.EmployeeService;
 import ru.egarschool.naapplication.Corporate.portal.service.impl.OrderService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     private final OrderRepo orderRepo;
-    private final EmployeeRepo employeeRepo;
+    private final EmployeeService employeeService;
 
-    public List<OrderEntity> findAll() {return orderRepo.findAll();}
-    public OrderEntity findById(Long orderId){
-        return orderRepo.findById(orderId).orElseThrow();
+    @Override
+    public List<OrderDto> findAll() {
+        List<OrderEntity> orders = orderRepo.findAll();
+        return orders.stream()
+                .map(e -> OrderMapper.getOrderDto(e))
+                .collect(Collectors.toList());
     }
 
-    public OrderEntity create(OrderEntity orderEntity, Long emplId){
-        if(emplId != null) {
-            EmployeeEntity employeeEntity = employeeRepo.findById(emplId).orElseThrow();
-            orderEntity.setOrderEmploy(employeeEntity);
-        }
-        return orderRepo.save(orderEntity);
+
+    public OrderDto findById(Long id){
+        OrderEntity order =  orderRepo.findById(id).orElseThrow();
+        return OrderMapper.getOrderDto(order);
     }
 
-    public OrderEntity update(OrderEntity orderEntity, OrderDto orderDto) {
-        return orderRepo.save(OrderMapper.getOrder(orderEntity,orderDto));
+    public OrderDto create(OrderDto orderDto){
+        OrderEntity order = OrderMapper.getOrder(orderDto);
+        orderRepo.save(order);
+        return OrderMapper.getOrderDto(order);
+    }
+
+    public OrderDto update(OrderDto orderDto, Long id) {
+        OrderEntity order = orderRepo.save(OrderMapper.getOrder(orderDto));
+        return OrderMapper.getOrderDto(order);
     }
 
 }

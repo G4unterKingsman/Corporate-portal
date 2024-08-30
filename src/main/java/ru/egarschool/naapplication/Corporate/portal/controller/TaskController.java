@@ -27,21 +27,21 @@ public class TaskController {
 
 
     @GetMapping("/add_task")
-    public String getAddTaskForm(Model model, Long idWhoGave, Long idWhoGiven){
-        model.addAttribute("task", new TaskEntity());
+    public String getAddTaskForm(Model model){
+        model.addAttribute("task", new TaskDto());
         return "add_task";
     }
 
 
     @PostMapping("/add_task")
-    public String saveTask(@Valid @ModelAttribute TaskEntity taskEntity, Long idWhoGave, Long idWhoGiven){
-        taskService.create(taskEntity, idWhoGave, idWhoGiven);
+    public String create(@Valid @ModelAttribute TaskDto taskDto){
+        taskService.create(taskDto);
         return "redirect:/all_tasks";
     }
 
-    @GetMapping("/{taskId}")
-    public String getInfoTask(Model model, @PathVariable Long taskId){
-        model.addAttribute("task", taskService.findById(taskId));
+    @GetMapping("/{id}")
+    public String getInfoTask(Model model, @PathVariable Long id){
+        model.addAttribute("task", taskService.findById(id));
         return "show_task";
     }
 
@@ -50,9 +50,7 @@ public class TaskController {
 
     @GetMapping("/{id}/edit_task")
     public String getEditForm(Model model, @PathVariable Long id){
-        TaskEntity task = taskService.findById(id);
-        model.addAttribute("task", task);
-        TaskDto taskDto = TaskMapper.getTaskDto(task);
+        TaskDto taskDto = taskService.findById(id);
         model.addAttribute("taskDto",taskDto);
         return "edit_task";
     }
@@ -60,11 +58,10 @@ public class TaskController {
     @PostMapping("/{id}/edit_task")
     public String update(@Valid @ModelAttribute TaskDto taskDto, BindingResult bindingResult,
                          @PathVariable Long id, Model model){
-        TaskEntity task = taskService.findById(id);
-        model.addAttribute("task",task);
+        model.addAttribute("task",taskService.findById(id));
         if(bindingResult.hasErrors())
             return "edit_task";
-        taskService.update(task, taskDto);
+        taskService.update(taskDto, id);
         return "redirect:/all_tasks/{id}";
     }
 }

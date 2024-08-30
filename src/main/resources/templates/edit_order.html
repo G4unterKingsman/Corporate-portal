@@ -25,13 +25,18 @@
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label for="title">Название</label>
-                        <input th:field="*{title}" th:value="${orderDto.title}" type="text" class="form-control" id="title" placeholder="" value="" required>
+                        <input th:field="*{title}" th:value="*{title}" type="text" class="form-control" id="title" placeholder="" value="" required>
                         <small class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="description">Описание</label>
-                        <input th:field="*{description}" th:value="${orderDto.description}" type="text" class="form-control" id="description" placeholder="" value="" required>
+                        <input th:field="*{description}" th:value="*{description}" type="text" class="form-control" id="description" placeholder="" value="" required>
                         <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="orderEmploy.name">Описание</label>
+                        <input th:field="*{orderEmploy.name}" th:value="*{orderEmploy.name}" type="text" class="form-control" id="orderEmploy.name" placeholder="" value="" required>
+                        <small class="text-danger" th:if="${#fields.hasErrors('orderEmploy.name')}" th:errors="*{orderEmploy.name}"></small>
                     </div>
                 </div>
                 <hr class="mb-4">

@@ -28,21 +28,22 @@
             <label for="name">Название</label>
             <input th:field="*{title}" type="text" class="form-control" id="name" placeholder="" value="" required>
           </div>
-          <div class="col-md-4 mb-3">
-            <label for="created">Когда создан</label>
-            <input th:field="*{created}" type="text" class="form-control" id="created" placeholder="" value="" required>
-          </div>
           <div class="mb-3">
             <label for="description">Описание</label>
             <input th:field="*{description}" type="text" class="form-control" id="description" placeholder="" value="" required>
           </div>
+
+
+
+          <!-- убрать этот блок когда будет готова авторизация -->
           <div class="mb-3">
-            <label for="whoGaveTask">Автор</label>
-            <input th:field="*{whoGaveTask.id}" type="number" class="form-control" id="whoGaveTask" placeholder="" value="" required>
+            <label for="whoGaveTask">Кто даёт задание</label>
+            <input th:field="*{whoGaveTask.name}" type="number" class="form-control" id="whoGaveTask" placeholder="" value="" required>
           </div>
+
           <div class="mb-3">
-            <label for="whoGivenTask">Автор</label>
-            <input th:field="*{whoGivenTask.id}" type="number" class="form-control" id="whoGivenTask" placeholder="" value="" required>
+            <label for="whoGivenTask">Кому задание</label>
+            <input th:field="*{whoGivenTask.name}" type="number" class="form-control" id="whoGivenTask" placeholder="" value="" required>
           </div>
         </div>
         <hr class="mb-4">
@@ -51,7 +52,6 @@
     </div>
   </form>
 </div>
-
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -26,15 +26,16 @@ public class OrderController {
 
 
     @GetMapping("/add_order")
-    public String getAddOrderForm(Model model, Long id){
-        model.addAttribute("order", new OrderEntity());
+    public String getAddOrderForm(Model model){
+        model.addAttribute("order", new OrderDto());
         return "add_order";
     }
 
     @PostMapping("/add_order")
-
-    public String saveOrder(@Valid @ModelAttribute OrderEntity orderEntity, Long employId){
-        orderService.create(orderEntity, employId);
+    public String create(@Valid @ModelAttribute OrderDto orderDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors())
+            return "edit_order";
+        orderService.create(orderDto);
         return "redirect:/all_orders";
     }
 
@@ -47,21 +48,18 @@ public class OrderController {
 
     @GetMapping("/{id}/edit_order")
     public String getEditForm(Model model, @PathVariable Long id){
-        OrderEntity order = orderService.findById(id);
-        model.addAttribute("order", order);
-        OrderDto orderDto = OrderMapper.getOrderDto(order);
-        model.addAttribute("orderDto",orderDto);
+        OrderDto orderDto = orderService.findById(id);
+        model.addAttribute("orderDto", orderDto);
         return "edit_order";
     }
 
     @PostMapping("/{id}/edit_order")
     public String update(@Valid @ModelAttribute OrderDto orderDto, BindingResult bindingResult,
                          @PathVariable Long id, Model model){
-        OrderEntity order = orderService.findById(id);
-        model.addAttribute("order",order);
+        model.addAttribute("order",orderService.findById(id));
         if(bindingResult.hasErrors())
             return "edit_order";
-        orderService.update(order, orderDto);
+        orderService.update(orderDto, id);
         return "redirect:/all_orders/{id}";
     }
 

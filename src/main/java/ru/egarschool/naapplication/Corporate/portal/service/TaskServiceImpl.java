@@ -14,6 +14,7 @@ import ru.egarschool.naapplication.Corporate.portal.repository.TaskRepo;
 import ru.egarschool.naapplication.Corporate.portal.service.impl.TaskService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -23,26 +24,27 @@ public class TaskServiceImpl implements TaskService {
     private final EmployeeRepo employeeRepo;
 
 
-    public List<TaskEntity> findAll(){
-        return taskRepo.findAll();
+    public List<TaskDto> findAll(){
+        List<TaskEntity> orders = taskRepo.findAll();
+        return orders.stream()
+                .map(e -> TaskMapper.getTaskDto(e))
+                .collect(Collectors.toList());
     }
-    public TaskEntity findById(Long taskId){
-        return taskRepo.findById(taskId).orElseThrow();
-    }
-
-    public TaskEntity create(TaskEntity taskEntity, Long idWhoGave, Long idWhoGiven){
-        if((idWhoGave != null) & (idWhoGiven != null)) {
-            EmployeeEntity employeeWhoGave = employeeRepo.findById(idWhoGave).orElseThrow();
-            EmployeeEntity employeeWhoGiven = employeeRepo.findById(idWhoGiven).orElseThrow();
-            taskEntity.setWhoGaveTask(employeeWhoGave);
-            taskEntity.setWhoGivenTask(employeeWhoGiven);
-        }
-        return taskRepo.save(taskEntity);
+    public TaskDto findById(Long id){
+        TaskEntity task =  taskRepo.findById(id).orElseThrow();
+        return TaskMapper.getTaskDto(task);
     }
 
+    public TaskDto create(TaskDto taskDto){
+        TaskEntity task = TaskMapper.getTask(taskDto);
+        taskRepo.save(task);
+        return TaskMapper.getTaskDto(task);
+    }
 
-    public TaskEntity update(TaskEntity taskEntity, TaskDto taskDto) {
-        return taskRepo.save(TaskMapper.getTask(taskEntity,taskDto));
+
+    public TaskDto update(TaskDto taskDto, Long id) {
+        TaskEntity task = taskRepo.save(TaskMapper.getTask(taskDto));
+        return TaskMapper.getTaskDto(task);
     }
 
 }
