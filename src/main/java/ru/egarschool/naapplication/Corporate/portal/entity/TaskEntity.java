@@ -13,22 +13,23 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Builder
-@Table
+@Table(name = "tasks")
 public class TaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
 
     @CreationTimestamp
     private LocalDateTime created;
     private String description;
 
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private EmployeeEntity whoGaveTask;
 
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private EmployeeEntity whoGivenTask;
 

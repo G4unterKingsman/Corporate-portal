@@ -6,19 +6,24 @@ import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
 import ru.egarschool.naapplication.Corporate.portal.entity.OrderEntity;
 
 public class OrderMapper {
-    public static OrderEntity getOrder(OrderEntity order, OrderDto orderDto) {
+    public static OrderEntity getOrder(OrderDto orderDto) {
+        if (orderDto == null) {return null;}
+        OrderEntity order = new OrderEntity();
+        order.setId(orderDto.getId());
         order.setTitle(orderDto.getTitle());
         order.setCreated(orderDto.getCreated());
-        order.setDescription(orderDto.getDescription());
         order.setOrderEmploy(orderDto.getOrderEmploy());
+        order.setDescription(orderDto.getDescription());
         return order;
     }
 
     public static OrderDto getOrderDto(OrderEntity order) {
+        if (order == null) {return null;}
         return OrderDto.builder()
+                .id(order.getId())
                 .title(order.getTitle())
-                .created(order.getCreated())
                 .description(order.getDescription())
+                .created(order.getCreated())
                 .orderEmploy(order.getOrderEmploy())
                 .build();
     }

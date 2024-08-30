@@ -17,10 +17,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class TaskDto {
+    private Long id;
     @Size(min= 2, max= 50, message = "Название должно занимать от 2-х до 50-ти символов")
     private String title;
+    @CreationTimestamp
     private LocalDateTime created;
-
     @Size(min= 5, max= 500, message = "Описание должно занимать от 5-х до 500-та символов")
     private String description;
     private EmployeeEntity whoGaveTask;

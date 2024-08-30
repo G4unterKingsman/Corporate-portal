@@ -20,19 +20,22 @@ public class EmployeeController {
 
     @GetMapping()
     public String findAll(Model model){
-        model.addAttribute("employees",employeeService.findAll());
+        model.addAttribute("employees",employeeService.getAll());
         return "all_employees";
     }
 
     @GetMapping("/add_employee")
-    public String getAddForm(Model model){
-        model.addAttribute("employee", new EmployeeEntity());
+    public String getCreateForm(Model model){
+        model.addAttribute("employee", new EmployeeDto());
         return "add_employee";
     }
 
     @PostMapping("/add_employee")
-    public String create(@Valid @ModelAttribute EmployeeEntity employeeEntity){
-        employeeService.create(employeeEntity);
+    public String create(@Valid @ModelAttribute EmployeeDto employeeDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors())
+            return "add_employee";
+
+        employeeService.create(employeeDto);
         return "redirect:/all_employees";
     }
 
@@ -43,10 +46,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}/edit_employee")
-    public String getEditForm(Model model, @PathVariable Long id){
-        EmployeeEntity employee = employeeService.findById(id);
-        model.addAttribute("employee", employee);
-        EmployeeDto employeeDto = EmployeeMapper.getEmployeeDto(employee);
+    public String getUpdateForm(Model model, @PathVariable Long id){
+        EmployeeDto employeeDto = employeeService.findById(id);
         model.addAttribute("employeeDto",employeeDto);
         return "edit_employee";
     }
@@ -54,11 +55,12 @@ public class EmployeeController {
     @PostMapping("/{id}/edit_employee")
     public String update(@Valid @ModelAttribute EmployeeDto employeeDto, BindingResult bindingResult,
                          @PathVariable Long id, Model model){
-        EmployeeEntity employee = employeeService.findById(id);
-        model.addAttribute("employee",employee);
+        model.addAttribute("employee",employeeService.findById(id));
+
         if(bindingResult.hasErrors())
             return "edit_employee";
-        employeeService.update(employee, employeeDto);
+
+        employeeService.update(employeeDto, id);
         return "redirect:/all_employees/{id}";
     }
 }

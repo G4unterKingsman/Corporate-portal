@@ -9,8 +9,11 @@ import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
 import java.util.List;
 
 public interface TaskService {
-    public List<TaskEntity> findAll();
-    public TaskEntity create(TaskEntity taskEntity, Long idWhoGave, Long idWhoGiven);
 
-    public TaskEntity update(TaskEntity taskEntity, TaskDto taskDto);
+    public TaskDto findById(Long id);
+
+    public List<TaskDto> findAll();
+    public TaskDto create(TaskDto taskDto);
+
+    public TaskDto update(TaskDto taskDto, Long id);
 }

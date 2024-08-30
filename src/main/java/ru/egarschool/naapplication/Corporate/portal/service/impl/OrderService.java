@@ -9,8 +9,11 @@ import ru.egarschool.naapplication.Corporate.portal.mapper.EmployeeMapper;
 import java.util.List;
 
 public interface OrderService {
-    public List<OrderEntity> findAll();
-    public OrderEntity create(OrderEntity orderEntity, Long emplId);
+    public List<OrderDto> findAll();
 
-    public OrderEntity update(OrderEntity orderEntity, OrderDto orderDto);
+    public OrderDto findById(Long id);
+
+    public OrderDto create(OrderDto orderDto);
+
+    public OrderDto update(OrderDto orderDto, Long id);
 }

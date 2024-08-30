@@ -24,6 +24,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class EmployeeDto {
+    private Long id;
     @Size(min= 2, max= 50, message = "Имя должно занимать от 2-х до 50-ти символов")
     private String name;
     @Range(min= 18, message = "ты слишком молод для этой работы, чел")
