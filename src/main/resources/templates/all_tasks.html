@@ -9,14 +9,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
 </head>
 <body class="bg-light">
 
 <div class="row">
     <div class="col col-lg-3">
         <a th:href="@{/all_tasks/add_task}" class="btn btn-lg btn-block btn-outline-primary" role="button"
-           aria-disabled="true">Добавить задание</a>
+           aria-disabled="true">Добавить задачу</a>
     </div>
     <div class="col col-lg-3">
         <a th:href="@{/}" class="btn btn-lg btn-block btn-outline-primary" role="button"
@@ -38,6 +37,7 @@
                 <th class="text-justify">Кому дали задание</th>
                 <th class="text-justify"></th>
                 <th class="text-justify"></th>
+                <th class="text-justify"></th>
             </tr>
             </thead>
             <tbody>
@@ -50,6 +50,7 @@
                 <td class="align-middle"><span th:text="${task.whoGivenTask.name}"/></td>
                 <td><a th:href="'all_tasks/' + ${task.id}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
                 <td><a th:href="'all_tasks/' + ${task.id} + '/edit_task'"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
+                <td><a th:href="@{/all_tasks/{id}/delete (id=${task.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Удалить</button></a></td>
             </tr>
             </tbody>
         </table>

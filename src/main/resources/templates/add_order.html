@@ -26,14 +26,17 @@
                     <div class="col-md-4 mb-3">
                         <label for="name">Название</label>
                         <input th:field="*{title}" type="text" class="form-control" id="name" placeholder="" value="" required>
+                        <small class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
                     </div>
                     <div class="mb-3">
                         <label for="description">Описание</label>
                         <input th:field="*{description}" type="text" class="form-control" id="description" placeholder="" value="" required>
+                        <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
                     </div>
                     <div class="mb-3">
                         <label for="author">Автор</label>
                         <input th:field="*{orderEmploy.name}" type="text" class="form-control" id="author" placeholder="" value="" required>
+                        <small class="text-danger" th:if="${#fields.hasErrors('orderEmploy.name')}" th:errors="*{orderEmploy.name}"></small>
                     </div>
                 </div>
                 <hr class="mb-4">

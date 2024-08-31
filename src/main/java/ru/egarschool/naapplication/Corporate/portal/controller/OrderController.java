@@ -32,7 +32,7 @@ public class OrderController {
     @PostMapping("/add_order")
     public String create(@Valid @ModelAttribute OrderDto orderDto, BindingResult bindingResult){
         if(bindingResult.hasErrors())
-            return "edit_order";
+            return "add_order";
         orderService.create(orderDto);
         return "redirect:/all_orders";
     }
@@ -59,6 +59,12 @@ public class OrderController {
             return "edit_order";
         orderService.update(orderDto, id);
         return "redirect:/all_orders/{id}";
+    }
+
+    @GetMapping("/{id}/delete")
+    public String deleteOrder(@PathVariable Long id){
+        orderService.delete(id);
+        return "redirect:/all_orders";
     }
 
 }

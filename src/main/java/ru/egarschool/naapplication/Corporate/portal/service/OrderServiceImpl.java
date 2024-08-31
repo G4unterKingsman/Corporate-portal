@@ -32,9 +32,6 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toDto(order);
     }
 
-
-
-
     public OrderDto create(OrderDto orderDto){
         OrderEntity order = orderMapper.toEntity(orderDto);
 
@@ -46,7 +43,6 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toDto(order);
     }
 
-
     public OrderDto update(OrderDto orderDto, Long id) {
         OrderEntity order = orderRepo.findById(id).orElseThrow();
         EmployeeEntity employee = employeeRepo.findByName(orderDto.getOrderEmploy().getName());
@@ -56,4 +52,8 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toDto(order);
     }
 
+    @Override
+    public void delete(Long id) {
+        orderRepo.deleteById(id);
+    }
 }

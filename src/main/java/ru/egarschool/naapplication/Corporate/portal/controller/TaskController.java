@@ -32,7 +32,9 @@ public class TaskController {
 
 
     @PostMapping("/add_task")
-    public String create(@Valid @ModelAttribute TaskDto taskDto){
+    public String create(@Valid @ModelAttribute TaskDto taskDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors())
+            return "edit_task";
         taskService.create(taskDto);
         return "redirect:/all_tasks";
     }
@@ -61,5 +63,11 @@ public class TaskController {
             return "edit_task";
         taskService.update(taskDto, id);
         return "redirect:/all_tasks/{id}";
+    }
+
+    @GetMapping("/{id}/delete")
+    public String deleteTask(@PathVariable Long id){
+        taskService.delete(id);
+        return "redirect:/all_tasks";
     }
 }

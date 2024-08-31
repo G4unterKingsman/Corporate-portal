@@ -14,10 +14,6 @@ public interface OrderMapper {
 
     OrderEntity toEntity(OrderDto byName);
 
-//    @Mapping(target = "orderEmploy", ignore = true)
-//    OrderDto toDtoWithoutEmployee(OrderEntity byName);
-
-
     @Mapping(source = "orderEmploy", target = "orderEmploy.id", ignore = true)
     void toUpdateOrderFromDto(OrderDto byName, @MappingTarget OrderEntity order);
 

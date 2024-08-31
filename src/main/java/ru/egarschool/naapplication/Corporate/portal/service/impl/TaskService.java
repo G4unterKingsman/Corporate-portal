@@ -6,10 +6,12 @@ import java.util.List;
 
 public interface TaskService {
 
-    public TaskDto getById(Long id);
+    TaskDto getById(Long id);
 
-    public List<TaskDto> findAll();
-    public TaskDto create(TaskDto taskDto);
+    List<TaskDto> findAll();
+    TaskDto create(TaskDto taskDto);
 
-    public TaskDto update(TaskDto taskDto, Long id);
+    TaskDto update(TaskDto taskDto, Long id);
+
+    void delete(Long id);
 }

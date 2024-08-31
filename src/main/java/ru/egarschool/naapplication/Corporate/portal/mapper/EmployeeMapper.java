@@ -15,10 +15,4 @@ public interface EmployeeMapper{
 
     void updateEmployeeFromDTO(EmployeeDto employeeDto, @MappingTarget EmployeeEntity employee);
 
-    //@Mapping(target = "orderEmploy", ignore = true)
-    //EmployeeDto toDtoWithoutEmployee(EmployeeEntity byName);
-
-
-//    @Mapping(target = "orderEmploy", ignore = true)
-//    EmployeeEntity toEntityWithoutEmployee(EmployeeDto byName);
 }
