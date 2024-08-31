@@ -2,11 +2,9 @@ package ru.egarschool.naapplication.Corporate.portal.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.egarschool.naapplication.Corporate.portal.dto.TaskDto;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
 import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
-import ru.egarschool.naapplication.Corporate.portal.mapper.EmployeeMapper;
 import ru.egarschool.naapplication.Corporate.portal.mapper.TaskMapper;
 import ru.egarschool.naapplication.Corporate.portal.repository.EmployeeRepo;
 import ru.egarschool.naapplication.Corporate.portal.repository.TaskRepo;
@@ -42,8 +40,6 @@ public class TaskServiceImpl implements TaskService {
         return getTaskDto(taskDto, task);
     }
 
-
-    @Transactional
     public TaskDto update(TaskDto taskDto, Long id) {
         TaskEntity task = taskRepo.findById(id).orElseThrow();
         return getTaskDto(taskDto, task);
@@ -60,5 +56,8 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.toDto(task);
     }
 
-
+    @Override
+    public void delete(Long id) {
+        taskRepo.deleteById(id);
+    }
 }

@@ -22,7 +22,8 @@ public class OrderEntity {
     @UpdateTimestamp
     private LocalDateTime created;
     private String description;
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne
     @JoinColumn
     private EmployeeEntity orderEmploy;
 }

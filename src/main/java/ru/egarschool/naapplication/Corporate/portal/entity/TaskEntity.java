@@ -25,11 +25,11 @@ public class TaskEntity {
     private LocalDateTime created;
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn
     private EmployeeEntity whoGaveTask;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn
     private EmployeeEntity whoGivenTask;
 

@@ -25,14 +25,14 @@ public class EmployeeEntity {
     private String description;
 
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderEmploy")
+    @OneToMany(mappedBy = "orderEmploy", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<OrderEntity> employOrders = new ArrayList<>();
 
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "whoGaveTask")
+    @OneToMany(mappedBy = "whoGaveTask", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<TaskEntity> taskForEmploy = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "whoGivenTask")
+    @OneToMany(mappedBy = "whoGivenTask", cascade = CascadeType.REMOVE, orphanRemoval = true)
 
     private List<TaskEntity> taskFromEmploy = new ArrayList<>();
 

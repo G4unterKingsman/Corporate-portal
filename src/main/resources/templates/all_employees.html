@@ -8,15 +8,15 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title></title>
 
-    <title>Hello, world!</title>
 </head>
 <body class="bg-light">
 
 <div class="row">
     <div class="col col-lg-3">
         <a th:href="@{/all_employees/add_employee}" class="btn btn-lg btn-block btn-outline-primary" role="button"
-           aria-disabled="true">Добавить сострудника</a>
+           aria-disabled="true">Добавить сотрудника</a>
     </div>
     <div class="col col-lg-3">
         <a th:href="@{/}" class="btn btn-lg btn-block btn-outline-primary" role="button"
@@ -39,6 +39,7 @@
                 <th class="text-justify">Описание</th>
                 <th class="text-justify"></th>
                 <th class="text-justify"></th>
+                <th class="text-justify"></th>
             </tr>
             </thead>
             <tbody>
@@ -52,6 +53,7 @@
                 <td class="align-middle"><span th:text="${employee.description}"/></td>
                 <td><a th:href="'all_employees/' + ${employee.id}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
                 <td><a th:href="'all_employees/' + ${employee.id} + '/edit_employee'"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
+                <td><a th:href="@{/all_employees/{id}/delete (id=${employee.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Удалить</button></a></td>
             </tr>
             </tbody>
         </table>

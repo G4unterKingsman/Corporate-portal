@@ -40,7 +40,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeMapper.toDto(employeeRepo.findByName(name));
     }
 
-
     @Override
     public EmployeeDto create(EmployeeDto employeeDto) {
         EmployeeEntity employee = employeeMapper.toEntity(employeeDto);
@@ -48,12 +47,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeMapper.toDto(employee);
     }
 
-
     @Override
     public EmployeeDto update(EmployeeDto employeeDto, Long id) {
         EmployeeEntity employee = employeeRepo.findById(id).orElseThrow();
         employeeMapper.updateEmployeeFromDTO(employeeDto,employee);
         employeeRepo.save(employee);
         return employeeMapper.toDto(employee);
+    }
+
+    @Override
+    public void delete(Long id) {
+        employeeRepo.deleteById(id);
     }
 }

@@ -12,7 +12,6 @@ import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
 public interface TaskMapper {
 
 
-
     TaskEntity toEntity(TaskDto taskDto);
 
     TaskDto toDto(TaskEntity task) ;
