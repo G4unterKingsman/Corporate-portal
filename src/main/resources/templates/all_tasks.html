@@ -44,7 +44,7 @@
             <tr th:each="task : ${tasks}">
                 <td class="align-middle"><span th:text="${task.id}"/></td>
                 <td class="align-middle"><span th:text="${task.title}"/></td>
-                <td class="align-middle"><span th:text="${task.created}"/></td>
+                <td class="align-middle"><span th:text="${#temporals.format(task.created, 'dd-MMM-yyyy, HH:mm')}"/></td>
                 <td class="align-middle"><span th:text="${task.description}"/></td>
                 <td class="align-middle"><span th:text="${task.whoGaveTask.name}"/></td>
                 <td class="align-middle"><span th:text="${task.whoGivenTask.name}"/></td>

@@ -47,7 +47,7 @@
                 <td class="align-middle"><span th:text="${employee.name}"/></td>
                 <td class="align-middle"><span th:text="${employee.age}"/></td>
                 <td class="align-middle"><span th:text="${employee.post}"/></td>
-                <td class="align-middle"><span th:text="${employee.joined}"/></td>
+                <td class="align-middle"><span th:text="${#temporals.format(employee.joined, 'dd-MMM-yyyy')}"/></td>
                 <td class="align-middle"><span th:text="${employee.workExperienceYears}"/></td>
                 <td class="align-middle"><span th:text="${employee.description}"/></td>
                 <td><a th:href="'all_employees/' + ${employee.id}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>

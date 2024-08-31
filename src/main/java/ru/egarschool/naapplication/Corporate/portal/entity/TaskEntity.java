@@ -3,7 +3,8 @@ package ru.egarschool.naapplication.Corporate.portal.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,7 +12,6 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @Builder
 @Table(name = "tasks")
 public class TaskEntity {
@@ -21,7 +21,7 @@ public class TaskEntity {
 
     private String title;
 
-    @CreationTimestamp
+    @UpdateTimestamp
     private LocalDateTime created;
     private String description;
 

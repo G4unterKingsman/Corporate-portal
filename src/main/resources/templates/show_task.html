@@ -46,7 +46,7 @@
           </tr>
           <tr>
             <td class="text-justify">Когда создано</td>
-            <td class="align-middle"><span th:text="*{created}"/></td>
+            <td class="align-middle"><span th:text="${#temporals.format(task.created, 'dd-MMM-yyyy, HH:mm')}"/></td>
           </tr>
           <tr>
             <td class="text-justify">Подробности Задачи</td>
