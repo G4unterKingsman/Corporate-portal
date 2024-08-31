@@ -2,7 +2,6 @@ package ru.egarschool.naapplication.Corporate.portal.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @Builder
 @Table(name = "employees")
 public class EmployeeEntity {
@@ -35,6 +33,7 @@ public class EmployeeEntity {
     private List<TaskEntity> taskForEmploy = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "whoGivenTask")
+
     private List<TaskEntity> taskFromEmploy = new ArrayList<>();
 
 

@@ -46,7 +46,7 @@
           </tr>
           <tr>
             <td class="text-justify">Создан</td>
-            <td class="align-middle"><span th:text="*{created}"/></td>
+            <td class="align-middle"><span th:text="${#temporals.format(order.created, 'dd-MMM-yyyy, HH:mm')}"/></td>
           </tr>
           <tr>
             <td class="text-justify">Описание отчёта</td>

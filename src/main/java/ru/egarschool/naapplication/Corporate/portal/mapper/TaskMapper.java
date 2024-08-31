@@ -1,30 +1,24 @@
 package ru.egarschool.naapplication.Corporate.portal.mapper;
 
-import ru.egarschool.naapplication.Corporate.portal.dto.OrderDto;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import ru.egarschool.naapplication.Corporate.portal.dto.TaskDto;
-import ru.egarschool.naapplication.Corporate.portal.entity.OrderEntity;
 import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
 
-public class TaskMapper {
-    public static TaskEntity getTask(TaskDto taskDto) {
-        TaskEntity task = new TaskEntity();
-        task.setId(taskDto.getId());
-        task.setTitle(taskDto.getTitle());
-        task.setCreated(taskDto.getCreated());
-        task.setDescription(taskDto.getDescription());
-        task.setWhoGaveTask(taskDto.getWhoGaveTask());
-        task.setWhoGivenTask(taskDto.getWhoGivenTask());
-        return task;
-    }
 
-    public static TaskDto getTaskDto(TaskEntity task) {
-        return TaskDto.builder()
-                .id(task.getId())
-                .title(task.getTitle())
-                .created(task.getCreated())
-                .description(task.getDescription())
-                .whoGaveTask(task.getWhoGaveTask())
-                .whoGivenTask(task.getWhoGivenTask())
-                .build();
-    }
+
+@Mapper
+public interface TaskMapper {
+
+
+
+    TaskEntity toEntity(TaskDto taskDto);
+
+    TaskDto toDto(TaskEntity task) ;
+
+
+    @Mapping(source = "whoGaveTask", target = "whoGaveTask.id", ignore = true)
+    @Mapping(source = "whoGivenTask", target = "whoGivenTask.id", ignore = true)
+    void toUpdateOrderFromDto(TaskDto byName, @MappingTarget TaskEntity order);
 }

@@ -8,8 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.egarschool.naapplication.Corporate.portal.dto.TaskDto;
-import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
-import ru.egarschool.naapplication.Corporate.portal.mapper.TaskMapper;
 import ru.egarschool.naapplication.Corporate.portal.service.TaskServiceImpl;
 
 @Controller
@@ -41,7 +39,7 @@ public class TaskController {
 
     @GetMapping("/{id}")
     public String getInfoTask(Model model, @PathVariable Long id){
-        model.addAttribute("task", taskService.findById(id));
+        model.addAttribute("task", taskService.getById(id));
         return "show_task";
     }
 
@@ -50,7 +48,7 @@ public class TaskController {
 
     @GetMapping("/{id}/edit_task")
     public String getEditForm(Model model, @PathVariable Long id){
-        TaskDto taskDto = taskService.findById(id);
+        TaskDto taskDto = taskService.getById(id);
         model.addAttribute("taskDto",taskDto);
         return "edit_task";
     }
@@ -58,7 +56,7 @@ public class TaskController {
     @PostMapping("/{id}/edit_task")
     public String update(@Valid @ModelAttribute TaskDto taskDto, BindingResult bindingResult,
                          @PathVariable Long id, Model model){
-        model.addAttribute("task",taskService.findById(id));
+        model.addAttribute("task",taskService.getById(id));
         if(bindingResult.hasErrors())
             return "edit_task";
         taskService.update(taskDto, id);

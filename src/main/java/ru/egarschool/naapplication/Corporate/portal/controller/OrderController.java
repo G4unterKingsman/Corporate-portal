@@ -8,8 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.egarschool.naapplication.Corporate.portal.dto.OrderDto;
-import ru.egarschool.naapplication.Corporate.portal.entity.OrderEntity;
-import ru.egarschool.naapplication.Corporate.portal.mapper.OrderMapper;
 import ru.egarschool.naapplication.Corporate.portal.service.OrderServiceImpl;
 
 @Controller
@@ -41,14 +39,14 @@ public class OrderController {
 
     @GetMapping("/{id}")
     public String getInfoOrder(Model model, @PathVariable Long id){
-        model.addAttribute("order", orderService.findById(id));
+        model.addAttribute("order", orderService.getById(id));
         return "show_order";
     }
 
 
     @GetMapping("/{id}/edit_order")
     public String getEditForm(Model model, @PathVariable Long id){
-        OrderDto orderDto = orderService.findById(id);
+        OrderDto orderDto = orderService.getById(id);
         model.addAttribute("orderDto", orderDto);
         return "edit_order";
     }
@@ -56,7 +54,7 @@ public class OrderController {
     @PostMapping("/{id}/edit_order")
     public String update(@Valid @ModelAttribute OrderDto orderDto, BindingResult bindingResult,
                          @PathVariable Long id, Model model){
-        model.addAttribute("order",orderService.findById(id));
+        model.addAttribute("order",orderService.getById(id));
         if(bindingResult.hasErrors())
             return "edit_order";
         orderService.update(orderDto, id);

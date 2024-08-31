@@ -5,10 +5,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
 
+import java.util.Optional;
+
 
 @Repository
 public interface EmployeeRepo extends JpaRepository<EmployeeEntity, Long> {
 
-    @Query
-    EmployeeEntity getByName(String name);
+    EmployeeEntity findByName(String name);
 }

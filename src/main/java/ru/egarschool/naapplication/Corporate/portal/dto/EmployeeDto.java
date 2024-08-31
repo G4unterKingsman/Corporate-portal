@@ -1,8 +1,6 @@
 package ru.egarschool.naapplication.Corporate.portal.dto;
 
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

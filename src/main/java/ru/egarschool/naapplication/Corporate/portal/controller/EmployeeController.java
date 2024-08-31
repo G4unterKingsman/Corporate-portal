@@ -8,8 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.egarschool.naapplication.Corporate.portal.dto.EmployeeDto;
-import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
-import ru.egarschool.naapplication.Corporate.portal.mapper.EmployeeMapper;
 import ru.egarschool.naapplication.Corporate.portal.service.EmployeeServiceImpl;
 
 @Controller
@@ -41,26 +39,24 @@ public class EmployeeController {
 
     @GetMapping("/{id}")
     public String getInfoEmployee(Model model, @PathVariable Long id){
-        model.addAttribute("employee", employeeService.findById(id));
+        model.addAttribute("employee", employeeService.getById(id));
         return "show_employee";
     }
 
     @GetMapping("/{id}/edit_employee")
     public String getUpdateForm(Model model, @PathVariable Long id){
-        EmployeeDto employeeDto = employeeService.findById(id);
+        EmployeeDto employeeDto = employeeService.getById(id);
         model.addAttribute("employeeDto",employeeDto);
         return "edit_employee";
     }
 
     @PostMapping("/{id}/edit_employee")
-    public String update(@Valid @ModelAttribute EmployeeDto employeeDto, BindingResult bindingResult,
-                         @PathVariable Long id, Model model){
-        model.addAttribute("employee",employeeService.findById(id));
-
+    public String update(@Valid @ModelAttribute("employee") EmployeeDto employeeDto, BindingResult bindingResult,
+                         @PathVariable Long id){
         if(bindingResult.hasErrors())
             return "edit_employee";
 
         employeeService.update(employeeDto, id);
-        return "redirect:/all_employees/{id}";
+        return "redirect:/all_employees";
     }
 }

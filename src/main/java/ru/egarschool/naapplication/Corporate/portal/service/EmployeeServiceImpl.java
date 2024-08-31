@@ -16,37 +16,44 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepo employeeRepo;
+    private final EmployeeMapper employeeMapper;
+
 
     @Override
     public List<EmployeeDto> getAll() {
         List<EmployeeEntity> employees = employeeRepo.findAll();
-
         return employees.stream()
-                .map(e -> EmployeeMapper.getEmployeeDto(e))
+                .map(e -> employeeMapper.toDto(e))
                 .collect(Collectors.toList());
+
     }
 
     @Override
-    public EmployeeDto findById(Long id){
-
+    public EmployeeDto getById(Long id){
         employeeRepo.findById(id).orElseThrow();
-        return EmployeeMapper.getEmployeeDto(employeeRepo.findById(id).orElseThrow());
+        return employeeMapper.toDto(employeeRepo.findById(id).orElseThrow());
+    }
+
+    @Override
+    public EmployeeDto getByName(String name){
+        employeeRepo.findByName(name);
+        return employeeMapper.toDto(employeeRepo.findByName(name));
     }
 
 
     @Override
     public EmployeeDto create(EmployeeDto employeeDto) {
-        EmployeeEntity employee = EmployeeMapper.getEmployee(employeeDto);
-
+        EmployeeEntity employee = employeeMapper.toEntity(employeeDto);
         employeeRepo.save(employee);
-        return EmployeeMapper.getEmployeeDto(employee);
+        return employeeMapper.toDto(employee);
     }
 
 
     @Override
-    public EmployeeDto update(EmployeeDto employeeDto,Long id) {
-        EmployeeEntity employee = employeeRepo.save(EmployeeMapper.getEmployee(employeeDto));
-        return EmployeeMapper.getEmployeeDto(employee);
+    public EmployeeDto update(EmployeeDto employeeDto, Long id) {
+        EmployeeEntity employee = employeeRepo.findById(id).orElseThrow();
+        employeeMapper.updateEmployeeFromDTO(employeeDto,employee);
+        employeeRepo.save(employee);
+        return employeeMapper.toDto(employee);
     }
-
 }

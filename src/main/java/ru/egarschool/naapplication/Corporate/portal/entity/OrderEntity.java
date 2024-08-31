@@ -3,7 +3,7 @@ package ru.egarschool.naapplication.Corporate.portal.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @Builder
 @Table(name = "orders")
 public class OrderEntity {
@@ -20,7 +19,7 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    @CreationTimestamp
+    @UpdateTimestamp
     private LocalDateTime created;
     private String description;
     @ManyToOne(cascade = CascadeType.ALL)

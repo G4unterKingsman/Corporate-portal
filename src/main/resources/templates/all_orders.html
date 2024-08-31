@@ -43,7 +43,7 @@
             <tr th:each="order : ${orders}">
                 <td class="align-middle"><span th:text="${order.id}"/></td>
                 <td class="align-middle"><span th:text="${order.title}"/></td>
-                <td class="align-middle"><span th:text="${order.created}"/></td>
+                <td class="align-middle"><span th:text="${#temporals.format(order.created, 'dd-MMM-yyyy, HH:mm')}"/></td>
                 <td class="align-middle"><span th:text="${order.description}"/></td>
                 <td class="align-middle"><span th:text="${order.getOrderEmploy.name}"/></td>
                 <td><a th:href="'all_orders/' + ${order.id}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
