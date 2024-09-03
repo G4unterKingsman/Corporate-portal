@@ -1,6 +1,8 @@
 package ru.egarschool.naapplication.Corporate.portal.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.egarschool.naapplication.Corporate.portal.dto.TaskDto;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
@@ -8,6 +10,7 @@ import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
 import ru.egarschool.naapplication.Corporate.portal.mapper.TaskMapper;
 import ru.egarschool.naapplication.Corporate.portal.repository.EmployeeRepo;
 import ru.egarschool.naapplication.Corporate.portal.repository.TaskRepo;
+import ru.egarschool.naapplication.Corporate.portal.service.impl.EmployeeService;
 import ru.egarschool.naapplication.Corporate.portal.service.impl.TaskService;
 
 import java.util.List;
@@ -36,7 +39,6 @@ public class TaskServiceImpl implements TaskService {
 
     public TaskDto create(TaskDto taskDto){
         TaskEntity task = taskMapper.toEntity(taskDto);
-
         return getTaskDto(taskDto, task);
     }
 
@@ -46,7 +48,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     private TaskDto getTaskDto(TaskDto taskDto, TaskEntity task) {
-        EmployeeEntity employeeWhoGave = employeeRepo.findByName(taskDto.getWhoGaveTask().getName());
+        String username = getCurrentUsername();
+        EmployeeEntity employeeWhoGave = employeeRepo.findByUserAccountUsername(username);
         EmployeeEntity employeeWhoGiven = employeeRepo.findByName(taskDto.getWhoGivenTask().getName());
         taskMapper.toUpdateOrderFromDto(taskDto,task);
         task.setWhoGaveTask(employeeWhoGave);
@@ -59,5 +62,14 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void delete(Long id) {
         taskRepo.deleteById(id);
+    }
+
+    public String getCurrentUsername() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            return ((UserDetails) principal).getUsername();
+        } else {
+            return principal.toString();
+        }
     }
 }

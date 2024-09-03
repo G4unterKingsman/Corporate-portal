@@ -3,6 +3,7 @@ package ru.egarschool.naapplication.Corporate.portal.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,9 @@ import ru.egarschool.naapplication.Corporate.portal.service.OrderServiceImpl;
 public class OrderController {
     private final OrderServiceImpl orderService;
 
+
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping()
     public String getAllOrders(Model model){
         model.addAttribute("orders", orderService.findAll());
@@ -23,12 +27,14 @@ public class OrderController {
     }
 
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/add_order")
     public String getAddOrderForm(Model model){
         model.addAttribute("order", new OrderDto());
         return "add_order";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or #orderDto.orderEmploy.userAccount.username == authentication.name")
     @PostMapping("/add_order")
     public String create(@Valid @ModelAttribute OrderDto orderDto, BindingResult bindingResult){
         if(bindingResult.hasErrors())
@@ -37,6 +43,8 @@ public class OrderController {
         return "redirect:/all_orders";
     }
 
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{id}")
     public String getInfoOrder(Model model, @PathVariable Long id){
         model.addAttribute("order", orderService.getById(id));
@@ -44,6 +52,8 @@ public class OrderController {
     }
 
 
+
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/{id}/edit_order")
     public String getEditForm(Model model, @PathVariable Long id){
         OrderDto orderDto = orderService.getById(id);
@@ -51,6 +61,8 @@ public class OrderController {
         return "edit_order";
     }
 
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or #orderDto.orderEmploy.userAccount.username == authentication.name")
     @PostMapping("/{id}/edit_order")
     public String update(@Valid @ModelAttribute OrderDto orderDto, BindingResult bindingResult,
                          @PathVariable Long id, Model model){
@@ -61,6 +73,8 @@ public class OrderController {
         return "redirect:/all_orders/{id}";
     }
 
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{id}/delete")
     public String deleteOrder(@PathVariable Long id){
         orderService.delete(id);

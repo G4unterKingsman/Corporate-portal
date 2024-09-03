@@ -21,3 +21,17 @@ values ('Кнопка', LOCALTIMESTAMP, 'покрась кнопку пжпжп'
        ('Куллер', LOCALTIMESTAMP, 'Поменяй бак с водой',5,4);
 
 
+insert into users(active, password, username,employee_id)
+values (True, '$2a$08$BcpUx.x3wyjViG2BEOIb5e4H4xMVyFVVhUbHwCEWNNWZCpXsQoNX.', 'admin',1),
+       (True, '$2a$08$BcpUx.x3wyjViG2BEOIb5e4H4xMVyFVVhUbHwCEWNNWZCpXsQoNX.', 'miron',2),
+       (True, '$2a$08$BcpUx.x3wyjViG2BEOIb5e4H4xMVyFVVhUbHwCEWNNWZCpXsQoNX.', 'SanSan',3),
+       (True, '$2a$08$BcpUx.x3wyjViG2BEOIb5e4H4xMVyFVVhUbHwCEWNNWZCpXsQoNX.', 'Grisha001',4),
+       (True, '$2a$08$BcpUx.x3wyjViG2BEOIb5e4H4xMVyFVVhUbHwCEWNNWZCpXsQoNX.', 'mashasha',5);
+
+
+insert into user_account_roles(user_account_id, roles)
+values  (1,'ROLE_USER'),
+        (2,'ROLE_USER'),
+        (3,'ROLE_USER'),
+        (4,'ROLE_USER'),
+        (5,'ROLE_ADMIN');

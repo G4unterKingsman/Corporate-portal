@@ -1,6 +1,8 @@
 package ru.egarschool.naapplication.Corporate.portal.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.egarschool.naapplication.Corporate.portal.dto.OrderDto;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
@@ -34,8 +36,8 @@ public class OrderServiceImpl implements OrderService {
 
     public OrderDto create(OrderDto orderDto){
         OrderEntity order = orderMapper.toEntity(orderDto);
-
-        EmployeeEntity employee = employeeRepo.findByName(orderDto.getOrderEmploy().getName());
+        String username = getCurrentUsername();
+        EmployeeEntity employee = employeeRepo.findByUserAccountUsername(username);
         orderMapper.toUpdateOrderFromDto(orderDto,order);
         order.setOrderEmploy(employee);
 
@@ -55,5 +57,14 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void delete(Long id) {
         orderRepo.deleteById(id);
+    }
+
+    public String getCurrentUsername() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            return ((UserDetails) principal).getUsername();
+        } else {
+            return principal.toString();
+        }
     }
 }

@@ -32,12 +32,6 @@
             <input th:field="*{description}" type="text" class="form-control" id="description" placeholder="" value="" required>
             <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
           </div>
-          <!-- убрать этот блок когда будет готова авторизация -->
-          <div class="mb-3">
-            <label for="whoGaveTask">Кто даёт задание</label>
-            <input th:field="*{whoGaveTask.name}" type="text" class="form-control" id="whoGaveTask" placeholder="" value="" required>
-            <small class="text-danger" th:if="${#fields.hasErrors('whoGivenTask')}" th:errors="*{whoGivenTask.name}"></small>
-          </div>
           <div class="mb-3">
             <label for="whoGivenTask">Кому задание</label>
             <input th:field="*{whoGivenTask.name}" type="text" class="form-control" id="whoGivenTask" placeholder="" value="" required>
