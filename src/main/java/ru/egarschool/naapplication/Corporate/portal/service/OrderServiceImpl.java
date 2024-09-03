@@ -1,5 +1,7 @@
 package ru.egarschool.naapplication.Corporate.portal.service;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +23,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepo orderRepo;
     private final OrderMapper orderMapper;
     private final EmployeeRepo employeeRepo;
+    private final SecurityService securityService;
 
     public List<OrderDto> findAll() {
         List<OrderEntity> orders = orderRepo.findAll();
@@ -34,22 +37,20 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toDto(order);
     }
 
-    public OrderDto create(OrderDto orderDto){
-        OrderEntity order = orderMapper.toEntity(orderDto);
-        String username = getCurrentUsername();
-        EmployeeEntity employee = employeeRepo.findByUserAccountUsername(username);
-        orderMapper.toUpdateOrderFromDto(orderDto,order);
-        order.setOrderEmploy(employee);
 
-        orderRepo.save(order);
-        return orderMapper.toDto(order);
+    public OrderDto create(OrderDto orderDto){
+        String username = securityService.getCurrentUsername();  // получаем юзернейм текущего пользователя
+        EmployeeEntity employee = employeeRepo.findEmployeeEntityByUserAccount_Username(username).orElseThrow(); //находим сотрудника по юзернейму
+        orderDto.setOrderEmploy(employee);  //присваиваем отчётDto сотрудника который сейчас пользователь
+
+        OrderEntity order = orderMapper.toEntity(orderDto); // создаём сущность отчёта по dто
+        orderRepo.save(order); // сохраняем отчёт
+        return orderMapper.toDto(order); // передаём отчёт обратно контроллеру
     }
 
     public OrderDto update(OrderDto orderDto, Long id) {
         OrderEntity order = orderRepo.findById(id).orElseThrow();
-        EmployeeEntity employee = employeeRepo.findByName(orderDto.getOrderEmploy().getName());
         orderMapper.toUpdateOrderFromDto(orderDto,order);
-        order.setOrderEmploy(employee);
         orderRepo.save(order);
         return orderMapper.toDto(order);
     }
@@ -59,12 +60,9 @@ public class OrderServiceImpl implements OrderService {
         orderRepo.deleteById(id);
     }
 
-    public String getCurrentUsername() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            return ((UserDetails) principal).getUsername();
-        } else {
-            return principal.toString();
-        }
+
+    public String getOwnerUsername(Long id) {
+        OrderEntity order = orderRepo.findById(id).orElseThrow();
+        return order.getOrderEmploy().getUserAccount().getUsername();
     }
 }

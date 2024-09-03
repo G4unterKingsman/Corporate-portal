@@ -52,7 +52,7 @@
           </tr>
           <tr>
             <td class="text-justify">Должность</td>
-            <td class="align-middle"><span th:text="*{post}"/></td>
+            <td class="align-middle"><span th:text="*{userAccount.roles}"/></td>
           </tr>
           <tr>
             <td class="text-justify">Когда присоеденился</td>
@@ -88,6 +88,9 @@
           <th class="text-justify">Когда создан</th>
           <th class="text-justify">Описание</th>
           <th class="text-justify">Автор</th>
+          <th class="text-justify"></th>
+          <th class="text-justify"></th>
+          <th class="text-justify"></th>
         </tr>
         </thead>
         <tbody>
@@ -96,7 +99,10 @@
           <td class="align-middle"><span th:text="${order.title}"/></td>
           <td class="align-middle"><span th:text="${#temporals.format(order.created, 'dd-MMM-yyyy, HH:mm')}"/></td>
           <td class="align-middle"><span th:text="${order.description}"/></td>
-          <td class="align-middle"><span th:text="${order.getOrderEmploy.name}"/></td>
+          <td class="align-middle"><span th:text="${order.orderEmploy.name}"/></td>
+          <td><a th:href="'all_orders/' + ${order.id}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
+          <td><a th:href="'all_orders/' + ${order.id} + '/edit_order'"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
+          <td><a th:href="@{/all_orders/{id}/delete (id=${order.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Удалить</button></a></td>
         </tr>
         </tbody>
       </table>
@@ -114,6 +120,7 @@
         <th class="text-justify">Описание</th>
         <th class="text-justify">От кого задание</th>
         <th class="text-justify">Кому задание</th>
+        <th class="text-justify"></th>
       </tr>
       </thead>
       <tbody>
@@ -124,6 +131,7 @@
         <td class="align-middle"><span th:text="${task.description}"/></td>
         <td class="align-middle"><span th:text="${task.whoGaveTask.name}"/></td>
         <td class="align-middle"><span th:text="${task.whoGivenTask.name}"/></td>
+        <td><a th:href="'all_tasks/' + ${task.id}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
       </tr>
       </tbody>
     </table>

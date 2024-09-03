@@ -13,5 +13,9 @@ public enum Role implements GrantedAuthority {
     public String getAuthority() {
         return null;
     }
+
+    public String getRoleName() {
+        return this.name(); // Или можно вернуть любое другое значение
+    }
 }
 

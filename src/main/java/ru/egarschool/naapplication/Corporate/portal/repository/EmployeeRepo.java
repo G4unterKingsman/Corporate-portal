@@ -16,6 +16,8 @@ public interface EmployeeRepo extends JpaRepository<EmployeeEntity, Long> {
 
 
 
-    @Query("SELECT e FROM EmployeeEntity e WHERE e.userAccount.username = :username")
-    EmployeeEntity findByUserAccountUsername(@Param("username") String username);
+    // @Query("SELECT e FROM EmployeeEntity e WHERE e.userAccount.username = :username")
+    // Optional<EmployeeEntity> findByUserAccountUsername(@Param("username") String username);
+
+    Optional<EmployeeEntity> findEmployeeEntityByUserAccount_Username(String username);
 }

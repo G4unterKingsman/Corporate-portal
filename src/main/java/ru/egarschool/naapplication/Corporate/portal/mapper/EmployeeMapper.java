@@ -17,7 +17,6 @@ public interface EmployeeMapper{
 
 
 
-    @Mapping(source = "userAccount", target = "userAccount", ignore = true)
     void updateEmployeeFromDTO(EmployeeDto employeeDto, @MappingTarget EmployeeEntity employee);
 
 }

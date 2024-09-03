@@ -1,11 +1,15 @@
 package ru.egarschool.naapplication.Corporate.portal.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import ru.egarschool.naapplication.Corporate.portal.dto.EmployeeDto;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
+import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
+import ru.egarschool.naapplication.Corporate.portal.entity.UserAccount;
 import ru.egarschool.naapplication.Corporate.portal.mapper.EmployeeMapper;
 import ru.egarschool.naapplication.Corporate.portal.repository.EmployeeRepo;
+import ru.egarschool.naapplication.Corporate.portal.repository.UserRepo;
 import ru.egarschool.naapplication.Corporate.portal.service.impl.EmployeeService;
 
 import java.util.List;
@@ -17,6 +21,9 @@ import java.util.stream.Collectors;
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepo employeeRepo;
     private final EmployeeMapper employeeMapper;
+    private final SecurityService securityService;
+    private final UserRepo userRepo;
+
 
 
     @Override
@@ -49,8 +56,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto update(EmployeeDto employeeDto, Long id) {
+        String username = securityService.getCurrentUsername();
+        UserAccount userAccount = userRepo.findByUsername(username).orElseThrow();
         EmployeeEntity employee = employeeRepo.findById(id).orElseThrow();
         employeeMapper.updateEmployeeFromDTO(employeeDto,employee);
+        employeeDto.setUserAccount(userAccount);
         employeeRepo.save(employee);
         return employeeMapper.toDto(employee);
     }
@@ -61,6 +71,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public EmployeeEntity findByUsername(String username) {
-        return employeeRepo.findByUserAccountUsername(username);
+        return employeeRepo.findEmployeeEntityByUserAccount_Username(username).orElseThrow();
+    }
+
+    public String getOwnerUsername(Long id) {
+        EmployeeEntity employee = employeeRepo.findById(id).orElseThrow();
+        return employee.getUserAccount().getUsername();
     }
 }

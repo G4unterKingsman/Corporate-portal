@@ -3,6 +3,7 @@ package ru.egarschool.naapplication.Corporate.portal.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +18,7 @@ import ru.egarschool.naapplication.Corporate.portal.service.OrderServiceImpl;
 public class OrderController {
     private final OrderServiceImpl orderService;
 
-
-
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping()
     public String getAllOrders(Model model){
         model.addAttribute("orders", orderService.findAll());
@@ -27,14 +26,16 @@ public class OrderController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/add_order")
     public String getAddOrderForm(Model model){
         model.addAttribute("order", new OrderDto());
         return "add_order";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #orderDto.orderEmploy.userAccount.username == authentication.name")
+    // TODO: Прописать логи, узнать почему даже с правами админа, и даже когда права не нужны возрващается 403
+    @PostAuthorize("hasRole('ROLE_ADMIN') or #orderDto.orderEmploy.userAccount.username == authentication.name")
     @PostMapping("/add_order")
     public String create(@Valid @ModelAttribute OrderDto orderDto, BindingResult bindingResult){
         if(bindingResult.hasErrors())
@@ -44,7 +45,7 @@ public class OrderController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @orderServiceImpl.getOwnerUsername(#id) == authentication.name")
     @GetMapping("/{id}")
     public String getInfoOrder(Model model, @PathVariable Long id){
         model.addAttribute("order", orderService.getById(id));
@@ -52,8 +53,7 @@ public class OrderController {
     }
 
 
-
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @orderServiceImpl.getOwnerUsername(#id)  == authentication.name")
     @GetMapping("/{id}/edit_order")
     public String getEditForm(Model model, @PathVariable Long id){
         OrderDto orderDto = orderService.getById(id);
@@ -62,19 +62,23 @@ public class OrderController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #orderDto.orderEmploy.userAccount.username == authentication.name")
+
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @orderServiceImpl.getOwnerUsername(#id)  == authentication.name")
     @PostMapping("/{id}/edit_order")
     public String update(@Valid @ModelAttribute OrderDto orderDto, BindingResult bindingResult,
                          @PathVariable Long id, Model model){
-        model.addAttribute("order",orderService.getById(id));
         if(bindingResult.hasErrors())
             return "edit_order";
+
+        model.addAttribute("order",orderService.getById(id));
         orderService.update(orderDto, id);
         return "redirect:/all_orders/{id}";
     }
 
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @orderServiceImpl.getOwnerUsername(#id)  == authentication.name")
     @GetMapping("/{id}/delete")
     public String deleteOrder(@PathVariable Long id){
         orderService.delete(id);

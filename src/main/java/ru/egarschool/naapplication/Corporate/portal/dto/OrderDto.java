@@ -21,6 +21,7 @@ public class OrderDto {
 
     @UpdateTimestamp
     private LocalDateTime created;
+
     @Size(min= 5, max= 500, message = "Описание должно занимать от 5-х до 500-та символов")
     private String description;
     private EmployeeEntity orderEmploy;
