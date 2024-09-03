@@ -17,7 +17,6 @@ public interface TaskMapper {
     TaskDto toDto(TaskEntity task) ;
 
 
-    @Mapping(source = "whoGaveTask", target = "whoGaveTask.id", ignore = true)
     @Mapping(source = "whoGivenTask", target = "whoGivenTask.id", ignore = true)
     void toUpdateOrderFromDto(TaskDto byName, @MappingTarget TaskEntity order);
 }

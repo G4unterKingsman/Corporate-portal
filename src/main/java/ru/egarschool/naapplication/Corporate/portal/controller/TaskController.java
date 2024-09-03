@@ -3,6 +3,7 @@ package ru.egarschool.naapplication.Corporate.portal.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +19,7 @@ public class TaskController {
     private final TaskServiceImpl taskService;
 
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping
     public String getAllTasks(Model model){
         model.addAttribute("tasks", taskService.findAll());
@@ -26,7 +27,7 @@ public class TaskController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/add_task")
     public String getAddTaskForm(Model model){
         model.addAttribute("task", new TaskDto());
@@ -34,7 +35,7 @@ public class TaskController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #taskDto.whoGaveTask.userAccount.username == authentication.name")
+    @PostAuthorize("hasRole('ROLE_ADMIN') or #taskDto.whoGaveTask.userAccount.username == authentication.name")
     @PostMapping("/add_task")
     public String create(@Valid @ModelAttribute TaskDto taskDto, BindingResult bindingResult){
         if(bindingResult.hasErrors())
@@ -44,7 +45,7 @@ public class TaskController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @taskServiceImpl.getOwnerUsername(#id)  == authentication.name")
     @GetMapping("/{id}")
     public String getInfoTask(Model model, @PathVariable Long id){
         model.addAttribute("task", taskService.getById(id));
@@ -54,7 +55,8 @@ public class TaskController {
 
 
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @taskServiceImpl.getOwnerUsername(#id)  == authentication.name")
     @GetMapping("/{id}/edit_task")
     public String getEditForm(Model model, @PathVariable Long id){
         TaskDto taskDto = taskService.getById(id);
@@ -62,8 +64,7 @@ public class TaskController {
         return "edit_task";
     }
 
-
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #taskDto.whoGaveTask.userAccount.username == authentication.name")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @taskServiceImpl.getOwnerUsername(#id)  == authentication.name")
     @PostMapping("/{id}/edit_task")
     public String update(@Valid @ModelAttribute TaskDto taskDto, BindingResult bindingResult,
                          @PathVariable Long id, Model model){
@@ -75,7 +76,8 @@ public class TaskController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @taskServiceImpl.getOwnerUsername(#id)  == authentication.name")
     @GetMapping("/{id}/delete")
     public String deleteTask(@PathVariable Long id){
         taskService.delete(id);

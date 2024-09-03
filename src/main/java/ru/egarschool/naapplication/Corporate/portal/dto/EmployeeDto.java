@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-// todo Найти рег-выражение для имени и должности @Pattern(regexp = "//", message = "Неподдерживаемые символы")
 
 @Data
 @NoArgsConstructor
@@ -29,7 +28,7 @@ import java.util.List;
 public class EmployeeDto {
     private Long id;
     @Size(min= 2, max= 50, message = "Имя должно занимать от 2-х до 50-ти символов")
-    @Pattern(regexp = "^[A-ZА-ЯЁ][a-zа-яё]+\\s[A-ZА-ЯЁ][a-zа-яё]+\\s[A-ZА-ЯЁ][a-zа-яё]+$", message = "Некорректное имя!")
+    @Pattern(regexp = "^[A-ZА-ЯЁ][a-zа-яё]+\\s[A-ZА-ЯЁ][a-zа-яё]+$", message = "Некорректное имя!")
     private String name;
     @Range(min= 18,max= 70, message = "Возраст от 18 до 70")
     private Integer age;

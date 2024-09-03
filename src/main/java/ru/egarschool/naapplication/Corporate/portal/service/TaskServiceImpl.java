@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.egarschool.naapplication.Corporate.portal.dto.TaskDto;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
+import ru.egarschool.naapplication.Corporate.portal.entity.OrderEntity;
 import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
 import ru.egarschool.naapplication.Corporate.portal.mapper.TaskMapper;
 import ru.egarschool.naapplication.Corporate.portal.repository.EmployeeRepo;
@@ -23,6 +24,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepo taskRepo;
     private final TaskMapper taskMapper;
     private final EmployeeRepo employeeRepo;
+    private final SecurityService securityService;
 
 
     public List<TaskDto> findAll(){
@@ -48,12 +50,18 @@ public class TaskServiceImpl implements TaskService {
     }
 
     private TaskDto getTaskDto(TaskDto taskDto, TaskEntity task) {
-        String username = getCurrentUsername();
-        EmployeeEntity employeeWhoGave = employeeRepo.findByUserAccountUsername(username);
+        // находим юзернейм текущего пользователя
+        String username = securityService.getCurrentUsername();
+        // находим сотрудника по юзернейму
+        EmployeeEntity employeeWhoGave = employeeRepo.findEmployeeEntityByUserAccount_Username(username).orElseThrow();
+        // находим сотрудника кому направлена задача
         EmployeeEntity employeeWhoGiven = employeeRepo.findByName(taskDto.getWhoGivenTask().getName());
-        taskMapper.toUpdateOrderFromDto(taskDto,task);
-        task.setWhoGaveTask(employeeWhoGave);
+        // присваиваем полученному Dto сотрудника хозяина задачи
+        taskDto.setWhoGaveTask(employeeWhoGave);
+        // присваиваем сущности задачи поле WhoGivenTask, которое не маппили
         task.setWhoGivenTask(employeeWhoGiven);
+        // маппим дто и сущность сотрудника без поля WhoGivenTask (кому направлена задача)
+        taskMapper.toUpdateOrderFromDto(taskDto,task);
 
         taskRepo.save(task);
         return taskMapper.toDto(task);
@@ -64,12 +72,8 @@ public class TaskServiceImpl implements TaskService {
         taskRepo.deleteById(id);
     }
 
-    public String getCurrentUsername() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            return ((UserDetails) principal).getUsername();
-        } else {
-            return principal.toString();
-        }
+    public String getOwnerUsername(Long id) {
+        TaskEntity task = taskRepo.findById(id).orElseThrow();
+        return task.getWhoGaveTask().getUserAccount().getUsername();
     }
 }

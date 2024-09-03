@@ -3,6 +3,7 @@ package ru.egarschool.naapplication.Corporate.portal.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +19,13 @@ public class EmployeeController {
     private final EmployeeServiceImpl employeeService;
 
     @GetMapping()
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     public String findAll(Model model){
         model.addAttribute("employees",employeeService.getAll());
         return "all_employees";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/add_employee")
     public String getCreateForm(Model model){
         model.addAttribute("employee", new EmployeeDto());
@@ -42,7 +44,8 @@ public class EmployeeController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @employeeServiceImpl.getOwnerUsername(#id)  == authentication.name")
     @GetMapping("/{id}")
     public String getInfoEmployee(Model model, @PathVariable Long id){
         model.addAttribute("employee", employeeService.getById(id));
@@ -51,7 +54,8 @@ public class EmployeeController {
 
 
 
-    @PreAuthorize("hasRole('ROLE_USER') ")
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @employeeServiceImpl.getOwnerUsername(#id)  == authentication.name")
     @GetMapping("/{id}/edit_employee")
     public String getUpdateForm(Model model, @PathVariable Long id){
         EmployeeDto employeeDto = employeeService.getById(id);
@@ -60,7 +64,7 @@ public class EmployeeController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #employeeDto.userAccount.username == authentication.name")
+    @PostAuthorize("hasRole('ROLE_ADMIN') or #employeeDto.userAccount.username == authentication.name")
     @PostMapping("/{id}/edit_employee")
     public String update(@Valid @ModelAttribute("employee") EmployeeDto employeeDto, BindingResult bindingResult,
                          @PathVariable Long id){
