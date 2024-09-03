@@ -1,6 +1,9 @@
 package ru.egarschool.naapplication.Corporate.portal.dto;
 
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -10,6 +13,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 import ru.egarschool.naapplication.Corporate.portal.entity.OrderEntity;
 import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
+import ru.egarschool.naapplication.Corporate.portal.entity.UserAccount;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,4 +44,5 @@ public class EmployeeDto {
     private List<OrderEntity> employOrders = new ArrayList<>();
     private List<TaskEntity> taskForEmploy = new ArrayList<>();
     private List<TaskEntity> taskFromEmploy = new ArrayList<>();
+    private UserAccount userAccount;
 }

@@ -6,7 +6,7 @@ spring:
   application:
     name: CorporatePortalApplication
   datasource:
-    url: jdbc:postgresql://localhost:5432/corporate-potral
+    url: jdbc:postgresql://localhost:5432/corporate-portal
     username: postgres
     password: egaroot
   jpa:

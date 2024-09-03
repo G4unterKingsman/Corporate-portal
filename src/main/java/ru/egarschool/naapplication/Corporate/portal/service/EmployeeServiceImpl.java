@@ -59,4 +59,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void delete(Long id) {
         employeeRepo.deleteById(id);
     }
+
+    public EmployeeEntity findByUsername(String username) {
+        return employeeRepo.findByUserAccountUsername(username);
+    }
 }

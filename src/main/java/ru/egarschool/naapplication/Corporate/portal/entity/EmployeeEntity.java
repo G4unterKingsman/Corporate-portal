@@ -24,23 +24,15 @@ public class EmployeeEntity {
     private Integer workExperienceYears;
     private String description;
 
-
     @OneToMany(mappedBy = "orderEmploy", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<OrderEntity> employOrders = new ArrayList<>();
-
 
     @OneToMany(mappedBy = "whoGaveTask", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<TaskEntity> taskForEmploy = new ArrayList<>();
 
     @OneToMany(mappedBy = "whoGivenTask", cascade = CascadeType.REMOVE, orphanRemoval = true)
-
     private List<TaskEntity> taskFromEmploy = new ArrayList<>();
 
-
-
-    //TODO: Сделать эндпоинты для задания и отчёта, добавить в их контроллеры обработку
-    //TODO: дописать все функции CRUD для КАЖДОЙ СУЩНОСТИ
-    //TODO: Добавить сущность админа команды? МногоКОдному создание задания,удаление сотрудников,просмотр отчётов всех
-
-
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private UserAccount userAccount;
 }

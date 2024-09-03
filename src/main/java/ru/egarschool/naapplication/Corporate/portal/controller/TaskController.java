@@ -3,6 +3,7 @@ package ru.egarschool.naapplication.Corporate.portal.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,8 @@ import ru.egarschool.naapplication.Corporate.portal.service.TaskServiceImpl;
 public class TaskController {
     private final TaskServiceImpl taskService;
 
+
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping
     public String getAllTasks(Model model){
         model.addAttribute("tasks", taskService.findAll());
@@ -23,7 +26,7 @@ public class TaskController {
     }
 
 
-
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/add_task")
     public String getAddTaskForm(Model model){
         model.addAttribute("task", new TaskDto());
@@ -31,6 +34,7 @@ public class TaskController {
     }
 
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or #taskDto.whoGaveTask.userAccount.username == authentication.name")
     @PostMapping("/add_task")
     public String create(@Valid @ModelAttribute TaskDto taskDto, BindingResult bindingResult){
         if(bindingResult.hasErrors())
@@ -39,6 +43,8 @@ public class TaskController {
         return "redirect:/all_tasks";
     }
 
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{id}")
     public String getInfoTask(Model model, @PathVariable Long id){
         model.addAttribute("task", taskService.getById(id));
@@ -48,6 +54,7 @@ public class TaskController {
 
 
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/{id}/edit_task")
     public String getEditForm(Model model, @PathVariable Long id){
         TaskDto taskDto = taskService.getById(id);
@@ -55,6 +62,8 @@ public class TaskController {
         return "edit_task";
     }
 
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or #taskDto.whoGaveTask.userAccount.username == authentication.name")
     @PostMapping("/{id}/edit_task")
     public String update(@Valid @ModelAttribute TaskDto taskDto, BindingResult bindingResult,
                          @PathVariable Long id, Model model){
@@ -65,6 +74,8 @@ public class TaskController {
         return "redirect:/all_tasks/{id}";
     }
 
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{id}/delete")
     public String deleteTask(@PathVariable Long id){
         taskService.delete(id);
