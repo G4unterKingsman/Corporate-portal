@@ -1,5 +1,6 @@
 package ru.egarschool.naapplication.Corporate.portal.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
@@ -19,20 +20,23 @@ public class EmployeeEntity {
     private Long id;
     private String name;
     private Integer age;
-    private String post;
     private LocalDate joined;
     private Integer workExperienceYears;
     private String description;
 
     @OneToMany(mappedBy = "orderEmploy", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
     private List<OrderEntity> employOrders = new ArrayList<>();
 
     @OneToMany(mappedBy = "whoGaveTask", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
     private List<TaskEntity> taskForEmploy = new ArrayList<>();
 
     @OneToMany(mappedBy = "whoGivenTask", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
     private List<TaskEntity> taskFromEmploy = new ArrayList<>();
 
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private UserAccount userAccount;
 }

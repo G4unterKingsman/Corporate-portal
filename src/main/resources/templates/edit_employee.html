@@ -35,9 +35,12 @@
             <small class="text-danger" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></small>
           </div>
           <div class="col-md-4 mb-3">
-            <label for="post">Должность</label>
-            <input th:field="*{post}" th:value="${employeeDto.post}" type="text" class="form-control" id="post" placeholder="" value="" required>
-            <small class="text-danger" th:if="${#fields.hasErrors('post')}" th:errors="*{post}"></small>
+            <label for="post">Роль</label>
+            <input th:field="*{userAccount.roles}" th:value="${employeeDto.userAccount.roles}" type="text" class="form-control" list="style" id="post" placeholder="" value="" required>
+            <datalist id="style">
+              <option value="ROLE_USER"></option>
+              <option value="ROLE_ADMIN"></option>
+            </datalist>
           </div>
           <div class="col-md-4 mb-3">
             <label for="joined">Когда присоеденился</label>

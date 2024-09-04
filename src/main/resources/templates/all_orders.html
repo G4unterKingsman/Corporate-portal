@@ -24,37 +24,36 @@
     </div>
 </div>
 
-<div class="container">
-    <br/>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th class="text-justify">#</th>
-                <th class="text-justify">Название</th>
-                <th class="text-justify">Когда создан</th>
-                <th class="text-justify">Описание</th>
-                <th class="text-justify">Автор</th>
-                <th class="text-justify"></th>
-                <th class="text-justify"></th>
-                <th class="text-justify"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="order : ${orders}">
-                <td class="align-middle"><span th:text="${order.id}"/></td>
-                <td class="align-middle"><span th:text="${order.title}"/></td>
-                <td class="align-middle"><span th:text="${#temporals.format(order.created, 'dd-MMM-yyyy, HH:mm')}"/></td>
-                <td class="align-middle"><span th:text="${order.description}"/></td>
-                <td class="align-middle"><span th:text="${order.getOrderEmploy.name}"/></td>
-                <td><a th:href="'all_orders/' + ${order.id}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
-                <td><a th:href="'all_orders/' + ${order.id} + '/edit_order'"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
-                <td><a th:href="@{/all_orders/{id}/delete (id=${order.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Удалить</button></a></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+<br/>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th class="text-justify">#</th>
+            <th class="text-justify">Название</th>
+            <th class="text-justify">Когда создан</th>
+            <th class="text-justify">Описание</th>
+            <th class="text-justify">Автор</th>
+            <th class="text-justify"></th>
+            <th class="text-justify"></th>
+            <th class="text-justify"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td class="align-middle"><span th:text="${order.id}"/></td>
+            <td class="align-middle"><span th:text="${order.title}"/></td>
+            <td class="align-middle"><span th:text="${#temporals.format(order.created, 'dd-MMM-yyyy, HH:mm')}"/></td>
+            <td class="align-middle"><span th:text="${order.description}"/></td>
+            <td class="align-middle"><span th:text="${order.getOrderEmploy.name}"/></td>
+            <td><a th:href="@{/all_orders/{id} (id=${order.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
+            <td><a th:href="@{/all_orders/{id}/edit_order (id=${order.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
+            <td><a th:href="@{/all_orders/{id}/delete (id=${order.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Удалить</button></a></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

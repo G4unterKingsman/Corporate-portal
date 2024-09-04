@@ -21,12 +21,14 @@ public class UserController {
         return "login";
     }
 
+
+    // регистрация новых пользователей через метод create в EmployeeController для админов
+    // оставить регистрацию "на будущее"?
     @GetMapping("/registration")
     public String registration(Model model){
         model.addAttribute("user", new UserAccount());
         return "registration";
     }
-
     @PostMapping("/registration")
     public String create(@ModelAttribute("user") UserAccount user, Model model){
         if(!userService.createUser(user)){
@@ -35,10 +37,4 @@ public class UserController {
         }
         return "redirect:/login";
     }
-
-    @GetMapping("/welcome")
-    public String welcome(){
-        return "welcome";
-    }
-
 }

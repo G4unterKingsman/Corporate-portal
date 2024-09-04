@@ -21,10 +21,8 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
 
-    public UserAccount getUserByUsername(String username) {
-        return userRepo.findByUsername(username).orElseThrow();
-    }
 
+    // TODO убрать после реализации создания через админа
     public boolean createUser(UserAccount user){
         EmployeeEntity employee = new EmployeeEntity();
         employee.setName(user.getEmployee().getName());
@@ -39,13 +37,6 @@ public class UserServiceImpl implements UserService {
 
         userRepo.save(newUser);
         return true;
-    }
-
-    public void updateProfile(Long userId, String newEmployeeName) {
-        UserAccount user = userRepo.findById(userId).orElseThrow();
-        EmployeeEntity employee = user.getEmployee();
-        employee.setName(newEmployeeName);
-        employeeRepo.save(employee);
     }
 
 }

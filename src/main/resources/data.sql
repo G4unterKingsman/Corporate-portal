@@ -1,9 +1,9 @@
-insert into employees(age, joined, work_experience_years, description, name, post)
-values (21,'2024-08-23',3,'Сложный в общении','Годрик Сторукий', 'admin'),
-       (23,'2022-08-22',3,'бывший логопед','Мирон Янович', 'прогер'),
-       (24,'2024-09-08',3,'дед тоже Саня','Сан Саныч', 'admin'),
-       (25,'2024-11-08',3,'понять и простить','Бородач Гриша', 'прогер'),
-       (26,'2024-12-08',3,'убивает взглядом','Мария Сергеева', 'admin');
+insert into employees(age, joined, work_experience_years, description, name)
+values (21,'2024-08-23',3,'Сложный в общении','Годрик Сторукий'),
+       (23,'2022-08-22',3,'бывший логопед','Мирон Янович'),
+       (24,'2024-09-08',3,'дед тоже Саня','Сан Саныч'),
+       (25,'2024-11-08',3,'понять и простить','Бородач Гриша'),
+       (26,'2024-12-08',3,'убивает взглядом','Мария Сергеева');
 
 insert into orders(title, created, description, order_employ_id)
 values ('Отчёт о проделанной работе', LOCALTIMESTAMP, 'покрасил кнопку',1),
@@ -22,7 +22,7 @@ values ('Кнопка', LOCALTIMESTAMP, 'покрась кнопку пжпжп'
 
 
 insert into users(active, password, username,employee_id)
-values (True, '$2a$08$BcpUx.x3wyjViG2BEOIb5e4H4xMVyFVVhUbHwCEWNNWZCpXsQoNX.', 'admin',1),
+values (True, '$2a$08$BcpUx.x3wyjViG2BEOIb5e4H4xMVyFVVhUbHwCEWNNWZCpXsQoNX.', 'godrik',1),
        (True, '$2a$08$BcpUx.x3wyjViG2BEOIb5e4H4xMVyFVVhUbHwCEWNNWZCpXsQoNX.', 'miron',2),
        (True, '$2a$08$BcpUx.x3wyjViG2BEOIb5e4H4xMVyFVVhUbHwCEWNNWZCpXsQoNX.', 'SanSan',3),
        (True, '$2a$08$BcpUx.x3wyjViG2BEOIb5e4H4xMVyFVVhUbHwCEWNNWZCpXsQoNX.', 'Grisha001',4),

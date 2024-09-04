@@ -35,9 +35,20 @@
             <small class="text-danger" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></small>
           </div>
           <div class="col-md-4 mb-3">
-            <label for="post">Пост</label>
-            <input th:field="*{post}" type="text" class="form-control" id="post" placeholder="" value="" required>
-            <small class="text-danger" th:if="${#fields.hasErrors('post')}" th:errors="*{post}"></small>
+            <label for="role">Роль</label>
+            <input th:field="*{userAccount.roles}" type="text" class="form-control" id="role" list="style" placeholder="" value="" required>
+            <datalist id="style">
+              <option value="ROLE_USER"></option>
+              <option value="ROLE_ADMIN"></option>
+            </datalist>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="username">имя пользователя</label>
+            <input th:field="*{userAccount.username}" type="text" class="form-control" id="username" placeholder="" value="" required>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="password">Пароль</label>
+            <input th:field="*{userAccount.password}" type="text" class="form-control" id="password" placeholder="" value="" required>
           </div>
           <div class="col-md-4 mb-3">
             <label for="joined">Когда присоеденился</label>
@@ -54,8 +65,7 @@
             <input th:field="*{description}" type="text" class="form-control" id="description" placeholder="" value="" required>
             <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
           </div>
-        <hr class="mb-4">
-
+          <hr class="mb-4">
           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         <button class="btn btn-primary btn-lg btn-block" type="submit" value="Submit">Добавить сотрудника</button>
       </div>

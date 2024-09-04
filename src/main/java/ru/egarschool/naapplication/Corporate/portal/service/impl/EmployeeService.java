@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface EmployeeService {
     EmployeeDto getById(Long id);
-    EmployeeDto getByName(String nane);
 
     List<EmployeeDto> getAll();
 
@@ -17,5 +16,4 @@ public interface EmployeeService {
 
     void delete(Long id);
 
-    EmployeeEntity findByUsername(String username);
 }

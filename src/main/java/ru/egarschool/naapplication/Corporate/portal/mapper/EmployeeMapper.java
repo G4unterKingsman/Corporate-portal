@@ -1,9 +1,11 @@
 package ru.egarschool.naapplication.Corporate.portal.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import ru.egarschool.naapplication.Corporate.portal.dto.EmployeeDto;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
+
 
 
 @Mapper(componentModel = "spring")
@@ -13,7 +15,7 @@ public interface EmployeeMapper{
 
     EmployeeDto toDto(EmployeeEntity byName);
 
-
+    @Mapping(source = "userAccount", target = "userAccount.id", ignore = true)
     void updateEmployeeFromDTO(EmployeeDto employeeDto, @MappingTarget EmployeeEntity employee);
 
 }

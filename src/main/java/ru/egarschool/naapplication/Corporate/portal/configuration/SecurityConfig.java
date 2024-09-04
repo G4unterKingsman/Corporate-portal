@@ -25,8 +25,12 @@ public class SecurityConfig{
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**")) //откл csrf для реста
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/","/welcome","/login", "/registration").permitAll()
+                        .requestMatchers("/login", "/logout").permitAll()
+
+                        // не .authenticated() т.к не реализована авторизация для рест (jwt надо бы сделать)
+                        .requestMatchers("/api/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -34,7 +38,12 @@ public class SecurityConfig{
                         .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
-                .logout((logout) -> logout.permitAll());
+                .logout((logout) -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll());
 
         return http.build();
     }

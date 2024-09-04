@@ -34,7 +34,6 @@ public class OrderController {
         return "add_order";
     }
 
-    // TODO: Прописать логи, узнать почему даже с правами админа, и даже когда права не нужны возрващается 403
     @PostAuthorize("hasRole('ROLE_ADMIN') or #orderDto.orderEmploy.userAccount.username == authentication.name")
     @PostMapping("/add_order")
     public String create(@Valid @ModelAttribute OrderDto orderDto, BindingResult bindingResult){

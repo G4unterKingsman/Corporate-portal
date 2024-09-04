@@ -28,7 +28,6 @@ public class EmployeeDto {
     private String name;
     @Range(min= 18,max= 70, message = "Возраст от 18 до 70")
     private Integer age;
-    private String post;
     private LocalDate joined;
     @Range(max= 40, message = "вы слишком стар для этой работы, сэр")
 

@@ -54,7 +54,6 @@
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
 		</dependency>
-
 <!--		<dependency>-->
 <!--			<groupId>org.springframework.boot</groupId>-->
 <!--			<artifactId>spring-boot-docker-compose</artifactId>-->
@@ -91,12 +90,10 @@
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct-processor</artifactId>
-			<version>1.6.0</version> <!-- Замените на ту же версию, что и основная -->
+			<version>1.6.0</version>
 			<scope>provided</scope>
 		</dependency>
-
 	</dependencies>
-
 	<build>
 		<plugins>
 <!--			<plugin>-->

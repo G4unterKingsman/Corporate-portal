@@ -38,6 +38,12 @@
         <a th:href="@{/all_tasks/add_task}" class="btn btn-lg btn-block btn-outline-primary" role="button"
            aria-disabled="true">создать задание</a>
     </div>
+    <div class="col col-lg-3">
+        <form id="logoutForm" action="/logout" method="POST">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <input type="submit" value="Logout"/>
+        </form>
+    </div>
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
