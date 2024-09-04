@@ -1,11 +1,9 @@
 package ru.egarschool.naapplication.Corporate.portal.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import ru.egarschool.naapplication.Corporate.portal.dto.EmployeeDto;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
-import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
 import ru.egarschool.naapplication.Corporate.portal.entity.UserAccount;
 import ru.egarschool.naapplication.Corporate.portal.mapper.EmployeeMapper;
 import ru.egarschool.naapplication.Corporate.portal.repository.EmployeeRepo;

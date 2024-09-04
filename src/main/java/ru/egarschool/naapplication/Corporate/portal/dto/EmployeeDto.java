@@ -1,9 +1,5 @@
 package ru.egarschool.naapplication.Corporate.portal.dto;
 
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
