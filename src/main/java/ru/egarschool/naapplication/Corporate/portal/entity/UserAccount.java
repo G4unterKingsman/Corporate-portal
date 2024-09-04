@@ -1,7 +1,5 @@
 package ru.egarschool.naapplication.Corporate.portal.entity;
 
-
-
 import ru.egarschool.naapplication.Corporate.portal.entity.enums.Role;
 
 import jakarta.persistence.*;

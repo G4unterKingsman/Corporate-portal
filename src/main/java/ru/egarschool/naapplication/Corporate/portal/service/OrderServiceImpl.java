@@ -1,10 +1,6 @@
 package ru.egarschool.naapplication.Corporate.portal.service;
 
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.egarschool.naapplication.Corporate.portal.dto.OrderDto;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
@@ -39,17 +35,22 @@ public class OrderServiceImpl implements OrderService {
 
 
     public OrderDto create(OrderDto orderDto){
-        String username = securityService.getCurrentUsername();  // получаем юзернейм текущего пользователя
+        String username = securityService.getCurrentUsername();
         EmployeeEntity employee = employeeRepo.findEmployeeEntityByUserAccount_Username(username).orElseThrow(); //находим сотрудника по юзернейму
-        orderDto.setOrderEmploy(employee);  //присваиваем отчётDto сотрудника который сейчас пользователь
+        orderDto.setOrderEmploy(employee);
 
-        OrderEntity order = orderMapper.toEntity(orderDto); // создаём сущность отчёта по dто
-        orderRepo.save(order); // сохраняем отчёт
-        return orderMapper.toDto(order); // передаём отчёт обратно контроллеру
+        OrderEntity order = orderMapper.toEntity(orderDto);
+        orderRepo.save(order);
+        return orderMapper.toDto(order);
     }
 
     public OrderDto update(OrderDto orderDto, Long id) {
+        String username = securityService.getCurrentUsername();
+        EmployeeEntity employee = employeeRepo.findEmployeeEntityByUserAccount_Username(username).orElseThrow();
+        orderDto.setOrderEmploy(employee);
+
         OrderEntity order = orderRepo.findById(id).orElseThrow();
+        order.setOrderEmploy(employee);
         orderMapper.toUpdateOrderFromDto(orderDto,order);
         orderRepo.save(order);
         return orderMapper.toDto(order);

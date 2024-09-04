@@ -1,8 +1,6 @@
 package ru.egarschool.naapplication.Corporate.portal.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
 
@@ -17,7 +15,7 @@ public interface EmployeeRepo extends JpaRepository<EmployeeEntity, Long> {
 
 
     // @Query("SELECT e FROM EmployeeEntity e WHERE e.userAccount.username = :username")
-    // Optional<EmployeeEntity> findByUserAccountUsername(@Param("username") String username);
+    // Optional<EmployeeEntity> findEmployeeEntityByUserAccount_Username(@Param("username") String username);
 
     Optional<EmployeeEntity> findEmployeeEntityByUserAccount_Username(String username);
 }

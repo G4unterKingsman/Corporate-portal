@@ -28,7 +28,7 @@ public class EmployeeController {
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/add_employee")
     public String getCreateForm(Model model){
-        model.addAttribute("employee", new EmployeeDto());
+        model.addAttribute("employeeDto", new EmployeeDto());
         return "add_employee";
     }
 
@@ -36,6 +36,7 @@ public class EmployeeController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/add_employee")
     public String create(@Valid @ModelAttribute EmployeeDto employeeDto, BindingResult bindingResult){
+
         if(bindingResult.hasErrors())
             return "add_employee";
 

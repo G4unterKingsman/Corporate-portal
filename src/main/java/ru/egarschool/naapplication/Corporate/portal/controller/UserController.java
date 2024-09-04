@@ -2,7 +2,6 @@ package ru.egarschool.naapplication.Corporate.portal.controller;
 
 
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.control.MappingControl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
