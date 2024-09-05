@@ -13,7 +13,6 @@ public interface OrderMapper {
 
     OrderEntity toEntity(OrderDto byName);
 
-    // @Mapping(source = "orderEmploy", target = "orderEmploy.id", ignore = true)
     void toUpdateOrderFromDto(OrderDto byName, @MappingTarget OrderEntity order);
 
 }

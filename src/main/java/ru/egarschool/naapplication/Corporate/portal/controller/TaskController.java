@@ -52,10 +52,6 @@ public class TaskController {
         return "show_task";
     }
 
-
-
-
-
     @PreAuthorize("hasRole('ROLE_ADMIN') or @taskServiceImpl.getOwnerUsername(#id)  == authentication.name")
     @GetMapping("/{id}/edit_task")
     public String getEditForm(Model model, @PathVariable Long id){

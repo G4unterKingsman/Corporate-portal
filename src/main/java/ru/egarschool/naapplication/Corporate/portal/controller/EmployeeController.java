@@ -32,7 +32,6 @@ public class EmployeeController {
         return "add_employee";
     }
 
-
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/add_employee")
     public String create(@Valid @ModelAttribute EmployeeDto employeeDto, BindingResult bindingResult){
@@ -43,8 +42,6 @@ public class EmployeeController {
         employeeService.create(employeeDto);
         return "redirect:/all_employees";
     }
-
-
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or @employeeServiceImpl.getOwnerUsername(#id)  == authentication.name")
     @GetMapping("/{id}")

@@ -14,8 +14,6 @@ import ru.egarschool.naapplication.Corporate.portal.service.impl.UserService;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
-
     @GetMapping("/login")
     public String login(@ModelAttribute("user") UserAccount user){
         return "login";
@@ -23,18 +21,15 @@ public class UserController {
 
 
     // регистрация новых пользователей через метод create в EmployeeController для админов
-    // оставить регистрацию "на будущее"?
+    // оставить регистрацию "на будущее" ?
+    // доступ к /registration закрыт
     @GetMapping("/registration")
     public String registration(Model model){
-        model.addAttribute("user", new UserAccount());
-        return "registration";
+        return "обратись к админу";
     }
     @PostMapping("/registration")
     public String create(@ModelAttribute("user") UserAccount user, Model model){
-        if(!userService.createUser(user)){
-            model.addAttribute("ошибка, такой пользователь уже есть");
-            return "/registration";
-        }
-        return "redirect:/login";
+
+        return "обратись к админу";
     }
 }

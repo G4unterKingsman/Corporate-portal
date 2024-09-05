@@ -25,8 +25,6 @@ public class OrderController {
         return "all_orders";
     }
 
-
-
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/add_order")
     public String getAddOrderForm(Model model){
