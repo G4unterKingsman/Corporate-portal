@@ -25,18 +25,14 @@ public class EmployeeEntity {
     private String description;
 
     @OneToMany(mappedBy = "orderEmploy", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JsonIgnore
     private List<OrderEntity> employOrders = new ArrayList<>();
 
     @OneToMany(mappedBy = "whoGaveTask", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JsonIgnore
     private List<TaskEntity> taskForEmploy = new ArrayList<>();
 
     @OneToMany(mappedBy = "whoGivenTask", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JsonIgnore
     private List<TaskEntity> taskFromEmploy = new ArrayList<>();
 
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
     private UserAccount userAccount;
 }

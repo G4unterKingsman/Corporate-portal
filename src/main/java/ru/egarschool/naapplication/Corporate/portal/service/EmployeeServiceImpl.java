@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service;
 import ru.egarschool.naapplication.Corporate.portal.dto.EmployeeDto;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
 import ru.egarschool.naapplication.Corporate.portal.entity.UserAccount;
+import ru.egarschool.naapplication.Corporate.portal.exception.EmployeNotFoundException;
 import ru.egarschool.naapplication.Corporate.portal.mapper.EmployeeMapper;
 import ru.egarschool.naapplication.Corporate.portal.repository.EmployeeRepo;
 import ru.egarschool.naapplication.Corporate.portal.repository.UserRepo;
 import ru.egarschool.naapplication.Corporate.portal.service.impl.EmployeeService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -88,5 +90,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public String getOwnerUsername(Long id) {
         EmployeeEntity employee = employeeRepo.findById(id).orElseThrow();
         return employee.getUserAccount().getUsername();
+    }
+    public EmployeeEntity findEmployeeByName(String name) {
+        return employeeRepo.findByName(name).orElseThrow(
+                () ->  new EmployeNotFoundException("Сотрудник с именем " + name + " не найден"));
     }
 }

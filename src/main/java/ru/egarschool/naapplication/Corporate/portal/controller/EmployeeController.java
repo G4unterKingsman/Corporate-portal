@@ -25,7 +25,7 @@ public class EmployeeController {
         return "all_employees";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/add_employee")
     public String getCreateForm(Model model){
         model.addAttribute("employeeDto", new EmployeeDto());

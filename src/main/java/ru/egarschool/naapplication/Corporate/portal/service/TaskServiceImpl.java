@@ -8,6 +8,7 @@ import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
 import ru.egarschool.naapplication.Corporate.portal.mapper.TaskMapper;
 import ru.egarschool.naapplication.Corporate.portal.repository.EmployeeRepo;
 import ru.egarschool.naapplication.Corporate.portal.repository.TaskRepo;
+import ru.egarschool.naapplication.Corporate.portal.service.impl.EmployeeService;
 import ru.egarschool.naapplication.Corporate.portal.service.impl.TaskService;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepo taskRepo;
     private final TaskMapper taskMapper;
     private final EmployeeRepo employeeRepo;
+    private final EmployeeServiceImpl employeeService;
     private final SecurityService securityService;
 
 
@@ -48,7 +50,7 @@ public class TaskServiceImpl implements TaskService {
     private TaskDto getTaskDto(TaskDto taskDto, TaskEntity task) {
         String username = securityService.getCurrentUsername();
         EmployeeEntity employeeWhoGave = employeeRepo.findEmployeeEntityByUserAccount_Username(username).orElseThrow();
-        EmployeeEntity employeeWhoGiven = employeeRepo.findByName(taskDto.getWhoGivenTask().getName());
+        EmployeeEntity employeeWhoGiven = employeeService.findEmployeeByName(taskDto.getWhoGivenTask().getName());
         taskDto.setWhoGaveTask(employeeWhoGave);
         task.setWhoGivenTask(employeeWhoGiven);
         taskMapper.toUpdateOrderFromDto(taskDto,task);

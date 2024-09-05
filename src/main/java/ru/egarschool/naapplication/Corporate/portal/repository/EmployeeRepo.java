@@ -10,12 +10,10 @@ import java.util.Optional;
 @Repository
 public interface EmployeeRepo extends JpaRepository<EmployeeEntity, Long> {
 
-    EmployeeEntity findByName(String name);
+    Optional<EmployeeEntity> findByName(String name);
 
 
 
     // @Query("SELECT e FROM EmployeeEntity e WHERE e.userAccount.username = :username")
-    // Optional<EmployeeEntity> findEmployeeEntityByUserAccount_Username(@Param("username") String username);
-
     Optional<EmployeeEntity> findEmployeeEntityByUserAccount_Username(String username);
 }

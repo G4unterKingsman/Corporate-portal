@@ -16,4 +16,6 @@ public interface EmployeeService {
 
     void delete(Long id);
 
+    EmployeeEntity findEmployeeByName(String name);
+
 }
