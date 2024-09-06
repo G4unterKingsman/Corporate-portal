@@ -9,6 +9,10 @@ import java.util.stream.Collectors;
 
 public class UserAccountDetails implements UserDetails {
 
+    /**
+     * вспомогательный класс для создания аккаунта, имплементирует UserDetails
+     */
+
     private final UserAccount userAccount;
 
     public UserAccountDetails(UserAccount userAccount){

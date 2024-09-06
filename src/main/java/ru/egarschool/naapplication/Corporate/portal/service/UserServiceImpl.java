@@ -20,9 +20,6 @@ public class UserServiceImpl implements UserService {
     private final EmployeeRepo employeeRepo;
     private final PasswordEncoder passwordEncoder;
 
-
-
-    // TODO убрать после реализации создания через админа
     public boolean createUser(UserAccount user){
         EmployeeEntity employee = new EmployeeEntity();
         employee.setName(user.getEmployee().getName());

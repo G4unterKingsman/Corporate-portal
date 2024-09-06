@@ -15,6 +15,15 @@ import java.time.LocalDateTime;
 @Builder
 @Table(name = "orders")
 public class OrderEntity {
+
+    /**
+     * id - индентификатор, задаётся автоматически в порядке добавления
+     * title - название отчёта
+     * created - дата создания, задаётся автоматичски при создании сущности
+     * description - описание отчёта
+     * orderEmploy - владелец отчёта, сотрудник
+     */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

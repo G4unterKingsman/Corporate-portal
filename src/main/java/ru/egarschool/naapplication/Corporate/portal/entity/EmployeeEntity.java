@@ -15,6 +15,20 @@ import java.util.List;
 @Builder
 @Table(name = "employees")
 public class EmployeeEntity {
+
+    /**
+     * id - индентификатор, задаётся автоматически в порядке добавления
+     * name - Имя сотрудника в формате "Имя Фамилия"
+     * age - возраст сотрудника
+     * joined - дата присоединения
+     * workExperienceYears - стаж работы
+     * description - описание/пометка о сотруднике
+     * employOrders - список отчётов сотрудника
+     * taskForEmploy - список задач ДЛЯ сотрудника ОТ других сотрудников
+     * taskFromEmploy- список задач ОТ сотрудника ДЛЯ других сотрудников
+     * userAccount - привязанный аккаунт, под которым сотрудник входит в портал
+     */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

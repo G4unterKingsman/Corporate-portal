@@ -2,6 +2,7 @@ package ru.egarschool.naapplication.Corporate.portal.controller.advice;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.mapstruct.ap.shaded.freemarker.template.TemplateNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import ru.egarschool.naapplication.Corporate.portal.exception.EmployeNotFoundException;
+import ru.egarschool.naapplication.Corporate.portal.exception.ResourceNotFoundException;
 
 
 @ControllerAdvice
@@ -24,6 +26,12 @@ public class CustomControllerAdvice {
     @ExceptionHandler(EmployeNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<String> handleEmployeeNotFoundException(EmployeNotFoundException e){
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<String> pageNotFoundException(ResourceNotFoundException e){
         return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
     }
 
