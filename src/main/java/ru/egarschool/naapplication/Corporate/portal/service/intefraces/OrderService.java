@@ -1,4 +1,4 @@
-package ru.egarschool.naapplication.Corporate.portal.service.impl;
+package ru.egarschool.naapplication.Corporate.portal.service.intefraces;
 
 import ru.egarschool.naapplication.Corporate.portal.dto.OrderDto;
 

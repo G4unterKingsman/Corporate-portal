@@ -8,7 +8,7 @@ import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
 
 
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface TaskMapper {
 
     TaskEntity toEntity(TaskDto taskDto);

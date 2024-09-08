@@ -1,8 +1,9 @@
-package ru.egarschool.naapplication.Corporate.portal.service.impl;
+package ru.egarschool.naapplication.Corporate.portal.service.intefraces;
 
 
 import ru.egarschool.naapplication.Corporate.portal.dto.EmployeeDto;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
+import ru.egarschool.naapplication.Corporate.portal.exception.EmployeNotFoundException;
 
 import java.util.List;
 
@@ -17,5 +18,8 @@ public interface EmployeeService {
     void delete(Long id);
 
     EmployeeEntity findEmployeeByName(String name);
+
+
+    String getOwnerUsername(Long id);
 
 }

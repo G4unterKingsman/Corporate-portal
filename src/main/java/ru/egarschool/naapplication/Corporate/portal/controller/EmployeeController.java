@@ -83,6 +83,12 @@ public class EmployeeController {
         return "show_employee";
     }
 
+    @RequestMapping("/index/all_employees/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @employeeServiceImpl.getOwnerUsername(#id)  == authentication.name")
+    public String getProfileEmployee(Model model, @PathVariable Long id){
+        model.addAttribute("employee", employeeService.getById(id));
+        return "redirect:/all_employees/{id}";
+    }
 
     /**
      * Получение формы обновления

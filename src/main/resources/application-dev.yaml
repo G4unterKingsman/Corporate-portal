@@ -6,10 +6,12 @@ spring:
   application:
     name: CorporatePortalApplication
   datasource:
-    url: jdbc:postgresql://localhost:5432/corporate-potral
-    username: postgres
-    password: egaroot
+    url: jdbc:h2:mem:cor-portal-db
+    username: sa
+    password: sa
+    driverClassName: org.h2.Driver
   jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
     hibernate:
       ddl-auto: create-drop

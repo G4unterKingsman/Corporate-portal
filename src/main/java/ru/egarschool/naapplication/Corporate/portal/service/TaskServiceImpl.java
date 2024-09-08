@@ -1,15 +1,16 @@
 package ru.egarschool.naapplication.Corporate.portal.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.egarschool.naapplication.Corporate.portal.dto.TaskDto;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
 import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
+import ru.egarschool.naapplication.Corporate.portal.exception.TaskNotFoundException;
 import ru.egarschool.naapplication.Corporate.portal.mapper.TaskMapper;
 import ru.egarschool.naapplication.Corporate.portal.repository.EmployeeRepo;
 import ru.egarschool.naapplication.Corporate.portal.repository.TaskRepo;
-import ru.egarschool.naapplication.Corporate.portal.service.impl.EmployeeService;
-import ru.egarschool.naapplication.Corporate.portal.service.impl.TaskService;
+import ru.egarschool.naapplication.Corporate.portal.service.intefraces.TaskService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,12 +29,13 @@ public class TaskServiceImpl implements TaskService {
     public List<TaskDto> findAll(){
         List<TaskEntity> orders = taskRepo.findAll();
         return orders.stream()
-                .map(e -> taskMapper.toDto(e))
+                .map(taskMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     public TaskDto getById(Long id){
-        TaskEntity task =  taskRepo.findById(id).orElseThrow();
+        TaskEntity task =  taskRepo.findById(id).orElseThrow(
+                () ->  new TaskNotFoundException("Задачи с идентификатором " + id + " нет"));
         return taskMapper.toDto(task);
     }
 
@@ -43,20 +45,23 @@ public class TaskServiceImpl implements TaskService {
     }
 
     public TaskDto update(TaskDto taskDto, Long id) {
-        TaskEntity task = taskRepo.findById(id).orElseThrow();
+        TaskEntity task = taskRepo.findById(id).orElseThrow(
+                () ->  new TaskNotFoundException("Задачи с идентификатором " + id + " нет"));
         return getTaskDto(taskDto, task);
     }
 
     private TaskDto getTaskDto(TaskDto taskDto, TaskEntity task) {
         String username = securityService.getCurrentUsername();
-        EmployeeEntity employeeWhoGave = employeeRepo.findEmployeeEntityByUserAccount_Username(username).orElseThrow();
+        EmployeeEntity employeeWhoGave = employeeRepo.findEmployeeEntityByUserAccount_Username(username).orElseThrow(
+                () ->  new UsernameNotFoundException("Сотрудник с username " + username + " не найден"));
         EmployeeEntity employeeWhoGiven = employeeService.findEmployeeByName(taskDto.getWhoGivenTask().getName());
+
         taskDto.setWhoGaveTask(employeeWhoGave);
         task.setWhoGivenTask(employeeWhoGiven);
         taskMapper.toUpdateOrderFromDto(taskDto,task);
 
         taskRepo.save(task);
-        return taskMapper.toDto(task);
+        return taskDto;
     }
 
     @Override
@@ -65,7 +70,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     public String getOwnerUsername(Long id) {
-        TaskEntity task = taskRepo.findById(id).orElseThrow();
+        TaskEntity task = taskRepo.findById(id).orElseThrow(
+                () ->  new TaskNotFoundException("Задачи с идентификатором " + id + " нет"));
         return task.getWhoGaveTask().getUserAccount().getUsername();
     }
 }

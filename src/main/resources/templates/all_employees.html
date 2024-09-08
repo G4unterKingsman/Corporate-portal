@@ -23,7 +23,6 @@
            aria-disabled="true">На главную</a>
     </div>
 </div>
-
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -31,7 +30,7 @@
                 <th class="text-justify">#</th>
                 <th class="text-justify">Имя</th>
                 <th class="text-justify">Возраст</th>
-                <th class="text-justify">Пост</th>
+                <th class="text-justify">Роль</th>
                 <th class="text-justify">Когда присоеденился</th>
                 <th class="text-justify">Стаж</th>
                 <th class="text-justify">Описание</th>
@@ -49,15 +48,13 @@
                 <td class="align-middle"><span th:text="${#temporals.format(employee.joined, 'dd-MMM-yyyy')}"/></td>
                 <td class="align-middle"><span th:text="${employee.workExperienceYears}"/></td>
                 <td class="align-middle"><span th:text="${employee.description}"/></td>
-                <td><a th:href="'all_employees/' + ${employee.id}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
-                <td><a th:href="'all_employees/' + ${employee.id} + '/edit_employee'"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
+                <td><a th:href="@{/all_employees/{id} (id=${employee.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
+                <td><a th:href="@{/all_employees/{id}/edit_employee (id=${employee.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
                 <td><a th:href="@{/all_employees/{id}/delete (id=${employee.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Удалить</button></a></td>
             </tr>
             </tbody>
         </table>
     </div>
-
-
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

@@ -19,9 +19,6 @@ import ru.egarschool.naapplication.Corporate.portal.service.CustomUserDetailsSer
 @RequiredArgsConstructor
 public class SecurityConfig{
 
-    private final CustomUserDetailsService customUserDetailsService;
-
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http

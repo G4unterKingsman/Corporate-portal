@@ -2,7 +2,6 @@ package ru.egarschool.naapplication.Corporate.portal.controller.advice;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.mapstruct.ap.shaded.freemarker.template.TemplateNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
