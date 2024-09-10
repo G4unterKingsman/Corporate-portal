@@ -87,7 +87,7 @@ public class EmployeeController {
     @PreAuthorize("hasRole('ROLE_ADMIN') or @employeeServiceImpl.getOwnerUsername(#id)  == authentication.name")
     public String getProfileEmployee(Model model, @PathVariable Long id){
         model.addAttribute("employee", employeeService.getById(id));
-        return "redirect:/all_employees/{id}";
+        return "redirect:/all_employees/" + id;
     }
 
     /**
@@ -118,7 +118,7 @@ public class EmployeeController {
         if(bindingResult.hasErrors())
             return "edit_employee";
         employeeService.update(employeeDto, id);
-        return "redirect:/all_employees";
+        return "redirect:/all_employees/" + id;
     }
 
 

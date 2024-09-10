@@ -18,5 +18,5 @@ public interface TaskMapper {
 
     // не мапить поле whoGivenTask, присваивание вручную в сервисе
     @Mapping(source = "whoGivenTask", target = "whoGivenTask.id", ignore = true)
-    void toUpdateOrderFromDto(TaskDto byName, @MappingTarget TaskEntity order);
+    void toUpdateTaskFromDto(TaskDto byName, @MappingTarget TaskEntity task);
 }

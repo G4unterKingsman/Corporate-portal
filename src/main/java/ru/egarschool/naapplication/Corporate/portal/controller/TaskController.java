@@ -44,8 +44,13 @@ public class TaskController {
         return "redirect:/all_tasks";
     }
 
-
-    @PreAuthorize("hasRole('ROLE_ADMIN') or @taskServiceImpl.getOwnerUsername(#id)  == authentication.name")
+    /**
+     * Метод получение представления show_task  - информации о задаче
+     * Проверка безопасности: проверяется является зи сотрудник Админом, тем кто дал задачу, или тем кому дана задача
+     * @param id - идентификатор задачи
+     */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @taskServiceImpl.getOwnerUsername(#id)  == authentication.name  " +
+                                        "or @taskServiceImpl.getAssigneeUsername(#id) == authentication.name")
     @GetMapping("/{id}")
     public String getInfoTask(Model model, @PathVariable Long id){
         model.addAttribute("task", taskService.getById(id));
@@ -78,5 +83,31 @@ public class TaskController {
     public String deleteTask(@PathVariable Long id){
         taskService.delete(id);
         return "redirect:/all_tasks";
+    }
+
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @taskServiceImpl.getAssigneeUsername(#id)  == authentication.name")
+    @GetMapping("/{id}/start")
+    public String startTask(@PathVariable Long id){
+        boolean isCancel = false;
+        taskService.switchStatus(id,isCancel);
+        return "redirect:/all_tasks/{id}";
+    }
+
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @taskServiceImpl.getOwnerUsername(#id)  == authentication.name")
+    @GetMapping("/{id}/complete")
+    public String completeTask(@PathVariable Long id){
+        boolean isCancel = false;
+        taskService.switchStatus(id,isCancel);
+        return "redirect:/all_tasks/{id}";
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @taskServiceImpl.getOwnerUsername(#id)  == authentication.name")
+    @GetMapping("/{id}/cancel")
+    public String cancelTask(@PathVariable Long id){
+        boolean isCancel = true;
+        taskService.switchStatus(id,isCancel);
+        return "redirect:/all_tasks/{id}";
     }
 }

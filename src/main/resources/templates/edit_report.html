@@ -9,33 +9,34 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Добавление отчёта</title>
+
+    <title>Corporate Portal</title>
 </head>
 <body class="bg-light">
 <div class="container">
     <div class="py-5 text-center">
-        <h2>Добавление отчёт</h2>
+        <h2>Редактирование отчёта</h2>
     </div>
-    <form enctype="multipart/form-data" action="#" th:action="@{/all_orders/add_order}" th:object="${order}" method="post" class="needs-validation"
-          novalidate>
+
+    <form enctype="multipart/form-data"  th:object="${reportDto}" method="post" class="needs-validation" novalidate>
         <div class="row">
             <div class="col-md-12">
                 <h4 class="mb-3">Поля для заполнения</h4>
                 <div class="row">
                     <div class="col-md-4 mb-3">
-                        <label for="name">Название</label>
-                        <input th:field="*{title}" type="text" class="form-control" id="name" placeholder="" value="" required>
+                        <label for="title">Название</label>
+                        <input th:field="*{title}" th:value="*{title}" type="text" class="form-control" id="title" placeholder="" value="" required>
                         <small class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
                     </div>
-                    <div class="mb-3">
+                    <div class="col-md-4 mb-3">
                         <label for="description">Описание</label>
-                        <input th:field="*{description}" type="text" class="form-control" id="description" placeholder="" value="" required>
+                        <input th:field="*{description}" th:value="*{description}" type="text" class="form-control" id="description" placeholder="" value="" required>
                         <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
                     </div>
                 </div>
                 <hr class="mb-4">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                <button class="btn btn-primary btn-lg btn-block" type="submit" value="Submit">Добавить отчёт</button>
+                <button class="btn btn-primary btn-lg btn-block" type="submit" value="Submit">Редактировать отчёт</button>
             </div>
         </div>
     </form>

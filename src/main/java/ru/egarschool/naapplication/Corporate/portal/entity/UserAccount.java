@@ -22,7 +22,6 @@ public class UserAccount {
      * employee - сотрудник, привязанный к аккаунту
      * roles - роли сотрудника, определяют его превилегии
      */
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -42,6 +41,4 @@ public class UserAccount {
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
-
-
 }

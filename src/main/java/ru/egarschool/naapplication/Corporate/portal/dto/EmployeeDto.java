@@ -10,7 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
-import ru.egarschool.naapplication.Corporate.portal.entity.OrderEntity;
+import ru.egarschool.naapplication.Corporate.portal.entity.ReportEntity;
 import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
 import ru.egarschool.naapplication.Corporate.portal.entity.UserAccount;
 
@@ -47,7 +47,7 @@ public class EmployeeDto {
 
 
     @JsonIgnore
-    private List<OrderEntity> employOrders = new ArrayList<>();
+    private List<ReportEntity> employeeReports = new ArrayList<>();
     @JsonIgnore
     private List<TaskEntity> taskForEmploy = new ArrayList<>();
     @JsonIgnore

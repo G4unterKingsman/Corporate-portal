@@ -15,7 +15,7 @@
 
 <div class="row">
   <div class="col col-lg-3">
-    <a th:href="@{/all_orders}" class="btn btn-lg btn-block btn-outline-primary" role="button"
+    <a th:href="@{/all_reports}" class="btn btn-lg btn-block btn-outline-primary" role="button"
        aria-disabled="true">все отчёты </a>
   </div>
   <div class="col col-lg-3">
@@ -25,7 +25,7 @@
 </div>
 
 <div>
-  <div class="col" th:action="@{/show_order}" th:object="${order}">
+  <div class="col" th:action="@{/show_report}" th:object="${report}">
     <div class="py-5 text-center">
       <h2>информация об отчёте</h2>
     </div>
@@ -46,7 +46,7 @@
           </tr>
           <tr>
             <td class="text-justify">Создан</td>
-            <td class="align-middle"><span th:text="${#temporals.format(order.created, 'dd-MMM-yyyy, HH:mm')}"/></td>
+            <td class="align-middle"><span th:text="${#temporals.format(report.created, 'dd-MMM-yyyy, HH:mm')}"/></td>
           </tr>
           <tr>
             <td class="text-justify">Описание отчёта</td>
@@ -54,10 +54,20 @@
           </tr>
           <tr>
             <td class="text-justify">Автор</td>
-            <td class="align-middle"><span th:text="*{orderEmploy.name}"/></td>
+            <td class="align-middle"><span th:text="*{reportEmploy.name}"/></td>
           </tr>
           </tbody>
         </table>
+      </div>
+      <div>
+        <div class="py-5 text-center">
+          <div>
+            <a th:href="@{/all_reports/{id}/edit_report (id=${report.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a>
+          </div>
+          <div>
+            <a th:href="@{/all_reports/{id}/delete (id=${report.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Удалить</button></a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

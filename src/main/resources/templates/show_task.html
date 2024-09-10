@@ -41,7 +41,7 @@
           </thead>
           <tbody>
           <tr>
-            <td class="text-justify">Заголовок задачи</td>
+            <td class="text-justify">Заголовок Задачи</td>
             <td class="align-middle"><span th:text="*{title}"/></td>
           </tr>
           <tr>
@@ -53,15 +53,36 @@
             <td class="align-middle"><span th:text="*{description}"/></td>
           </tr>
           <tr>
-            <td class="text-justify">От кого задание</td>
+            <td class="text-justify">От кого задача</td>
             <td class="align-middle"><span th:text="*{whoGaveTask.name}"/></td>
           </tr>
           <tr>
-            <td class="text-justify">Кому задание</td>
+            <td class="text-justify">Кому задача</td>
             <td class="align-middle"><span th:text="*{whoGivenTask.name}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Статус Задачи</td>
+            <td class="align-middle"><span th:text="*{status.getName()}"/></td>
           </tr>
           </tbody>
         </table>
+      </div>
+      <div class="py-5 text-center">
+          <div>
+            <a th:href="@{/all_tasks/{id}/edit_task (id=${task.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a>
+          </div>
+          <div>
+            <a th:href="@{/all_tasks/{id}/delete (id=${task.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Удалить</button></a>
+          </div>
+      </div>
+      <div class="py-5 text-center">
+        <div th:if="${task.status.name == 'Создан' && #authentication.principal.employee.id == task.whoGivenTask.id}">
+          <a th:href="@{/all_tasks/{id}/start (id=${task.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Начать</button></a>
+        </div>
+        <div th:if="${task.status.name == 'В процессе' && #authentication.principal.employee.id == task.whoGaveTask.id}">
+          <a th:href="@{/all_tasks/{id}/complete (id=${task.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Завершить</button></a>
+          <a th:href="@{/all_tasks/{id}/cancel (id=${task.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Отменить</button></a>
+        </div>
       </div>
     </div>
   </div>

@@ -15,7 +15,7 @@
 
 <div class="row">
     <div class="col col-lg-3">
-        <a th:href="@{/all_orders/add_order}" class="btn btn-lg btn-block btn-outline-primary" role="button"
+        <a th:href="@{/all_reports/add_report}" class="btn btn-lg btn-block btn-outline-primary" role="button"
            aria-disabled="true">Добавить отчёт</a>
     </div>
     <div class="col col-lg-3">
@@ -31,8 +31,6 @@
         <tr>
             <th class="text-justify">#</th>
             <th class="text-justify">Название</th>
-            <th class="text-justify">Когда создан</th>
-            <th class="text-justify">Описание</th>
             <th class="text-justify">Автор</th>
             <th class="text-justify"></th>
             <th class="text-justify"></th>
@@ -40,15 +38,19 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="order : ${orders}">
-            <td class="align-middle"><span th:text="${order.id}"/></td>
-            <td class="align-middle"><span th:text="${order.title}"/></td>
-            <td class="align-middle"><span th:text="${#temporals.format(order.created, 'dd-MMM-yyyy, HH:mm')}"/></td>
-            <td class="align-middle"><span th:text="${order.description}"/></td>
-            <td class="align-middle"><span th:text="${order.getOrderEmploy.name}"/></td>
-            <td><a th:href="@{/all_orders/{id} (id=${order.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
-            <td><a th:href="@{/all_orders/{id}/edit_order (id=${order.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
-            <td><a th:href="@{/all_orders/{id}/delete (id=${order.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Удалить</button></a></td>
+        <tr th:each="report : ${reports}">
+            <td class="align-middle"><span th:text="${report.id}"/></td>
+            <td class="align-middle"><span th:text="${report.title}"/></td>
+            <td class="align-middle"><span th:text="${report.getReportEmploy().name}"/></td>
+            <div th:if="${#authentication.principal.employee.id == report.reportEmploy.id || #authentication.principal.employee.id == task.whoGivenTask.id}">
+                <td><a th:href="@{/all_reports/{id} (id=${report.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
+            </div>
+            <div th:if="${#authentication.principal.employee.id == report.reportEmploy.id}">
+                <td><a th:href="@{/all_reports/{id}/edit_report (id=${report.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
+            </div>
+            <div th:if="${#authentication.principal.employee.id == report.reportEmploy.id}">
+                <td><a th:href="@{/all_reports/{id}/delete (id=${report.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Удалить</button></a></td>
+            </div>
         </tr>
         </tbody>
     </table>

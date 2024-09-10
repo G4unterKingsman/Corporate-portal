@@ -32,12 +32,12 @@ public class TaskRestController {
     }
 
     @PutMapping("/{id}")
-    public TaskDto updateOrder(@PathVariable Long id, @RequestBody TaskDto taskDto) {
+    public TaskDto updateTask(@PathVariable Long id, @RequestBody TaskDto taskDto) {
         return taskService.update(taskDto, id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOrder(@PathVariable Long id) {
+    public void deleteTask(@PathVariable Long id) {
         taskService.delete(id);
     }
 }

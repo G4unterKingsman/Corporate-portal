@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderDto {
+public class ReportDto {
     private Long id;
 
     @Size(min= 2, max= 50, message = "Название должно занимать от 2-х до 50-ти символов")
@@ -31,5 +31,5 @@ public class OrderDto {
     private String description;
 
     @JsonIgnore
-    private EmployeeEntity orderEmploy;
+    private EmployeeEntity reportEmploy;
 }

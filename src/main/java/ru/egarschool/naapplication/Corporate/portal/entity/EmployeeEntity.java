@@ -22,7 +22,7 @@ public class EmployeeEntity {
      * joined - дата присоединения
      * workExperienceYears - стаж работы
      * description - описание/пометка о сотруднике
-     * employOrders - список отчётов сотрудника
+     * employReports - список отчётов сотрудника
      * taskForEmploy - список задач ДЛЯ сотрудника ОТ других сотрудников
      * taskFromEmploy- список задач ОТ сотрудника ДЛЯ других сотрудников
      * userAccount - привязанный аккаунт, под которым сотрудник входит в портал
@@ -37,8 +37,8 @@ public class EmployeeEntity {
     private Integer workExperienceYears;
     private String description;
 
-    @OneToMany(mappedBy = "orderEmploy", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<OrderEntity> employOrders = new ArrayList<>();
+    @OneToMany(mappedBy = "reportEmploy", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<ReportEntity> employReports = new ArrayList<>();
 
     @OneToMany(mappedBy = "whoGaveTask", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<TaskEntity> taskForEmploy = new ArrayList<>();

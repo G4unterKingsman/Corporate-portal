@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
+import ru.egarschool.naapplication.Corporate.portal.entity.enums.TaskStatus;
 
 import java.time.LocalDateTime;
 
@@ -36,4 +37,7 @@ public class TaskDto {
     @JsonIgnore
     @NotNull(message = "Обязательно для заполнения")
     private EmployeeEntity whoGivenTask;
+
+    @NotNull(message = "Обязательно для заполнения")
+    private TaskStatus status;
 }
