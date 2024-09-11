@@ -42,7 +42,7 @@
             <td class="align-middle"><span th:text="${report.id}"/></td>
             <td class="align-middle"><span th:text="${report.title}"/></td>
             <td class="align-middle"><span th:text="${report.getReportEmploy().name}"/></td>
-            <div th:if="${#authentication.principal.employee.id == report.reportEmploy.id || #authentication.principal.employee.id == task.whoGivenTask.id}">
+            <div th:if="${#authentication.principal.employee.id == report.reportEmploy.id}">
                 <td><a th:href="@{/all_reports/{id} (id=${report.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
             </div>
             <div th:if="${#authentication.principal.employee.id == report.reportEmploy.id}">

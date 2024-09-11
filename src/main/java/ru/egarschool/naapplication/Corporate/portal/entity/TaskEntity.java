@@ -50,8 +50,6 @@ public class TaskEntity {
 
     private String title;
 
-    @CreationTimestamp
-    private LocalDateTime created;
     private String description;
 
     @ManyToOne
@@ -65,9 +63,17 @@ public class TaskEntity {
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
 
-    private Integer timeAllowed;
+    @CreationTimestamp
+    private LocalDateTime created;
 
-    private Integer timeCancel;
+    @UpdateTimestamp
+    private LocalDateTime updated;
 
+    private LocalDateTime completed; // предполагаемая дата завершени, считается в сервисе как дата создания + timeAllowed
+    private Integer timeAllowed; // количество времени на задачу
+
+    @ManyToOne
+    @JoinColumn
+    private ReportEntity report;
 
 }

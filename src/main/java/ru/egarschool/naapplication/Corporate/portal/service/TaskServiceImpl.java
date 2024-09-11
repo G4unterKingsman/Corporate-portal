@@ -13,6 +13,8 @@ import ru.egarschool.naapplication.Corporate.portal.repository.EmployeeRepo;
 import ru.egarschool.naapplication.Corporate.portal.repository.TaskRepo;
 import ru.egarschool.naapplication.Corporate.portal.service.intefraces.TaskService;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,22 +44,38 @@ public class TaskServiceImpl implements TaskService {
 
     public TaskDto create(TaskDto taskDto){
         TaskEntity task = taskMapper.toEntity(taskDto);
-        return getTaskDto(taskDto, task);
+        String username = securityService.getCurrentUsername();
+        EmployeeEntity employeeWhoGave = employeeRepo.findEmployeeEntityByUserAccount_Username(username).orElseThrow(
+                () ->  new UsernameNotFoundException("Сотрудник с username " + username + " не найден"));
+        EmployeeEntity employeeWhoGiven = employeeService.findEmployeeByName(taskDto.getWhoGivenTask().getName());
+
+        taskDto.setStatus(TaskStatus.CREATED);
+        taskDto.setCreated(LocalDateTime.now());
+        taskDto.setWhoGaveTask(employeeWhoGave); // сеттим текущего сотрудника-пользователя как хозяина задачи
+        task.setWhoGivenTask(employeeWhoGiven); // вручную сеттим сотрудника, кому направлена задача
+        taskDto.setCompleted(calculateTimeComplete(taskDto)); // считаем для дто дату дедлайна
+
+        task.setCompleted(calculateTimeComplete(taskDto));
+
+        taskMapper.toUpdateTaskFromDto(taskDto,task);
+        taskRepo.save(task);
+        return taskDto;
     }
 
     public TaskDto update(TaskDto taskDto, Long id) {
         TaskEntity task = taskRepo.findById(id).orElseThrow(
                 () ->  new TaskNotFoundException("Задачи с идентификатором " + id + " нет"));
-        return getTaskDto(taskDto, task);
-    }
-
-    private TaskDto getTaskDto(TaskDto taskDto, TaskEntity task) {
         String username = securityService.getCurrentUsername();
         EmployeeEntity employeeWhoGave = employeeRepo.findEmployeeEntityByUserAccount_Username(username).orElseThrow(
                 () ->  new UsernameNotFoundException("Сотрудник с username " + username + " не найден"));
         EmployeeEntity employeeWhoGiven = employeeService.findEmployeeByName(taskDto.getWhoGivenTask().getName());
-        taskDto.setWhoGaveTask(employeeWhoGave);
-        task.setWhoGivenTask(employeeWhoGiven);
+
+        taskDto.setWhoGaveTask(employeeWhoGave); // сеттим текущего сотрудника-пользователя как хозяина задачи
+        task.setWhoGivenTask(employeeWhoGiven); // вручную сеттим сотрудника, кому направлена задача
+        taskDto.setCreated(task.getCreated()); // вкручную мапим дату создания
+        taskDto.setCompleted(calculateTimeComplete(taskDto)); // считаем для дто дату дедлайна
+        task.setCompleted(calculateTimeComplete(taskDto)); // считаем для сущности дату дедлайна
+        taskDto.setStatus(task.getStatus());
         taskMapper.toUpdateTaskFromDto(taskDto,task);
         taskRepo.save(task);
         return taskDto;
@@ -73,8 +91,10 @@ public class TaskServiceImpl implements TaskService {
         TaskEntity task = taskRepo.findById(id).orElseThrow(
                 () ->  new TaskNotFoundException("Задачи с идентификатором " + id + " нет"));
 
-
-        if (task.getStatus() == TaskStatus.CREATED && !isCancel) {
+        if (task.getStatus() == null && !isCancel) {
+            task.setStatus(TaskStatus.CREATED);
+        }
+        else if (task.getStatus() == TaskStatus.CREATED && !isCancel) {
             task.setStatus(TaskStatus.IN_PROGRESS);
         }
         else if (task.getStatus() == TaskStatus.IN_PROGRESS && !isCancel) {
@@ -83,6 +103,7 @@ public class TaskServiceImpl implements TaskService {
         else if (task.getStatus() == TaskStatus.IN_PROGRESS && isCancel) {
             task.setStatus(TaskStatus.CANCELLED);
         }
+        task.setUpdated(LocalDateTime.now());
         taskRepo.save(task);
     }
 
@@ -98,4 +119,11 @@ public class TaskServiceImpl implements TaskService {
                 () -> new TaskNotFoundException("Задачи с идентификатором " + id + " нет"));
         return task.getWhoGivenTask().getUserAccount().getUsername();
     }
+
+
+    // метод подсчёта даты завершения  = дата создания + часы отведенные на выполнение
+    private LocalDateTime calculateTimeComplete(TaskDto taskDto) {
+        return taskDto.getCreated().plusHours(taskDto.getTimeAllowed());
+    }
+
 }

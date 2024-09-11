@@ -45,8 +45,16 @@
             <td class="align-middle"><span th:text="*{title}"/></td>
           </tr>
           <tr>
-            <td class="text-justify">создан</td>
-            <td class="align-middle"><span th:text="${#temporals.format(task.created, 'dd-MMM-yyyy, HH:mm')}"/></td>
+            <td class="text-justify">Дата создания</td>
+            <td class="align-middle"><span th:text="${#temporals.format(task.created, 'dd-MMMM-yyyy, HH:mm')}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Дата редактирования</td>
+            <td class="align-middle"><span th:text="${#temporals.format(task.updated, 'dd-MMMM-yyyy, HH:mm')}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Дата Завершения(дедлайн)</td>
+            <td class="align-middle"><span th:text="${#temporals.format(task.completed, 'dd-MMMM-yyyy, HH:mm')}"/></td>
           </tr>
           <tr>
             <td class="text-justify">Подробности Задачи</td>
@@ -63,6 +71,10 @@
           <tr>
             <td class="text-justify">Статус Задачи</td>
             <td class="align-middle"><span th:text="*{status.getName()}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Время на выполнение</td>
+            <td class="align-middle"><span th:text="*{timeAllowed}"/></td>
           </tr>
           </tbody>
         </table>

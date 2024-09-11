@@ -39,7 +39,7 @@ public class TaskController {
     @PostMapping("/add_task")
     public String create(@Valid @ModelAttribute TaskDto taskDto, BindingResult bindingResult){
         if(bindingResult.hasErrors())
-            return "edit_task";
+            return "add_task";
         taskService.create(taskDto);
         return "redirect:/all_tasks";
     }

@@ -37,15 +37,10 @@
                         <input th:field="*{whoGivenTask.name}" th:value="*{whoGivenTask.name}" type="text" class="form-control" id="whoGivenTask" placeholder="" value="" required>
                         <small class="text-danger" th:if="${#fields.hasErrors('whoGivenTask')}" th:errors="*{whoGivenTask.name}"></small>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="status">Статус</label>
-                        <input th:field="*{status}" type="text" class="form-control" id="status" list="style" placeholder="" value="" required>
-                        <datalist id="style">
-                            <option th:value="CREATED">Создан</option>
-                            <option th:value="IN_PROGRESS">В процессе</option>
-                            <option th:value="COMPLETED">Завершен</option>
-                            <option th:value="CANCELLED">Отменё</option>
-                        </datalist>
+                    <div class="mb-3">
+                        <label for="timeAllowed">Время на выполнение (в часах)</label>
+                        <input th:field="*{timeAllowed}" type="number" class="form-control" id="timeAllowed" placeholder="" value="" required>
+                        <small class="text-danger" th:if="${#fields.hasErrors('timeAllowed')}" th:errors="*{timeAllowed}"></small>
                     </div>
                 </div>
                 <hr class="mb-4">

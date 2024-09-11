@@ -16,7 +16,9 @@ public interface TaskMapper {
     TaskDto toDto(TaskEntity task) ;
 
 
-    // не мапить поле whoGivenTask, присваивание вручную в сервисе
+    // ? тоже самое что и toEntity, но не мапится поле whoGivenTask, присваивание вручную в сервисе
     @Mapping(source = "whoGivenTask", target = "whoGivenTask.id", ignore = true)
+    @Mapping(source = "completed", target = "completed", ignore = true)
+    @Mapping(source = "created", target = "created", ignore = true)
     void toUpdateTaskFromDto(TaskDto byName, @MappingTarget TaskEntity task);
 }

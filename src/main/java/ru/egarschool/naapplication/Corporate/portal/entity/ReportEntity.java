@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -32,9 +33,18 @@ public class ReportEntity {
 
     @CreationTimestamp
     private LocalDateTime created;
+
+    @UpdateTimestamp
+    private LocalDateTime updated;
+
     private String description;
 
     @ManyToOne
     @JoinColumn
     private EmployeeEntity reportEmploy;
+
+    @OneToMany(mappedBy = "report")
+    private List<TaskEntity> tasks;
+
+
 }
