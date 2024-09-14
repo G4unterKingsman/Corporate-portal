@@ -75,39 +75,31 @@
       </div>
     </div>
   </div>
-    <br/>
-    <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-        <tr>
-          <th class="text-justify">#</th>
-          <th class="text-justify">Название</th>
-          <th class="text-justify">Когда создан</th>
-          <th class="text-justify">Описание</th>
-          <th class="text-justify">Автор</th>
-          <th class="text-justify"></th>
-          <th class="text-justify"></th>
-          <th class="text-justify"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="report : ${employee.getEmployeeReports}">
-          <td class="align-middle"><span th:text="*{report.id}"/></td>
-          <td class="align-middle"><span th:text="${report.title}"/></td>
-          <td class="align-middle"><span th:text="${#temporals.format(report.created, 'dd-MMM-yyyy, HH:mm')}"/></td>
-          <td class="align-middle"><span th:text="${report.description}"/></td>
-          <td class="align-middle"><span th:text="${report.reportEmploy.name}"/></td>
-          <td><a th:href="@{/all_reports/{id} (id=${report.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
-          <td><a th:href="@{/all_reports/{id}/edit_report (id=${report.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
-          <td><a th:href="@{/all_reports/{id}/delete (id=${report.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Удалить</button></a></td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
   <br/>
   <br/>
-
   <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th class="text-justify">#</th>
+        <th class="text-justify">Название</th>
+        <th class="text-justify">Когда создан</th>
+        <th class="text-justify"></th>
+        <th class="text-justify"></th>
+        <th class="text-justify"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="report : ${employee.getEmployeeReports}">
+        <td class="align-middle"><span th:text="${report.id}"/></td>
+        <td class="align-middle"><span th:text="${report.title}"/></td>
+        <td class="align-middle"><span th:text="${#temporals.format(report.created, 'dd-MMM-yyyy, HH:mm')}"/></td>
+        <td><a th:href="@{/all_reports/{id} (id=${report.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
+        <td><a th:href="@{/all_reports/{id}/edit_report (id=${report.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
+        <td><a th:href="@{/all_reports/{id}/delete (id=${report.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Удалить</button></a></td>
+      </tr>
+      </tbody>
+    </table>
     <table class="table table-striped">
       <thead>
       <tr>
@@ -132,7 +124,6 @@
       </tr>
       </tbody>
     </table>
-
     <table class="table table-striped">
       <thead>
       <tr>

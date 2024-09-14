@@ -39,6 +39,9 @@ public class TaskServiceImpl implements TaskService {
     public TaskDto getById(Long id){
         TaskEntity task =  taskRepo.findById(id).orElseThrow(
                 () ->  new TaskNotFoundException("Задачи с идентификатором " + id + " нет"));
+
+        // обновляем статус задачи при получении по id
+        updateTaskStatus(task);
         return taskMapper.toDto(task);
     }
 
@@ -53,9 +56,9 @@ public class TaskServiceImpl implements TaskService {
         taskDto.setCreated(LocalDateTime.now());
         taskDto.setWhoGaveTask(employeeWhoGave); // сеттим текущего сотрудника-пользователя как хозяина задачи
         task.setWhoGivenTask(employeeWhoGiven); // вручную сеттим сотрудника, кому направлена задача
-        taskDto.setCompleted(calculateTimeComplete(taskDto)); // считаем для дто дату дедлайна
+        taskDto.setDeadline(calculateTimeDeadline(taskDto)); // считаем для дто дату дедлайна
 
-        task.setCompleted(calculateTimeComplete(taskDto));
+        task.setDeadline(calculateTimeDeadline(taskDto));
 
         taskMapper.toUpdateTaskFromDto(taskDto,task);
         taskRepo.save(task);
@@ -72,10 +75,14 @@ public class TaskServiceImpl implements TaskService {
 
         taskDto.setWhoGaveTask(employeeWhoGave); // сеттим текущего сотрудника-пользователя как хозяина задачи
         task.setWhoGivenTask(employeeWhoGiven); // вручную сеттим сотрудника, кому направлена задача
-        taskDto.setCreated(task.getCreated()); // вкручную мапим дату создания
-        taskDto.setCompleted(calculateTimeComplete(taskDto)); // считаем для дто дату дедлайна
-        task.setCompleted(calculateTimeComplete(taskDto)); // считаем для сущности дату дедлайна
+        taskDto.setCreated(task.getCreated()); // вручную мапим дату создания
+        taskDto.setDeadline(calculateTimeDeadline(taskDto)); // считаем для dto дто дату дедлайна
+        task.setDeadline(calculateTimeDeadline(taskDto)); // считаем для сущности дто дату дедлайна
+
+
+        updateTaskStatus(task);
         taskDto.setStatus(task.getStatus());
+
         taskMapper.toUpdateTaskFromDto(taskDto,task);
         taskRepo.save(task);
         return taskDto;
@@ -86,11 +93,12 @@ public class TaskServiceImpl implements TaskService {
         taskRepo.deleteById(id);
     }
 
+
+    //метод изминения статуса по кнопкам "начать" "завершить" "отменить"
     @Override
     public void switchStatus(Long id, boolean isCancel) {
         TaskEntity task = taskRepo.findById(id).orElseThrow(
                 () ->  new TaskNotFoundException("Задачи с идентификатором " + id + " нет"));
-
         if (task.getStatus() == null && !isCancel) {
             task.setStatus(TaskStatus.CREATED);
         }
@@ -99,6 +107,10 @@ public class TaskServiceImpl implements TaskService {
         }
         else if (task.getStatus() == TaskStatus.IN_PROGRESS && !isCancel) {
             task.setStatus(TaskStatus.COMPLETED);
+            task.setCompleted(LocalDateTime.now());
+
+            // считаем фактически затраченное время в часах. Дата создания + время завершения
+            task.setTimeCancelled((int)Duration.between(task.getCreated(), LocalDateTime.now()).toHours());
         }
         else if (task.getStatus() == TaskStatus.IN_PROGRESS && isCancel) {
             task.setStatus(TaskStatus.CANCELLED);
@@ -121,9 +133,33 @@ public class TaskServiceImpl implements TaskService {
     }
 
 
-    // метод подсчёта даты завершения  = дата создания + часы отведенные на выполнение
-    private LocalDateTime calculateTimeComplete(TaskDto taskDto) {
+    // метод подсчёта дедлайна = дата создания + часы отведенные на выполнение
+    private LocalDateTime calculateTimeDeadline(TaskDto taskDto) {
         return taskDto.getCreated().plusHours(taskDto.getTimeAllowed());
     }
 
+
+
+    public TaskEntity findTaskById(Long id) {
+        TaskEntity task = taskRepo.findTaskEntitiesById(id).orElseThrow(
+                () -> new TaskNotFoundException("Задачи с идентификатором " + id + " нет"));
+        updateTaskStatus(task);
+        return task;
+    }
+
+
+
+    //поиск задачи по статусу, для подсчёта количества задач разных статусов
+    //TODO убрать если не пригодится
+    public List<TaskEntity> findByStatus(TaskStatus taskStatus){
+        return taskRepo.findTaskEntitiesByStatus(taskStatus).orElseThrow(
+                () -> new TaskNotFoundException("Задач с статусом " + taskStatus + " нет"));
+    }
+
+    public void updateTaskStatus(TaskEntity task) {
+        if (task.getDeadline().isBefore(LocalDateTime.now()) && task.getStatus() != TaskStatus.COMPLETED) {
+            task.setStatus(TaskStatus.CANCELLED);
+            taskRepo.save(task);
+        }
+    }
 }

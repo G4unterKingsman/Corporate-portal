@@ -1,6 +1,7 @@
 package ru.egarschool.naapplication.Corporate.portal.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import ru.egarschool.naapplication.Corporate.portal.dto.ReportDto;
 import ru.egarschool.naapplication.Corporate.portal.entity.ReportEntity;
@@ -12,6 +13,8 @@ public interface ReportMapper {
 
     ReportEntity toEntity(ReportDto byName);
 
+
+    @Mapping(source = "linkedTask", target = "linkedTask.id", ignore = true)
     void toUpdateReportFromDto(ReportDto byName, @MappingTarget ReportEntity report);
 
 }

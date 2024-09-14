@@ -53,8 +53,20 @@
             <td class="align-middle"><span th:text="${#temporals.format(task.updated, 'dd-MMMM-yyyy, HH:mm')}"/></td>
           </tr>
           <tr>
-            <td class="text-justify">Дата Завершения(дедлайн)</td>
+            <td class="text-justify">Дата Дедлайна</td>
+            <td class="align-middle"><span th:text="${#temporals.format(task.deadline, 'dd-MMMM-yyyy, HH:mm')}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Фактическая дата завершения</td>
             <td class="align-middle"><span th:text="${#temporals.format(task.completed, 'dd-MMMM-yyyy, HH:mm')}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Фактически затрачено часов</td>
+            <td class="align-middle"><span th:text="*{timeCancelled}"/>.ч</td>
+          </tr>
+          <tr>
+            <td class="text-justify">Выделено часов на задачу</td>
+            <td class="align-middle"><span th:text="*{timeAllowed}"/>.ч</td>
           </tr>
           <tr>
             <td class="text-justify">Подробности Задачи</td>
@@ -72,10 +84,6 @@
             <td class="text-justify">Статус Задачи</td>
             <td class="align-middle"><span th:text="*{status.getName()}"/></td>
           </tr>
-          <tr>
-            <td class="text-justify">Время на выполнение</td>
-            <td class="align-middle"><span th:text="*{timeAllowed}"/></td>
-          </tr>
           </tbody>
         </table>
       </div>
@@ -91,8 +99,10 @@
         <div th:if="${task.status.name == 'Создан' && #authentication.principal.employee.id == task.whoGivenTask.id}">
           <a th:href="@{/all_tasks/{id}/start (id=${task.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Начать</button></a>
         </div>
-        <div th:if="${task.status.name == 'В процессе' && #authentication.principal.employee.id == task.whoGaveTask.id}">
+        <div th:if="${task.status.name == 'В процессе' && (#authentication.principal.employee.id == task.whoGaveTask.id || #authentication.principal.employee.id == task.whoGivenTask.id)}">
           <a th:href="@{/all_tasks/{id}/complete (id=${task.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Завершить</button></a>
+        </div>
+        <div th:if="${task.status.name == 'В процессе' && #authentication.principal.employee.id == task.whoGaveTask.id}">
           <a th:href="@{/all_tasks/{id}/cancel (id=${task.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Отменить</button></a>
         </div>
       </div>

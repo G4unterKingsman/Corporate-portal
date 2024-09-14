@@ -45,8 +45,12 @@
             <td class="align-middle"><span th:text="*{title}"/></td>
           </tr>
           <tr>
-            <td class="text-justify">Создан</td>
+            <td class="text-justify">Дата создания</td>
             <td class="align-middle"><span th:text="${#temporals.format(report.created, 'dd-MMM-yyyy, HH:mm')}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Дата редактирования</td>
+            <td class="align-middle"><span th:text="${#temporals.format(report.updated, 'dd-MMM-yyyy, HH:mm')}"/></td>
           </tr>
           <tr>
             <td class="text-justify">Описание отчёта</td>
@@ -55,6 +59,42 @@
           <tr>
             <td class="text-justify">Автор</td>
             <td class="align-middle"><span th:text="*{reportEmploy.name}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Связанная задача</td>
+            <td class="align-middle"><span th:text="*{linkedTask.title}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Описание задачи</td>
+            <td class="align-middle"><span th:text="*{linkedTask.description}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">От кого</td>
+            <td class="align-middle"><span th:text="*{linkedTask.whoGaveTask.name}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Кому</td>
+            <td class="align-middle"><span th:text="*{linkedTask.whoGivenTask.name}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Задача создана</td>
+            <td class="align-middle"><span th:text="*{#temporals.format(linkedTask.created, 'dd-MMM-yyyy, HH:mm')}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Дедлайн задачи</td>
+            <td class="align-middle"><span th:text="*{#temporals.format(linkedTask.deadline, 'dd-MMM-yyyy, HH:mm')}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Отведенное время на задачу</td>
+            <td class="align-middle"><span th:text="*{linkedTask.timeAllowed}"/>.ч</td>
+          </tr>
+          <tr>
+            <td class="text-justify">Фактически затраченно время на задачу</td>
+            <td class="align-middle"><span th:text="*{linkedTask.timeCancelled}"/>.ч</td>
+          </tr>
+          <tr>
+            <td class="text-justify">Статус задачи</td>
+            <td class="align-middle"><span th:text="*{linkedTask.status.getName()}"/></td>
           </tr>
           </tbody>
         </table>

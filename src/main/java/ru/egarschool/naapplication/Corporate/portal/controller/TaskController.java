@@ -18,7 +18,6 @@ import ru.egarschool.naapplication.Corporate.portal.service.TaskServiceImpl;
 public class TaskController {
     private final TaskServiceImpl taskService;
 
-
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping
     public String getAllTasks(Model model){
@@ -76,15 +75,12 @@ public class TaskController {
         return "redirect:/all_tasks/{id}";
     }
 
-
-
     @PreAuthorize("hasRole('ROLE_ADMIN') or @taskServiceImpl.getOwnerUsername(#id)  == authentication.name")
     @GetMapping("/{id}/delete")
     public String deleteTask(@PathVariable Long id){
         taskService.delete(id);
         return "redirect:/all_tasks";
     }
-
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or @taskServiceImpl.getAssigneeUsername(#id)  == authentication.name")
     @GetMapping("/{id}/start")
@@ -94,8 +90,8 @@ public class TaskController {
         return "redirect:/all_tasks/{id}";
     }
 
-
-    @PreAuthorize("hasRole('ROLE_ADMIN') or @taskServiceImpl.getOwnerUsername(#id)  == authentication.name")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @taskServiceImpl.getOwnerUsername(#id)  == authentication.name" +
+                                        " or @taskServiceImpl.getAssigneeUsername(#id) == authentication.name")
     @GetMapping("/{id}/complete")
     public String completeTask(@PathVariable Long id){
         boolean isCancel = false;

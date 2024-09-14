@@ -95,9 +95,12 @@ public class EmployeeServiceImpl implements EmployeeService {
                 () ->  new EmployeNotFoundException("Сотрудник с индентификатором " + id + " не найден"));
         return employee.getUserAccount().getUsername();
     }
+
     public EmployeeEntity findEmployeeByName(String name) {
         return employeeRepo.findByName(name).orElseThrow(
                 () ->  new EmployeNotFoundException("Сотрудник с именем " + name + " не найден"));
     }
+
+
 
 }

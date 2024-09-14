@@ -52,6 +52,7 @@ public class EmployeeDto {
     private List<TaskEntity> taskForEmploy = new ArrayList<>();
     @JsonIgnore
     private List<TaskEntity> taskFromEmploy = new ArrayList<>();
+
     @JsonIgnore
     @NotNull(message = "Обязательно для заполнения")
     private UserAccount userAccount;

@@ -48,7 +48,11 @@ public class TaskDto {
 
     private LocalDateTime completed;
 
+    private LocalDateTime deadline;
+
     @NotNull(message = "Обязательно для заполнения")
     private Integer timeAllowed;
 
+    private Integer timeCancelled;
+    private ReportEntity report;
 }

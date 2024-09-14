@@ -32,6 +32,11 @@
                         <input th:field="*{description}" type="text" class="form-control" id="description" placeholder="" value="" required>
                         <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
                     </div>
+                    <div class="mb-3">
+                        <label for="linkedTask">ID связанной задачи:</label>
+                        <input th:field="*{linkedTask.id}" type="number" class="form-control" id="linkedTask" placeholder="" value="" required>
+                        <small class="text-danger" th:if="${#fields.hasErrors('linkedTask')}" th:errors="*{linkedTask}"></small>
+                    </div>
                 </div>
                 <hr class="mb-4">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>

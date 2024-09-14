@@ -43,8 +43,7 @@ public class ReportEntity {
     @JoinColumn
     private EmployeeEntity reportEmploy;
 
-    @OneToMany(mappedBy = "report")
-    private List<TaskEntity> tasks;
-
-
+    @OneToOne
+    @JoinColumn
+    private TaskEntity linkedTask;
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.egarschool.naapplication.Corporate.portal.dto.ReportDto;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
 import ru.egarschool.naapplication.Corporate.portal.entity.ReportEntity;
+import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
 import ru.egarschool.naapplication.Corporate.portal.exception.ReportNotFoundException;
 import ru.egarschool.naapplication.Corporate.portal.mapper.ReportMapper;
 import ru.egarschool.naapplication.Corporate.portal.repository.EmployeeRepo;
@@ -22,6 +23,7 @@ public class ReportServiceImpl implements ReportService {
     private final ReportMapper reportMapper;
     private final EmployeeRepo employeeRepo;
     private final SecurityService securityService;
+    private final TaskServiceImpl taskService;
 
     public List<ReportDto> findAll() {
         List<ReportEntity> reports = reportRepo.findAll();
@@ -38,27 +40,42 @@ public class ReportServiceImpl implements ReportService {
 
 
     public ReportDto create(ReportDto reportDto){
+        ReportEntity report = reportMapper.toEntity(reportDto);
         String username = securityService.getCurrentUsername();
         EmployeeEntity employee = employeeRepo.findEmployeeEntityByUserAccount_Username(username).orElseThrow(
                 () ->  new UsernameNotFoundException("Сотрудник с username " + username + " не найден"));
-        reportDto.setReportEmploy(employee);
+        // находим задачу по linkedtask.id из reportDto
+        TaskEntity linkedTask = taskService.findTaskById(reportDto.getLinkedTask().getId());
 
-        ReportEntity report = reportMapper.toEntity(reportDto);
+        if (!linkedTask.getWhoGaveTask().getId().equals(employee.getId()) && !linkedTask.getWhoGivenTask().getId().equals(employee.getId()))
+            throw new IllegalStateException("Вы не являетесь владельцем этой задачи");
+
+        report.setLinkedTask(linkedTask);
+        reportDto.setReportEmploy(employee);
+        linkedTask.setReport(report);
+
+        reportMapper.toUpdateReportFromDto(reportDto,report);
         reportRepo.save(report);
         return reportDto;
     }
 
     public ReportDto update(ReportDto reportDto, Long id) {
+        ReportEntity report = reportRepo.findById(id).orElseThrow(
+                () ->  new ReportNotFoundException("Отчёт с идентификатором " + id + " не найден"));
         String username = securityService.getCurrentUsername();
         EmployeeEntity employee = employeeRepo.findEmployeeEntityByUserAccount_Username(username).orElseThrow(
                 () ->  new UsernameNotFoundException("Сотрудник с username " + username + " не найден"));
+        TaskEntity linkedTask = taskService.findTaskById(reportDto.getLinkedTask().getId());
+
+        if (!linkedTask.getWhoGaveTask().getId().equals(employee.getId()))
+            throw new IllegalStateException("Вы не являетесь владельцем этой задачи");
+
+        report.setLinkedTask(linkedTask);
         reportDto.setReportEmploy(employee);
+        linkedTask.setReport(report);
 
-        ReportEntity report = reportRepo.findById(id).orElseThrow(
-                () ->  new ReportNotFoundException("Отчёт с идентификатором " + id + " не найден"));
-        report.setReportEmploy(employee);
+
         reportMapper.toUpdateReportFromDto(reportDto,report);
-
         reportRepo.save(report);
         return reportDto;
     }
