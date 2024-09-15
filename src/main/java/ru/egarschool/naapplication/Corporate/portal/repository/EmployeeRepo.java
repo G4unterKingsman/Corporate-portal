@@ -13,7 +13,9 @@ public interface EmployeeRepo extends JpaRepository<EmployeeEntity, Long> {
     Optional<EmployeeEntity> findByName(String name);
 
 
-
+    /**
+     * нахождение сотрудника по юзернейму, нужно для чтобы находить владельцев задач\отчётов
+     */
     // @Query("SELECT e FROM EmployeeEntity e WHERE e.userAccount.username = :username")
     Optional<EmployeeEntity> findEmployeeEntityByUserAccount_Username(String username);
 

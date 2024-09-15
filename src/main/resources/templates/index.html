@@ -20,7 +20,7 @@
     </div>
     <div class="col col-lg-3">
         <a th:href="@{/all_employees}" class="btn btn-lg btn-block btn-outline-primary" role="button"
-           aria-disabled="true">все сотрудники</a>
+           aria-disabled="true">Все сотрудники</a>
     </div>
     <div class="col col-lg-3">
         <a th:href="@{/all_reports/add_report}" class="btn btn-lg btn-block btn-outline-primary" role="button"
@@ -28,15 +28,15 @@
     </div>
     <div class="col col-lg-3">
         <a th:href="@{/all_reports}" class="btn btn-lg btn-block btn-outline-primary" role="button"
-           aria-disabled="true">все отчёты</a>
+           aria-disabled="true">Все отчёты</a>
     </div>
     <div class="col col-lg-3">
         <a th:href="@{/all_tasks}" class="btn btn-lg btn-block btn-outline-primary" role="button"
-           aria-disabled="true">все задания</a>
+           aria-disabled="true">Все задачи</a>
     </div>
     <div class="col col-lg-3">
         <a th:href="@{/all_tasks/add_task}" class="btn btn-lg btn-block btn-outline-primary" role="button"
-           aria-disabled="true">создать задание</a>
+           aria-disabled="true">Создать задачу</a>
     </div>
     <div class="col col-lg-3" th:action="@{/}" th:object="${user}">
         <a th:href="@{/all_employees/{id} (id=*{employee.id})}" class="btn btn-lg btn-block btn-outline-primary" role="button"
@@ -45,12 +45,9 @@
     <div class="col col-lg-3">
         <form id="logoutForm" action="/logout" method="POST">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-            <input type="submit" value="Logout"/>
+            <button class="btn btn-primary btn-lg btn-block" type="submit" value="Submit">Выйти</button>
         </form>
     </div>
 </div>
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-
 </body>
 </html>

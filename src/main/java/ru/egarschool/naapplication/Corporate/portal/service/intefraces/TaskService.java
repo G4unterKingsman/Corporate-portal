@@ -1,7 +1,6 @@
 package ru.egarschool.naapplication.Corporate.portal.service.intefraces;
 
 import ru.egarschool.naapplication.Corporate.portal.dto.TaskDto;
-import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
 
 import java.util.List;
 

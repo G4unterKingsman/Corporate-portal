@@ -15,6 +15,10 @@ public interface EmployeeMapper{
 
     EmployeeDto toDto(EmployeeEntity byName);
 
+
+    /**
+     * Обновление сотрудника из DTO без поля userAccount, т.к оно задаётся вручную в сервисе
+     */
     @Mapping(source = "userAccount", target = "userAccount.id", ignore = true)
     void updateEmployeeFromDTO(EmployeeDto employeeDto, @MappingTarget EmployeeEntity employee);
 

@@ -8,8 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
 import ru.egarschool.naapplication.Corporate.portal.entity.TaskEntity;
 

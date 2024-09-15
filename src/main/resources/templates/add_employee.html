@@ -12,7 +12,7 @@
 <body class="bg-light">
 <div class="container">
   <div class="py-5 text-center">
-    <h2>Добавление сострудника</h2>
+    <h2>Добавление сотрудника</h2>
   </div>
 
   <form enctype="multipart/form-data" action="#" th:action="@{/all_employees/add_employee}" th:object="${employeeDto}" method="post" class="needs-validation"
@@ -38,7 +38,7 @@
             </datalist>
           </div>
           <div class="col-md-4 mb-3">
-            <label for="username">Имя пользователя</label>
+            <label for="username">Username</label>
             <input th:field="*{userAccount.username}" type="text" class="form-control" id="username" placeholder="" value="" required>
           </div>
           <div class="col-md-4 mb-3">

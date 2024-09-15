@@ -5,12 +5,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import ru.egarschool.naapplication.Corporate.portal.entity.enums.Role;
 import ru.egarschool.naapplication.Corporate.portal.entity.enums.TaskStatus;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Getter
@@ -65,13 +63,7 @@ public class TaskEntity {
     private Integer timeAllowed; // количество времени на задачу
     private Integer timeCancelled; // количество фактически затраченного времени
 
-
-
-    /** Поменять связ на ManyToOne чтобы один отчёт мог ссылаться на несколько задач
-     *
-     *
-     */
-    @OneToOne(mappedBy = "linkedTask")
-    private ReportEntity report;
+    @OneToMany(mappedBy = "linkedTask")
+    private List<ReportEntity> reports;
 
 }

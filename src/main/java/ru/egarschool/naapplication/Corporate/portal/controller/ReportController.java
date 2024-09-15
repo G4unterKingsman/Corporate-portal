@@ -11,8 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.egarschool.naapplication.Corporate.portal.dto.ReportDto;
 import ru.egarschool.naapplication.Corporate.portal.service.ReportServiceImpl;
-
-
 /**
  *  Контроллер сущности Отчёта, здесь реализованы все методы CRUD
  *  Внедрение сервиса осуществляется через @RequiredArgsConstructor
@@ -55,7 +53,7 @@ public class ReportController {
 
 
     /**
-     * Создание сотрудника, доступ только Администратору
+     * Создание отчёта, доступ только Администратору или авторизированному пользователю
      * @param reportDto - параметр для приёма и передачи полей из представления, подставленных @ModelAttribute
      * @param bindingResult - параметр валидации для reportDto, вся валидация указана в ReportDto
      */
@@ -71,7 +69,7 @@ public class ReportController {
     /**
      * Отображение отчёта
      * @param model - подставляет значения из полученного от сервиса сотрудника
-     * @param id - идентификатор сотрудника, также используется для представления
+     * @param id - идентификатор отчёта, также используется для представления
      */
     @PreAuthorize("hasRole('ROLE_ADMIN') or @reportServiceImpl.getOwnerUsername(#id) == authentication.name")
     @GetMapping("/{id}")
@@ -115,8 +113,8 @@ public class ReportController {
 
 
     /**
-     * Метод удаления сотрудника по id, доступен только администратору
-     * @param id - идентификатор удаляемого сотрудника
+     * Метод удаления отчёта по id, доступен только администратору
+     * @param id - идентификатор удаляемого отчёта
      */
     @PreAuthorize("hasRole('ROLE_ADMIN') or @reportServiceImpl.getOwnerUsername(#id)  == authentication.name")
     @GetMapping("/{id}/delete")

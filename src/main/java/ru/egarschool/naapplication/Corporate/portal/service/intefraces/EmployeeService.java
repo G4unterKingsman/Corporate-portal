@@ -3,7 +3,6 @@ package ru.egarschool.naapplication.Corporate.portal.service.intefraces;
 
 import ru.egarschool.naapplication.Corporate.portal.dto.EmployeeDto;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
-import ru.egarschool.naapplication.Corporate.portal.exception.EmployeNotFoundException;
 
 import java.util.List;
 

@@ -28,7 +28,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final UserRepo userRepo;
 
 
-
+    /**
+     * Отображеие всех сотрудиков
+     * Используем стримы чтобы смаппить entity в dto, и вернуть
+     */
     @Override
     public List<EmployeeDto> getAll() {
         List<EmployeeEntity> employees = employeeRepo.findAll();
@@ -38,18 +41,26 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     }
 
+    /**
+     * Получение сотрудника по id, если сотрудник не найден, выбрасываем исключение
+     */
     @Override
     public EmployeeDto getById(Long id){
         return employeeMapper.toDto(employeeRepo.findById(id).orElseThrow(
                 () ->  new EmployeNotFoundException("Сотрудник с идентификатором " + id + " не найден")));
     }
 
+    /**
+     * создание сотрудника (доступно только Администраторам)
+     * создаём нового пользователя, и присваиваем ему данные полученные из дто сотрудника
+     * маппим сотрудника из дто, и связываем созданного пользователя с сотрудником
+     * сохранаяем сотрудника и пользователя в базу
+     */
     @Transactional
     @Override
     public EmployeeDto create(EmployeeDto employeeDto) {
-        String username = employeeDto.getUserAccount().getUsername();
         UserAccount user = new UserAccount();
-        user.setUsername(username);
+        user.setUsername(employeeDto.getUserAccount().getUsername());
         user.setPassword(passwordEncoder.encode(employeeDto.getUserAccount().getPassword()));
         user.setActive(true);
         user.setRoles(employeeDto.getUserAccount().getRoles());
@@ -62,10 +73,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepo.save(employee);
         userRepo.save(user);
 
-        return employeeMapper.toDto(employee);
+        return employeeDto;
     }
 
-
+    /**
+     * редактирование сотрудника (доступно администратору и пользователю владельцу профиля)
+     * находим юзернейм текущего пользователя, и находим по нему авторизированного пользователя
+     * находим сотрудника по предоставленному id
+     * обновляем сотрудника из дто
+     * присваиваем к дто текущего пользователя
+     * сохранаяем обновлённого сотрудника в базу
+     * возвращаем дто сотрудника
+     */
     @Transactional
     @Override
     public EmployeeDto update(EmployeeDto employeeDto, Long id) {
@@ -84,11 +103,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
 
+    /**
+     * удаление сотрудника из базы по id
+     * @param id = идентификатор удаляемого сотрудника
+     */
+
     @Override
     public void delete(Long id) {
         employeeRepo.deleteById(id);
     }
 
+
+    /**
+     * метод нахождения сотрудника-хозяина задачи\отчёта
+     * Используется в TaskService и ReportService
+     * Находится сотрудник по переданному id
+     * возвращаем юзернейм сотрудника-хозяина отчёта или задачи
+     */
 
     public String getOwnerUsername(Long id) {
         EmployeeEntity employee = employeeRepo.findById(id).orElseThrow(
@@ -96,6 +127,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employee.getUserAccount().getUsername();
     }
 
+
+    /**
+     * нахождение сотрудника по имени
+     * Нужно для создания задачи в TaskService
+     */
     public EmployeeEntity findEmployeeByName(String name) {
         return employeeRepo.findByName(name).orElseThrow(
                 () ->  new EmployeNotFoundException("Сотрудник с именем " + name + " не найден"));

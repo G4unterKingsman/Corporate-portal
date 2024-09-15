@@ -15,8 +15,13 @@ public interface TaskMapper {
 
     TaskDto toDto(TaskEntity task) ;
 
+
+    /**
+     * Обновление сотрудника из DTO
+     * без полей whoGivenTask, status
+     * Задаются вручную в сервисе
+     */
     @Mapping(source = "whoGivenTask", target = "whoGivenTask.id", ignore = true)
-    @Mapping(source = "deadline", target = "deadline", ignore = true)
-    @Mapping(source = "created", target = "created", ignore = true)
+    @Mapping(source = "status", target = "status", ignore = true)
     void toUpdateTaskFromDto(TaskDto byName, @MappingTarget TaskEntity task);
 }

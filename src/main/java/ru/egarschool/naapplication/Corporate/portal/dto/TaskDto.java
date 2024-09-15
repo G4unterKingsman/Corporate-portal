@@ -1,8 +1,6 @@
 package ru.egarschool.naapplication.Corporate.portal.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -10,13 +8,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import ru.egarschool.naapplication.Corporate.portal.entity.EmployeeEntity;
 import ru.egarschool.naapplication.Corporate.portal.entity.ReportEntity;
 import ru.egarschool.naapplication.Corporate.portal.entity.enums.TaskStatus;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -54,5 +51,5 @@ public class TaskDto {
     private Integer timeAllowed;
 
     private Integer timeCancelled;
-    private ReportEntity report;
+    private List<ReportEntity> reports;
 }
