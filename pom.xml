@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.2.9</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>ru.egarschool.naapplication</groupId>
 	<artifactId>Corporate-portal</artifactId>
@@ -54,12 +54,6 @@
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-docker-compose</artifactId>-->
-<!--			<scope>runtime</scope>-->
-<!--			<optional>true</optional>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -107,33 +101,6 @@
 	</dependencies>
 	<build>
 		<plugins>
-<!--			<plugin>-->
-<!--				<groupId>org.openapitools</groupId>-->
-<!--				<artifactId>openapi-generator-maven-plugin</artifactId>-->
-<!--				&lt;!&ndash; RELEASE_VERSION &ndash;&gt;-->
-<!--				<version>7.7.0</version>-->
-<!--				&lt;!&ndash; /RELEASE_VERSION &ndash;&gt;-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<goals>-->
-<!--							<goal>generate</goal>-->
-<!--						</goals>-->
-<!--						<configuration>-->
-<!--							<inputSpec>${project.basedir}/src/main/resources/swagger/openapi.yaml</inputSpec>-->
-<!--							<generatorName>spring</generatorName>-->
-<!--							<apiPackage>org.example.openapi.api</apiPackage>-->
-<!--							<modelPackage>org.example.openapi.model</modelPackage>-->
-<!--							<modelNameSuffix>Model</modelNameSuffix>-->
-<!--							<supportingFilesToGenerate>-->
-<!--								ApiUtil.java-->
-<!--							</supportingFilesToGenerate>-->
-<!--							<configOptions>-->
-<!--								<delegatePattern>true</delegatePattern>-->
-<!--							</configOptions>-->
-<!--						</configuration>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--			</plugin>-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

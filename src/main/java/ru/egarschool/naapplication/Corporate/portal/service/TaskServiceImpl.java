@@ -43,7 +43,6 @@ public class TaskServiceImpl implements TaskService {
     /**
      * Получение задачи по id, если задача не найдена, выбрасываем исключение
      */
-
     public TaskDto getById(Long id){
         TaskEntity task =  taskRepo.findById(id).orElseThrow(
                 () ->  new TaskNotFoundException("Задачи с идентификатором " + id + " нет"));
@@ -77,7 +76,7 @@ public class TaskServiceImpl implements TaskService {
         taskDto.setCreated(LocalDateTime.now());
         taskDto.setWhoGaveTask(employeeWhoGave);
         task.setWhoGivenTask(employeeWhoGiven);
-        taskDto.setDeadline(calculateTimeDeadline(taskDto)); // считаем для дто дату дедлайна
+        taskDto.setDeadline(calculateTimeDeadline(taskDto));
         task.setDeadline(calculateTimeDeadline(taskDto));
 
         taskMapper.toUpdateTaskFromDto(taskDto,task);
