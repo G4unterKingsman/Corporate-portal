@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+  <title>Corporate Portal</title>
+</head>
+<body class="bg-light">
+
+<div class="row">
+  <div class="col col-lg-3">
+    <a th:href="@{/all_employees}" class="btn btn-lg btn-block btn-outline-primary" role="button"
+       aria-disabled="true">все сотрудники </a>
+  </div>
+  <div class="col col-lg-3">
+    <a th:href="@{/}" class="btn btn-lg btn-block btn-outline-primary" role="button"
+       aria-disabled="true">На главную</a>
+  </div>
+</div>
+
+<div>
+  <div class="col" th:action="@{/show_employee}" th:object="${employee}">
+    <div class="py-5 text-center">
+      <h2>информация о сотруднике</h2>
+    </div>
+    <div class="container">
+      <br/>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th class="text-justify"></th>
+            <th class="text-justify"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="text-justify">Имя</td>
+            <td class="align-middle"><span th:text="*{name}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Возраст</td>
+            <td class="align-middle"><span th:text="*{age}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Роль</td>
+            <td class="align-middle"><span th:text="*{userAccount.roles}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Когда присоеденился</td>
+            <td class="align-middle"><span th:text="*{joined}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Стаж</td>
+            <td class="align-middle"><span th:text="*{workExperienceYears}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Описание</td>
+            <td class="align-middle"><span th:text="*{description}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Username</td>
+            <td class="align-middle"><span th:text="*{userAccount.username}"/></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th class="text-justify">#</th>
+        <th class="text-justify">Название</th>
+        <th class="text-justify">Когда создан</th>
+        <th class="text-justify"></th>
+        <th class="text-justify"></th>
+        <th class="text-justify"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="report : ${employee.getEmployeeReports}">
+        <td class="align-middle"><span th:text="${report.id}"/></td>
+        <td class="align-middle"><span th:text="${report.title}"/></td>
+        <td class="align-middle"><span th:text="${#temporals.format(report.created, 'dd-MMM-yyyy, HH:mm')}"/></td>
+        <td><a th:href="@{/all_reports/{id} (id=${report.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
+        <td><a th:href="@{/all_reports/{id}/edit_report (id=${report.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
+        <td><a th:href="@{/all_reports/{id}/delete (id=${report.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Удалить</button></a></td>
+      </tr>
+      </tbody>
+    </table>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th class="text-justify">#</th>
+        <th class="text-justify">Название</th>
+        <th class="text-justify">Когда создан</th>
+        <th class="text-justify">Описание</th>
+        <th class="text-justify">От кого задание</th>
+        <th class="text-justify">Кому задание</th>
+        <th class="text-justify"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="task : ${employee.getTaskFromEmploy}">
+        <td class="align-middle"><span th:text="${task.id}"/></td>
+        <td class="align-middle"><span th:text="${task.title}"/></td>
+        <td class="align-middle"><span th:text="${#temporals.format(task.created, 'dd-MMM-yyyy, HH:mm')}"/></td>
+        <td class="align-middle"><span th:text="${task.description}"/></td>
+        <td class="align-middle"><span th:text="${task.whoGaveTask.name}"/></td>
+        <td class="align-middle"><span th:text="${task.whoGivenTask.name}"/></td>
+        <td><a th:href="@{/all_tasks/{id} (id=${task.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
+      </tr>
+      </tbody>
+    </table>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th class="text-justify">#</th>
+        <th class="text-justify">Название</th>
+        <th class="text-justify">Когда создан</th>
+        <th class="text-justify">Описание</th>
+        <th class="text-justify">Кто дал задание</th>
+        <th class="text-justify">Кому дали задание</th>
+        <th class="text-justify"></th>
+        <th class="text-justify"></th>
+        <th class="text-justify"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="task : ${employee.getTaskForEmploy}">
+        <td class="align-middle"><span th:text="${task.id}"/></td>
+        <td class="align-middle"><span th:text="${task.title}"/></td>
+        <td class="align-middle"><span th:text="${task.created}"/></td>
+        <td class="align-middle"><span th:text="${task.description}"/></td>
+        <td class="align-middle"><span th:text="${task.whoGaveTask.name}"/></td>
+        <td class="align-middle"><span th:text="${task.whoGivenTask.name}"/></td>
+        <td><a th:href="@{/all_tasks/{id} (id=${task.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Подробнее</button></a></td>
+        <td><a th:href="@{/all_tasks/{id}/edit_task (id=${task.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a></td>
+        <td><a th:href="@{/all_tasks/{id}/delete (id=${task.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Удалить</button></a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>

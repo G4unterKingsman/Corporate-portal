@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <title>Corporate Portal</title>
+</head>
+<body class="bg-light">
+
+<div class="row">
+  <div class="col col-lg-3">
+    <a th:href="@{/all_reports}" class="btn btn-lg btn-block btn-outline-primary" role="button"
+       aria-disabled="true">все отчёты </a>
+  </div>
+  <div class="col col-lg-3">
+    <a th:href="@{/}" class="btn btn-lg btn-block btn-outline-primary" role="button"
+       aria-disabled="true">На главную</a>
+  </div>
+</div>
+
+<div>
+  <div class="col" th:action="@{/show_report}" th:object="${report}">
+    <div class="py-5 text-center">
+      <h2>информация об отчёте</h2>
+    </div>
+    <div class="container">
+      <br/>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th class="text-justify"></th>
+            <th class="text-justify"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="text-justify">Название отчёта</td>
+            <td class="align-middle"><span th:text="*{title}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Дата создания</td>
+            <td class="align-middle"><span th:text="${#temporals.format(report.created, 'dd-MMM-yyyy, HH:mm')}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Дата редактирования</td>
+            <td class="align-middle"><span th:text="${#temporals.format(report.updated, 'dd-MMM-yyyy, HH:mm')}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Описание отчёта</td>
+            <td class="align-middle"><span th:text="*{description}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Автор</td>
+            <td class="align-middle"><span th:text="*{reportEmploy.name}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Связанная задача</td>
+            <td class="align-middle"><span th:text="*{linkedTask.title}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">ID связанной задачи</td>
+            <td class="align-middle"><span th:text="*{linkedTask.id}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Описание задачи</td>
+            <td class="align-middle"><span th:text="*{linkedTask.description}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">От кого</td>
+            <td class="align-middle"><span th:text="*{linkedTask.whoGaveTask.name}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Кому</td>
+            <td class="align-middle"><span th:text="*{linkedTask.whoGivenTask.name}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Задача создана</td>
+            <td class="align-middle"><span th:text="*{#temporals.format(linkedTask.created, 'dd-MMM-yyyy, HH:mm')}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Дедлайн задачи</td>
+            <td class="align-middle"><span th:text="*{#temporals.format(linkedTask.deadline, 'dd-MMM-yyyy, HH:mm')}"/></td>
+          </tr>
+          <tr>
+            <td class="text-justify">Отведенное время на задачу</td>
+            <td class="align-middle"><span th:text="*{linkedTask.timeAllowed}"/>.ч</td>
+          </tr>
+          <tr>
+            <td class="text-justify">Фактически затраченно время на задачу</td>
+            <td class="align-middle"><span th:text="*{linkedTask.timeCancelled}"/>.ч</td>
+          </tr>
+          <tr>
+            <td class="text-justify">Статус задачи</td>
+            <td class="align-middle"><span th:text="*{linkedTask.status.getName()}"/></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="py-5 text-center">
+          <div>
+            <a th:href="@{/all_reports/{id}/edit_report (id=${report.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Редактировать</button></a>
+          </div>
+          <div>
+            <a th:href="@{/all_reports/{id}/delete (id=${report.id})}"><button class="btn btn-lg btn-block btn-outline-primary">Удалить</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>

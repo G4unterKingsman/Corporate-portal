@@ -1,0 +1,25 @@
+version: '3.8'
+
+networks:
+  corp-port-network:
+    driver: bridge
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: no
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: popok
+      POSTGRES_DB: corpor-bd
+    ports:
+      - "5431:5432"
+    networks:
+      - corp-port-network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    command: ["postgres", "-c", "listen_addresses=*"]
+
+volumes:
+  postgres_data:
